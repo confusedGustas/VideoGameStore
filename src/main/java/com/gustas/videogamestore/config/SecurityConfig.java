@@ -19,7 +19,15 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                        .requestMatchers(
+                                "api/games",
+                                "api/users/login",
+                                "api/users/register",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html/**"
+                                ).permitAll()
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }

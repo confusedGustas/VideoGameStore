@@ -1,7 +1,6 @@
 package com.gustas.videogamestore.dao.User;
 
 import com.gustas.videogamestore.domain.User;
-import com.gustas.videogamestore.exception.UserNotFoundException;
 import com.gustas.videogamestore.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return userRepository.findByIdWithGames(id);
     }
 
 }

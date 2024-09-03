@@ -1,6 +1,5 @@
 package com.gustas.videogamestore.domain;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
