@@ -37,20 +37,12 @@ public class Game {
     private Region activationRegion;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
-    private Type activationType;
-
-    @ManyToOne
     @JoinColumn(name = "platform_id")
     private Platform activationPlatform;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
-
-    @ManyToOne
-    @JoinColumn(name = "origin_id")
-    private Origin origin;
 
     @ManyToOne
     @JoinColumn(name = "genre_id")

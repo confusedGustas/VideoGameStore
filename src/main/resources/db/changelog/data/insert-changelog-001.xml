@@ -15,5 +15,533 @@
             <column name="enabled" value="true"/>
         </insert>
     </changeSet>
+    <changeSet id="2" author="Gustas Antanas Gaigalas">
+        <insert tableName="genres">
+            <column name="id" valueNumeric="1"/>
+            <column name="genre" value="RPG"/>
+        </insert>
+        <insert tableName="genres">
+            <column name="id" valueNumeric="2"/>
+            <column name="genre" value="Shooter"/>
+        </insert>
+        <insert tableName="genres">
+            <column name="id" valueNumeric="3"/>
+            <column name="genre" value="Puzzle"/>
+        </insert>
+        <insert tableName="genres">
+            <column name="id" valueNumeric="4"/>
+            <column name="genre" value="Sports"/>
+        </insert>
+        <insert tableName="genres">
+            <column name="id" valueNumeric="5"/>
+            <column name="genre" value="Adventure"/>
+        </insert>
+        <insert tableName="genres">
+            <column name="id" valueNumeric="6"/>
+            <column name="genre" value="Fighting"/>
+        </insert>
+
+        <insert tableName="platforms">
+            <column name="id" valueNumeric="1"/>
+            <column name="platform" value="Steam"/>
+        </insert>
+        <insert tableName="platforms">
+            <column name="id" valueNumeric="2"/>
+            <column name="platform" value="Ubisoft"/>
+        </insert>
+        <insert tableName="platforms">
+            <column name="id" valueNumeric="3"/>
+            <column name="platform" value="Epic Games"/>
+        </insert>
+
+        <insert tableName="regions">
+            <column name="id" valueNumeric="1"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="regions">
+            <column name="id" valueNumeric="2"/>
+            <column name="region" value="JAV"/>
+        </insert>
+        <insert tableName="regions">
+            <column name="id" valueNumeric="3"/>
+            <column name="region" value="Turkey"/>
+        </insert>
+        <insert tableName="regions">
+            <column name="id" valueNumeric="4"/>
+            <column name="region" value="Argentina"/>
+        </insert>
+        <insert tableName="regions">
+            <column name="id" valueNumeric="5"/>
+            <column name="region" value="Egypt"/>
+        </insert>
+        <insert tableName="regions">
+            <column name="id" valueNumeric="6"/>
+            <column name="region" value="Canada"/>
+        </insert>
+
+        <insert tableName="publishers">
+            <column name="id" valueNumeric="1"/>
+            <column name="publisher" value="Activision"/>
+        </insert>
+        <insert tableName="publishers">
+            <column name="id" valueNumeric="2"/>
+            <column name="publisher" value="Ubisoft"/>
+        </insert>
+        <insert tableName="publishers">
+            <column name="id" valueNumeric="3"/>
+            <column name="publisher" value="Nintendo"/>
+        </insert>
+    </changeSet>
+    <changeSet id="3" author="Gustas Antanas Gaigalas">
+        <insert tableName="games">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Abiotic Factor"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="description" value="A sci-fi game exploring the survival in an alien environment."/>
+            <column name="image" value="AbioticFactor.jpg"/>
+            <column name="release_year" value="2023"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="100"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Age of Mythology"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="A strategy game rooted in mythological tales."/>
+            <column name="image" value="AgeofMythology.jpg"/>
+            <column name="release_year" value="2002"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="200"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Batman Arkham City"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="description" value="An action-adventure game set in the Batman universe."/>
+            <column name="image" value="BatmanArkhamCity.jpg"/>
+            <column name="release_year" value="2011"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="150"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Car Mechanic Simulator VR"/>
+            <column name="price" valueNumeric="24.99"/>
+            <column name="description" value="A simulation game where you fix and restore cars in VR."/>
+            <column name="image" value="CarMechanicSimulatorVR.png"/>
+            <column name="release_year" value="2021"/>
+            <column name="region_id" valueNumeric="4"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="120"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Core Keeper"/>
+            <column name="price" valueNumeric="14.99"/>
+            <column name="description" value="An indie exploration and crafting game."/>
+            <column name="image" value="CoreKeeper.png"/>
+            <column name="release_year" value="2022"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="180"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Cyberpunk 2077"/>
+            <column name="price" valueNumeric="59.99"/>
+            <column name="description" value="An open-world RPG set in a dystopian future."/>
+            <column name="image" value="Cyberpunk2077.jpg"/>
+            <column name="release_year" value="2020"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="75"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="7"/>
+            <column name="name" value="Disney Bolt"/>
+            <column name="price" valueNumeric="14.99"/>
+            <column name="description" value="An action game based on the Disney film Bolt."/>
+            <column name="image" value="DisneyBolt.jpg"/>
+            <column name="release_year" value="2008"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="160"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="8"/>
+            <column name="name" value="DOOM"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="A classic first-person shooter game."/>
+            <column name="image" value="DOOM.png"/>
+            <column name="release_year" value="1993"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="140"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="9"/>
+            <column name="name" value="Dying Light 2 Stay Human"/>
+            <column name="price" valueNumeric="49.99"/>
+            <column name="description" value="A survival horror game set in a post-apocalyptic world."/>
+            <column name="image" value="DyingLight2StayHuman.jpg"/>
+            <column name="release_year" value="2022"/>
+            <column name="region_id" valueNumeric="5"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="90"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="10"/>
+            <column name="name" value="Farmers Life"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="A farming simulation game with life management elements."/>
+            <column name="image" value="FarmersLife.jpg"/>
+            <column name="release_year" value="2022"/>
+            <column name="region_id" valueNumeric="4"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="100"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="11"/>
+            <column name="name" value="Farming Simulator 22"/>
+            <column name="price" valueNumeric="39.99"/>
+            <column name="description" value="Manage your farm and cultivate crops in this simulation game."/>
+            <column name="image" value="FarmingSimulator22.png"/>
+            <column name="release_year" value="2021"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="110"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="12"/>
+            <column name="name" value="Gas Station Simulator"/>
+            <column name="price" valueNumeric="24.99"/>
+            <column name="description" value="Manage your own gas station and upgrade facilities."/>
+            <column name="image" value="GasStationSimulator.jpeg"/>
+            <column name="release_year" value="2021"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="130"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="13"/>
+            <column name="name" value="God of War"/>
+            <column name="price" valueNumeric="49.99"/>
+            <column name="description" value="An action-adventure game following the journey of Kratos."/>
+            <column name="image" value="GodofWar.jpg"/>
+            <column name="release_year" value="2018"/>
+            <column name="region_id" valueNumeric="4"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="70"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="14"/>
+            <column name="name" value="Grand Theft Auto IV"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="An open-world action-adventure game with a sprawling cityscape."/>
+            <column name="image" value="GrandTheftAutoIV.jpg"/>
+            <column name="release_year" value="2008"/>
+            <column name="region_id" valueNumeric="5"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="85"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="15"/>
+            <column name="name" value="Hitman Absolution"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="description" value="Stealth action game where you play as a contract assassin."/>
+            <column name="image" value="HitmanAbsolution.jpeg"/>
+            <column name="release_year" value="2012"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="90"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="16"/>
+            <column name="name" value="Intravenous 2"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="A stealth action game with a strong narrative focus."/>
+            <column name="image" value="Intravenous2.jpg"/>
+            <column name="release_year" value="2023"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="80"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="17"/>
+            <column name="name" value="Metro Exodus"/>
+            <column name="price" valueNumeric="39.99"/>
+            <column name="description" value="A story-driven FPS set in a post-apocalyptic Russia."/>
+            <column name="image" value="MetroExodus.jpeg"/>
+            <column name="release_year" value="2019"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="95"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="18"/>
+            <column name="name" value="Minecraft Story Mode"/>
+            <column name="price" valueNumeric="24.99"/>
+            <column name="description" value="An episodic point-and-click adventure game in the Minecraft universe."/>
+            <column name="image" value="MinecraftStoryMode.jpg"/>
+            <column name="release_year" value="2015"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="110"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="19"/>
+            <column name="name" value="NBA 2K25"/>
+            <column name="price" valueNumeric="59.99"/>
+            <column name="description" value="The latest installment in the NBA 2K basketball simulation series."/>
+            <column name="image" value="NBA2K25.jpg"/>
+            <column name="release_year" value="2024"/>
+            <column name="region_id" valueNumeric="4"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="4"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="50"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="20"/>
+            <column name="name" value="Norland"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="description" value="A role-playing game with an expansive open world."/>
+            <column name="image" value="Norland.jpg"/>
+            <column name="release_year" value="2023"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="110"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="21"/>
+            <column name="name" value="Omerta"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="A strategy game focused on organized crime and gang wars."/>
+            <column name="image" value="Omerta.jpg"/>
+            <column name="release_year" value="2013"/>
+            <column name="region_id" valueNumeric="5"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="100"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="22"/>
+            <column name="name" value="Real Farm"/>
+            <column name="price" valueNumeric="24.99"/>
+            <column name="description" value="A farming simulation game that lets you experience farm life."/>
+            <column name="image" value="RealFarm.jpg"/>
+            <column name="release_year" value="2017"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="120"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="23"/>
+            <column name="name" value="Resident Evil Revelations 2"/>
+            <column name="price" valueNumeric="29.99"/>
+            <column name="description" value="A survival horror game that follows the events after Resident Evil 5."/>
+            <column name="image" value="ResidentEvilRevelations2.jpg"/>
+            <column name="release_year" value="2015"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="90"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="24"/>
+            <column name="name" value="Skyrim Special Edition"/>
+            <column name="price" valueNumeric="39.99"/>
+            <column name="description" value="A remastered version of the critically acclaimed RPG Skyrim."/>
+            <column name="image" value="SkyrimSpecialEdition.jpg"/>
+            <column name="release_year" value="2016"/>
+            <column name="region_id" valueNumeric="4"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="80"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="25"/>
+            <column name="name" value="Stardew Valley"/>
+            <column name="price" valueNumeric="14.99"/>
+            <column name="description" value="A farming simulation game with a focus on community and exploration."/>
+            <column name="image" value="StardewValley.jpg"/>
+            <column name="release_year" value="2016"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="3"/>
+            <column name="genre_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="140"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="26"/>
+            <column name="name" value="The Sims 4"/>
+            <column name="price" valueNumeric="39.99"/>
+            <column name="description" value="A life simulation game where you create and control people."/>
+            <column name="image" value="TheSims4.jpg"/>
+            <column name="release_year" value="2014"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="75"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="27"/>
+            <column name="name" value="Total War: Warhammer II"/>
+            <column name="price" valueNumeric="49.99"/>
+            <column name="description" value="A strategy game combining turn-based management with real-time battles."/>
+            <column name="image" value="TotalWarWarhammerII.jpg"/>
+            <column name="release_year" value="2017"/>
+            <column name="region_id" valueNumeric="1"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="60"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="28"/>
+            <column name="name" value="Warframe"/>
+            <column name="price" valueNumeric="0.99"/>
+            <column name="description" value="A cooperative free-to-play third-person online action game."/>
+            <column name="image" value="Warframe.jpg"/>
+            <column name="release_year" value="2013"/>
+            <column name="region_id" valueNumeric="4"/>
+            <column name="platform_id" valueNumeric="2"/>
+            <column name="publisher_id" valueNumeric="2"/>
+            <column name="genre_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="100"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="29"/>
+            <column name="name" value="Worms Rumble"/>
+            <column name="price" valueNumeric="19.99"/>
+            <column name="description" value="A real-time battle royale game featuring the classic Worms characters."/>
+            <column name="image" value="WormsRumble.png"/>
+            <column name="release_year" value="2020"/>
+            <column name="region_id" valueNumeric="2"/>
+            <column name="platform_id" valueNumeric="1"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="85"/>
+        </insert>
+
+        <insert tableName="games">
+            <column name="id" valueNumeric="30"/>
+            <column name="name" value="XCOM 2"/>
+            <column name="price" valueNumeric="39.99"/>
+            <column name="description" value="A tactical RPG where you lead a resistance against an alien occupation."/>
+            <column name="image" value="XCOM2.jpg"/>
+            <column name="release_year" value="2016"/>
+            <column name="region_id" valueNumeric="3"/>
+            <column name="platform_id" valueNumeric="3"/>
+            <column name="publisher_id" valueNumeric="1"/>
+            <column name="genre_id" valueNumeric="5"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="stock" valueNumeric="120"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

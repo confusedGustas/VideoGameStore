@@ -2,11 +2,9 @@ package com.gustas.videogamestore.mapper;
 
 import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.Genre;
-import com.gustas.videogamestore.domain.Origin;
 import com.gustas.videogamestore.domain.Platform;
 import com.gustas.videogamestore.domain.Publisher;
 import com.gustas.videogamestore.domain.Region;
-import com.gustas.videogamestore.domain.Type;
 import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 
@@ -19,8 +17,6 @@ public class GameMapper {
     public static Game toEntity(SaveGameRequestDto saveGameRequestDto,
                                  Genre genre,
                                  Platform platform,
-                                 Origin origin,
-                                 Type type,
                                  Region region,
                                  Publisher publisher) {
         Game game = new Game();
@@ -32,8 +28,6 @@ public class GameMapper {
         game.setActivationPlatform(platform);
         game.setStock(saveGameRequestDto.getStock());
         game.setImage(saveGameRequestDto.getImage());
-        game.setOrigin(origin);
-        game.setActivationType(type);
         game.setDescription(saveGameRequestDto.getDescription());
         game.setActivationRegion(region);
         game.setPublisher(publisher);
@@ -52,8 +46,6 @@ public class GameMapper {
         dto.setActivationPlatform(game.getActivationPlatform());
         dto.setStock(game.getStock());
         dto.setImage(game.getImage());
-        dto.setOrigin(game.getOrigin());
-        dto.setActivationType(game.getActivationType());
         dto.setDescription(game.getDescription());
         dto.setActivationRegion(game.getActivationRegion());
         dto.setPublisher(game.getPublisher());

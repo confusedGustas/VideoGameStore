@@ -3,21 +3,16 @@ package com.gustas.videogamestore.service.Game;
 import com.gustas.videogamestore.constant.SortingConstant;
 import com.gustas.videogamestore.dao.Game.GameDao;
 import com.gustas.videogamestore.dao.Genre.GenreDao;
-import com.gustas.videogamestore.dao.Origin.OriginDao;
 import com.gustas.videogamestore.dao.Platform.PlatformDao;
 import com.gustas.videogamestore.dao.Publisher.PublisherDao;
 import com.gustas.videogamestore.dao.Region.RegionDao;
-import com.gustas.videogamestore.dao.Type.TypeDao;
 import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.GameSearchCriteria;
 import com.gustas.videogamestore.domain.Genre;
-import com.gustas.videogamestore.domain.Origin;
 import com.gustas.videogamestore.domain.Platform;
 import com.gustas.videogamestore.domain.Publisher;
 import com.gustas.videogamestore.domain.Region;
 import com.gustas.videogamestore.domain.SortOrder;
-import com.gustas.videogamestore.domain.Type;
-import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
@@ -40,8 +35,6 @@ public class GameServiceImpl implements GameService {
     private GameDao gameDao;
     private GenreDao genreDao;
     private PlatformDao platformDao;
-    private OriginDao originDao;
-    private TypeDao typeDao;
     private RegionDao regionDao;
     private PublisherDao publisherDao;
     private SessionService sessionService;
@@ -101,19 +94,13 @@ public class GameServiceImpl implements GameService {
         Platform platform = findOrCreate(saveGameRequestDto.getPlatform(),
                 platformDao::findByPlatformName, Platform::new, platformDao::save);
 
-        Origin origin = findOrCreate(saveGameRequestDto.getOrigin(),
-                originDao::findByOriginName, Origin::new, originDao::save);
-
-        Type type = findOrCreate(saveGameRequestDto.getType(),
-                typeDao::findByTypeName, Type::new, typeDao::save);
-
         Region region = findOrCreate(saveGameRequestDto.getRegion(),
                 regionDao::findByRegionName, Region::new, regionDao::save);
 
         Publisher publisher = findOrCreate(saveGameRequestDto.getPublisher(),
                 publisherDao::findByPublisherName, Publisher::new, publisherDao::save);
 
-        return GameMapper.toEntity(saveGameRequestDto, genre, platform, origin, type, region, publisher);
+        return GameMapper.toEntity(saveGameRequestDto, genre, platform, region, publisher);
     }
 
     private <T> T findOrCreate(String name,
