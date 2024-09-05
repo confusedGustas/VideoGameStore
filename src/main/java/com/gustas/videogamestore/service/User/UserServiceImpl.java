@@ -49,6 +49,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        User user = sessionService.getUserFromSessionId();
+        userDao.deleteUser(user);
+
+        logoutUser(null, request, response);
+    }
+
+    @Override
     public void saveUser(SaveUserRequestDto saveUserRequestDto) {
         validateRegistrationCredentials(saveUserRequestDto);
 

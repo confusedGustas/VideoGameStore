@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +44,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void logoutUser(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
         userService.logoutUser(authentication, request, response);
+    }
+
+    @DeleteMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        userService.deleteUser(request, response);
     }
 
     @GetMapping("/get")

@@ -32,4 +32,9 @@ public class UserDaoImpl implements UserDao {
         return userRepository.findByIdWithGames(id);
     }
 
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
 }
