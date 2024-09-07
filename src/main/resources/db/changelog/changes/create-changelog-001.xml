@@ -145,4 +145,18 @@
                                  referencedTableName="games"
                                  referencedColumnNames="id"/>
     </changeSet>
+    <changeSet id="2" author="Gustas Antanas Gaigalas">
+        <createTable tableName="images">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="image" type="blob">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
