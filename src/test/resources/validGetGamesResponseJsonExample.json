@@ -1,0 +1,787 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Abiotic Factor",
+      "price": 19.99,
+      "description": "A sci-fi game exploring the survival in an alien environment.",
+      "image": "AbioticFactor.jpg",
+      "releaseYear": 2023,
+      "stock": 100,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 2,
+      "name": "Age of Mythology",
+      "price": 29.99,
+      "description": "A strategy game rooted in mythological tales.",
+      "image": "AgeofMythology.jpg",
+      "releaseYear": 2002,
+      "stock": 200,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 3,
+      "name": "Batman Arkham City",
+      "price": 19.99,
+      "description": "An action-adventure game set in the Batman universe.",
+      "image": "BatmanArkhamCity.jpg",
+      "releaseYear": 2011,
+      "stock": 150,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 4,
+      "name": "Car Mechanic Simulator VR",
+      "price": 24.99,
+      "description": "A simulation game where you fix and restore cars in VR.",
+      "image": "CarMechanicSimulatorVR.png",
+      "releaseYear": 2021,
+      "stock": 120,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 5,
+      "name": "Core Keeper",
+      "price": 14.99,
+      "description": "An indie exploration and crafting game.",
+      "image": "CoreKeeper.png",
+      "releaseYear": 2022,
+      "stock": 180,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 6,
+      "name": "Cyberpunk 2077",
+      "price": 59.99,
+      "description": "An open-world RPG set in a dystopian future.",
+      "image": "Cyberpunk2077.jpg",
+      "releaseYear": 2020,
+      "stock": 75,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 1,
+        "genre": "RPG"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 7,
+      "name": "Disney Bolt",
+      "price": 14.99,
+      "description": "An action game based on the Disney film Bolt.",
+      "image": "DisneyBolt.jpg",
+      "releaseYear": 2008,
+      "stock": 160,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 8,
+      "name": "DOOM",
+      "price": 29.99,
+      "description": "A classic first-person shooter game.",
+      "image": "DOOM.png",
+      "releaseYear": 1993,
+      "stock": 140,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 9,
+      "name": "Dying Light 2 Stay Human",
+      "price": 49.99,
+      "description": "A survival horror game set in a post-apocalyptic world.",
+      "image": "DyingLight2StayHuman.jpg",
+      "releaseYear": 2022,
+      "stock": 90,
+      "activationRegion": {
+        "id": 5,
+        "region": "Egypt"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 10,
+      "name": "Farmers Life",
+      "price": 29.99,
+      "description": "A farming simulation game with life management elements.",
+      "image": "FarmersLife.jpg",
+      "releaseYear": 2022,
+      "stock": 100,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 11,
+      "name": "Farming Simulator 22",
+      "price": 39.99,
+      "description": "Manage your farm and cultivate crops in this simulation game.",
+      "image": "FarmingSimulator22.png",
+      "releaseYear": 2021,
+      "stock": 110,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 12,
+      "name": "Gas Station Simulator",
+      "price": 24.99,
+      "description": "Manage your own gas station and upgrade facilities.",
+      "image": "GasStationSimulator.jpeg",
+      "releaseYear": 2021,
+      "stock": 130,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 13,
+      "name": "God of War",
+      "price": 49.99,
+      "description": "An action-adventure game following the journey of Kratos.",
+      "image": "GodofWar.jpg",
+      "releaseYear": 2018,
+      "stock": 70,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 14,
+      "name": "Grand Theft Auto IV",
+      "price": 29.99,
+      "description": "An open-world action-adventure game with a sprawling cityscape.",
+      "image": "GrandTheftAutoIV.jpg",
+      "releaseYear": 2008,
+      "stock": 85,
+      "activationRegion": {
+        "id": 5,
+        "region": "Egypt"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 15,
+      "name": "Hitman Absolution",
+      "price": 19.99,
+      "description": "Stealth action game where you play as a contract assassin.",
+      "image": "HitmanAbsolution.jpeg",
+      "releaseYear": 2012,
+      "stock": 90,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 16,
+      "name": "Intravenous 2",
+      "price": 29.99,
+      "description": "A stealth action game with a strong narrative focus.",
+      "image": "Intravenous2.jpg",
+      "releaseYear": 2023,
+      "stock": 80,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 17,
+      "name": "Metro Exodus",
+      "price": 39.99,
+      "description": "A story-driven FPS set in a post-apocalyptic Russia.",
+      "image": "MetroExodus.jpeg",
+      "releaseYear": 2019,
+      "stock": 95,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 18,
+      "name": "Minecraft Story Mode",
+      "price": 24.99,
+      "description": "An episodic point-and-click adventure game in the Minecraft universe.",
+      "image": "MinecraftStoryMode.jpg",
+      "releaseYear": 2015,
+      "stock": 110,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 19,
+      "name": "NBA 2K25",
+      "price": 59.99,
+      "description": "The latest installment in the NBA 2K basketball simulation series.",
+      "image": "NBA2K25.jpg",
+      "releaseYear": 2024,
+      "stock": 50,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 4,
+        "genre": "Sports"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 20,
+      "name": "Norland",
+      "price": 19.99,
+      "description": "A role-playing game with an expansive open world.",
+      "image": "Norland.jpg",
+      "releaseYear": 2023,
+      "stock": 110,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 1,
+        "genre": "RPG"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 21,
+      "name": "Omerta",
+      "price": 29.99,
+      "description": "A strategy game focused on organized crime and gang wars.",
+      "image": "Omerta.jpg",
+      "releaseYear": 2013,
+      "stock": 100,
+      "activationRegion": {
+        "id": 5,
+        "region": "Egypt"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 22,
+      "name": "Real Farm",
+      "price": 24.99,
+      "description": "A farming simulation game that lets you experience farm life.",
+      "image": "RealFarm.jpg",
+      "releaseYear": 2017,
+      "stock": 120,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 23,
+      "name": "Resident Evil Revelations 2",
+      "price": 29.99,
+      "description": "A survival horror game that follows the events after Resident Evil 5.",
+      "image": "ResidentEvilRevelations2.jpg",
+      "releaseYear": 2015,
+      "stock": 90,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 24,
+      "name": "Skyrim Special Edition",
+      "price": 39.99,
+      "description": "A remastered version of the critically acclaimed RPG Skyrim.",
+      "image": "SkyrimSpecialEdition.jpg",
+      "releaseYear": 2016,
+      "stock": 80,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 1,
+        "genre": "RPG"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 25,
+      "name": "Stardew Valley",
+      "price": 14.99,
+      "description": "A farming simulation game with a focus on community and exploration.",
+      "image": "StardewValley.jpg",
+      "releaseYear": 2016,
+      "stock": 140,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 26,
+      "name": "The Sims 4",
+      "price": 39.99,
+      "description": "A life simulation game where you create and control people.",
+      "image": "TheSims4.jpg",
+      "releaseYear": 2014,
+      "stock": 75,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 27,
+      "name": "Total War: Warhammer II",
+      "price": 49.99,
+      "description": "A strategy game combining turn-based management with real-time battles.",
+      "image": "TotalWarWarhammerII.jpg",
+      "releaseYear": 2017,
+      "stock": 60,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 28,
+      "name": "Warframe",
+      "price": 0.99,
+      "description": "A cooperative free-to-play third-person online action game.",
+      "image": "Warframe.jpg",
+      "releaseYear": 2013,
+      "stock": 100,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 1,
+        "genre": "RPG"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 29,
+      "name": "Worms Rumble",
+      "price": 19.99,
+      "description": "A real-time battle royale game featuring the classic Worms characters.",
+      "image": "WormsRumble.png",
+      "releaseYear": 2020,
+      "stock": 85,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 30,
+      "name": "XCOM 2",
+      "price": 39.99,
+      "description": "A tactical RPG where you lead a resistance against an alien occupation.",
+      "image": "XCOM2.jpg",
+      "releaseYear": 2016,
+      "stock": 120,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    }
+  ],
+  "currentPage": 0,
+  "totalPages": 1,
+  "totalItems": 30
+}

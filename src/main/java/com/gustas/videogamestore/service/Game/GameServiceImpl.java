@@ -55,10 +55,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void saveGame(SaveGameRequestDto saveGameRequestDto) {
+    public GameResponseDto saveGame(SaveGameRequestDto saveGameRequestDto) {
         Game game = createGameEntity(saveGameRequestDto);
 
-        gameDao.saveGame(game);
+        return GameMapper.toDto(gameDao.saveGame(game));
     }
 
     private Pageable createPageable(GameSearchCriteria gameSearchCriteria) {

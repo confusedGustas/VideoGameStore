@@ -16,8 +16,8 @@ public class GameDaoImpl implements GameDao {
     private SessionService sessionService;
 
     @Override
-    public void saveGame(Game game) {
-        gameRepository.save(game);
+    public Game saveGame(Game game) {
+        return gameRepository.save(game);
     }
 
     @Override

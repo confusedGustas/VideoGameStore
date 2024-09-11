@@ -3,6 +3,7 @@ package com.gustas.videogamestore.controller;
 import com.gustas.videogamestore.domain.GameSearchCriteria;
 import com.gustas.videogamestore.domain.SortOrder;
 import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
+import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.service.Game.GameService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,8 +32,8 @@ public class GameController {
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.OK)
     @CacheEvict(value = "games", allEntries = true)
-    public void saveGame(@Valid @RequestBody SaveGameRequestDto saveGameRequestDto) {
-        gameService.saveGame(saveGameRequestDto);
+    public GameResponseDto saveGame(@Valid @RequestBody SaveGameRequestDto saveGameRequestDto) {
+        return gameService.saveGame(saveGameRequestDto);
     }
 
     @GetMapping

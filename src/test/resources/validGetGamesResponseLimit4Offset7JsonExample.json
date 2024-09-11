@@ -1,0 +1,59 @@
+{
+  "items": [
+    {
+      "id": 29,
+      "name": "Worms Rumble",
+      "price": 19.99,
+      "description": "A real-time battle royale game featuring the classic Worms characters.",
+      "image": "WormsRumble.png",
+      "releaseYear": 2020,
+      "stock": 85,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 30,
+      "name": "XCOM 2",
+      "price": 39.99,
+      "description": "A tactical RPG where you lead a resistance against an alien occupation.",
+      "image": "XCOM2.jpg",
+      "releaseYear": 2016,
+      "stock": 120,
+      "activationRegion": {
+        "id": 3,
+        "region": "Turkey"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    }
+  ],
+  "currentPage": 7,
+  "totalPages": 8,
+  "totalItems": 30
+}

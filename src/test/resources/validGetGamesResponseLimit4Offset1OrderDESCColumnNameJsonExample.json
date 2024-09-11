@@ -1,0 +1,111 @@
+{
+  "items": [
+    {
+      "id": 26,
+      "name": "The Sims 4",
+      "price": 39.99,
+      "description": "A life simulation game where you create and control people.",
+      "image": "TheSims4.jpg",
+      "releaseYear": 2014,
+      "stock": 75,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 5,
+        "genre": "Adventure"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 25,
+      "name": "Stardew Valley",
+      "price": 14.99,
+      "description": "A farming simulation game with a focus on community and exploration.",
+      "image": "StardewValley.jpg",
+      "releaseYear": 2016,
+      "stock": 140,
+      "activationRegion": {
+        "id": 1,
+        "region": "Europe"
+      },
+      "activationPlatform": {
+        "id": 2,
+        "platform": "Ubisoft"
+      },
+      "publisher": {
+        "id": 3,
+        "publisher": "Nintendo"
+      },
+      "genre": {
+        "id": 3,
+        "genre": "Puzzle"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 24,
+      "name": "Skyrim Special Edition",
+      "price": 39.99,
+      "description": "A remastered version of the critically acclaimed RPG Skyrim.",
+      "image": "SkyrimSpecialEdition.jpg",
+      "releaseYear": 2016,
+      "stock": 80,
+      "activationRegion": {
+        "id": 4,
+        "region": "Argentina"
+      },
+      "activationPlatform": {
+        "id": 1,
+        "platform": "Steam"
+      },
+      "publisher": {
+        "id": 1,
+        "publisher": "Activision"
+      },
+      "genre": {
+        "id": 1,
+        "genre": "RPG"
+      },
+      "seller": "Test"
+    },
+    {
+      "id": 23,
+      "name": "Resident Evil Revelations 2",
+      "price": 29.99,
+      "description": "A survival horror game that follows the events after Resident Evil 5.",
+      "image": "ResidentEvilRevelations2.jpg",
+      "releaseYear": 2015,
+      "stock": 90,
+      "activationRegion": {
+        "id": 2,
+        "region": "JAV"
+      },
+      "activationPlatform": {
+        "id": 3,
+        "platform": "Epic Games"
+      },
+      "publisher": {
+        "id": 2,
+        "publisher": "Ubisoft"
+      },
+      "genre": {
+        "id": 2,
+        "genre": "Shooter"
+      },
+      "seller": "Test"
+    }
+  ],
+  "currentPage": 1,
+  "totalPages": 8,
+  "totalItems": 30
+}

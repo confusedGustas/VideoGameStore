@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface GameDao {
 
-    void saveGame(Game game);
+    Game saveGame(Game game);
     Page<Game> findAll(Pageable pageable);
     void deleteGame(Long gameId);
 
