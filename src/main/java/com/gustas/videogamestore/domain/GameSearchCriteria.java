@@ -11,5 +11,6 @@ public class GameSearchCriteria {
     private Integer offset;
     private SortOrder sortOrder;
     private String sortColumn;
+    private String search;
 
 }

@@ -38,12 +38,13 @@ public class GameController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @Cacheable(value = "games", key = "{#limit, #offset, #sortOrder, #sortColumn}")
+    @Cacheable(value = "games", key = "{#limit, #offset, #sortOrder, #sortColumn, #search}")
     public PaginatedResponseDto getGames(@RequestParam(required = false) Integer limit,
                                          @RequestParam(required = false) Integer offset,
                                          @RequestParam(required = false) SortOrder sortOrder,
-                                         @RequestParam(required = false) String sortColumn) {
-        return gameService.getGames(new GameSearchCriteria(limit, offset, sortOrder, sortColumn));
+                                         @RequestParam(required = false) String sortColumn,
+                                         @RequestParam(required = false) String search) {
+        return gameService.getGames(new GameSearchCriteria(limit, offset, sortOrder, sortColumn, search));
     }
 
     @DeleteMapping("/delete")

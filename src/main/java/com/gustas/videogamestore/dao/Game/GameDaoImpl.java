@@ -6,6 +6,7 @@ import com.gustas.videogamestore.service.Session.SessionService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -21,8 +22,8 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public Page<Game> findAll(Pageable pageable) {
-        return gameRepository.findAll(pageable);
+    public Page<Game> findAll(Specification<Game> specification, Pageable pageable) {
+        return gameRepository.findAll(specification, pageable);
     }
 
     @Override

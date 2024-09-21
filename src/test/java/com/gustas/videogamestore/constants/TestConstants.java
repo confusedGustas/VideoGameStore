@@ -20,6 +20,5 @@ public class TestConstants {
     public static final String SORT_COLUMN_ATTRIBUTE = "sortColumn";
     public static final String REGISTER_USER_URL = "/api/users/register";
     public static final String LOGIN_USER_URL = "/api/users/login";
-    public static final String SAVE_GAME_URL = "/api/games/save";
 
 }
