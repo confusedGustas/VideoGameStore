@@ -4,19 +4,16 @@ import com.gustas.videogamestore.domain.Image;
 import com.gustas.videogamestore.repository.ImageRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-@Service
 @AllArgsConstructor
 public class ImageUtil {
 

@@ -50,7 +50,6 @@ export default {
     }
   },
   beforeUnmount() {
-    // Clean up the blob URL when the component is destroyed
     if (this.imageUrl && this.imageUrl.startsWith('blob:')) {
       URL.revokeObjectURL(this.imageUrl);
     }
