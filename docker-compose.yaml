@@ -10,6 +10,8 @@ services:
 
   backend:
     build: ./
+    env_file:
+      - .env
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/video_game_store
       SPRING_DATASOURCE_USERNAME: postgres
@@ -20,4 +22,4 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "5173:80"
+      - "8081:80"
