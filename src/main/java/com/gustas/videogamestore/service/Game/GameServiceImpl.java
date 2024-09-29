@@ -64,6 +64,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public GameResponseDto getGame(Long gameId) {
+        return GameMapper.toDto(gameDao.getGame(gameId));
+    }
+
+    @Override
     public GameResponseDto saveGame(SaveGameRequestDto saveGameRequestDto) {
         Game game = createGameEntity(saveGameRequestDto);
 

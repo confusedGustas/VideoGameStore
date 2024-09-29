@@ -2,66 +2,42 @@ import axios from 'axios';
 
 const state = {
     games: [],
-    searchResults: [],
     selectedGame: null,
-    currentPage: 1,
-    totalPages: 1,
-    pageSize: 10
+    searchResults: []
 };
 
 const mutations = {
     SET_GAMES(state, games) {
         state.games = games;
     },
-    SET_SEARCH_RESULTS(state, results) {
-        state.searchResults = results;
-    },
     SET_SELECTED_GAME(state, game) {
         state.selectedGame = game;
     },
-    SET_CURRENT_PAGE(state, page) {
-        state.currentPage = page;
-    },
-    SET_TOTAL_PAGES(state, total) {
-        state.totalPages = total;
+    SET_SEARCH_RESULTS(state, results) {
+        state.searchResults = results;
     }
 };
 
 const actions = {
-    async fetchGames({ commit, state }) {
-        try {
-            const response = await axios.get('http://localhost:8080/api/games', {
-                params: {
-                    page: state.currentPage - 1,
-                    size: state.pageSize
-                }
-            });
-            commit('SET_GAMES', response.data.content);
-            commit('SET_TOTAL_PAGES', response.data.totalPages);
-        } catch (error) {
-            console.error('Error fetching games:', error);
-        }
-    },
-    async searchGames({ commit }, query) {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/games`, {
-                params: { search: query }
-            });
-            commit('SET_SEARCH_RESULTS', response.data);
-        } catch (error) {
-            console.error('Error searching games:', error);
-        }
+    async fetchGames({ commit }) {
+        return await fetchData('http://localhost:8080/api/games', commit, 'SET_GAMES');
     },
     async fetchGameById({ commit }, id) {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/games/${id}`);
-            commit('SET_SELECTED_GAME', response.data);
-        } catch (error) {
-            console.error('Error fetching game details:', error);
-        }
+        return await fetchData(`http://localhost:8080/api/games/get/${id}`, commit, 'SET_SELECTED_GAME');
     },
-    setCurrentPage({ commit }, page) {
-        commit('SET_CURRENT_PAGE', page);
+    async searchGames({ commit }, search) {
+        return await fetchData(`http://localhost:8080/api/games?search=${search}`, commit, 'SET_SEARCH_RESULTS');
+    }
+};
+
+const fetchData = async (url, commit, mutation) => {
+    try {
+        const { data } = await axios.get(url);
+        commit(mutation, data.items || data);
+        return data.items || data;
+    } catch (error) {
+        console.error(`Error fetching data from ${url}:`, error);
+        throw error;
     }
 };
 

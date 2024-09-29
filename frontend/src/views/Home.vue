@@ -23,7 +23,7 @@ import FilterSort from '@/components/FilterSort.vue';
 import GameList from '@/components/GameList.vue';
 
 export default {
-  name: 'Home-Component',
+  name: 'HomeComponent',
   components: {
     SearchBar,
     FilterSort,

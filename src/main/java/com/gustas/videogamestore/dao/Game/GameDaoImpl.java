@@ -34,6 +34,12 @@ public class GameDaoImpl implements GameDao {
         gameRepository.deleteById(gameId);
     }
 
+    @Override
+    public Game getGame(Long gameId) {
+        return gameRepository.findById(gameId).orElseThrow(() ->
+            new IllegalArgumentException("Game with the specified id does not exist"));
+    }
+
     private void checkIfUserIsOwner(Long gameId) {
         if (sessionService.getUserFromSessionId().getGames().stream().noneMatch(game -> game.getId().equals(gameId))) {
             throw new IllegalArgumentException("User is not the owner of the game");

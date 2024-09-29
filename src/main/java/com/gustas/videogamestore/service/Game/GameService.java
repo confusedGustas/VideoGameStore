@@ -12,5 +12,6 @@ public interface GameService {
     GameResponseDto saveGame(SaveGameRequestDto saveGameRequestDto);
     PaginatedResponseDto getGames(GameSearchCriteria gameSearchCriteria);
     void deleteGame(Long gameId);
+    GameResponseDto getGame(Long gameId);
 
 }

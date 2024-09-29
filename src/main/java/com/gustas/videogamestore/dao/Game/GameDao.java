@@ -10,5 +10,6 @@ public interface GameDao {
     Game saveGame(Game game);
     Page<Game> findAll(Specification<Game> specification, Pageable pageable);
     void deleteGame(Long gameId);
+    Game getGame(Long gameId);
 
 }
