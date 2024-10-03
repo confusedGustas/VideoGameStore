@@ -22,10 +22,10 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String region;
+    private String regionName;
 
-    public Region(String region) {
-        this.region = region;
+    public Region(String regionName) {
+        this.regionName = regionName;
     }
 
 }

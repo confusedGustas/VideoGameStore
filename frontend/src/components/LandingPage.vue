@@ -2,7 +2,7 @@
   <div class="landing-page">
     <h1 class="title">Video Game Store</h1>
     <div class="search-bar">
-      <input v-model="searchQuery" @keyup.enter="search" placeholder="Search games..." />
+      <input v-model="searchQuery" @keyup.enter="search" placeholder="Search Games..." />
       <button @click="search">Search</button>
     </div>
 
@@ -21,13 +21,13 @@
     </div>
 
     <div class="game-grid">
-      <div v-for="game in games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
+      <div v-for="game in Games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
         <img :src="getImageUrl(game.image)" :alt="game.name" />
         <h3>{{ game.name }}</h3>
         <p class="price">{{ formatPrice(game.price) }}</p>
-        <p class="genre">{{ game.genre?.genre || 'N/A' }}</p>
-        <p class="publisher">{{ game.publisher?.publisher || 'N/A' }}</p>
-        <p class="platform">{{ game.activationPlatform?.platform || 'N/A' }}</p>
+        <p class="genre">{{ game.genre?.name || 'N/A' }}</p>
+        <p class="publisher">{{ game.publisher?.publisherName || 'N/A' }}</p>
+        <p class="platform">{{ game.activationPlatform?.platformName || 'N/A' }}</p>
       </div>
     </div>
 
@@ -45,7 +45,7 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const router = useRouter();
-const games = ref([]);
+const Games = ref([]);
 const searchQuery = ref('');
 const currentPage = ref(1);
 const hasMorePages = ref(true);
@@ -65,12 +65,12 @@ const fetchGames = async (page = 1) => {
 
     const response = await axios.get(`http://localhost:8080/api/games`, { params });
 
-    games.value = response.data.items;
+    Games.value = response.data.items;
 
     const totalItems = response.data.totalItems;
     hasMorePages.value = response.data.items.length === itemsPerPage && (currentPage.value * itemsPerPage) < totalItems;
   } catch (err) {
-    console.error('Error fetching games:', err);
+    console.error('Error fetching Games:', err);
   }
 };
 

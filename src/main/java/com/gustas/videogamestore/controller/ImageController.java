@@ -1,6 +1,6 @@
 package com.gustas.videogamestore.controller;
 
-import com.gustas.videogamestore.service.Image.ImageService;
+import com.gustas.videogamestore.service.image.ImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;

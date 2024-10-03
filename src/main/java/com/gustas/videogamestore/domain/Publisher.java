@@ -22,10 +22,10 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String publisher;
+    private String publisherName;
 
-    public Publisher(String publisher) {
-        this.publisher = publisher;
+    public Publisher(String publisherName) {
+        this.publisherName = publisherName;
     }
 
 }

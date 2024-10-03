@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
 
-    Optional<Platform> findByPlatform(String platformName);
+    Optional<Platform> findByPlatformName(String platformName);
 
 }

@@ -22,10 +22,10 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String genre;
+    private String name;
 
-    public Genre(String genre) {
-        this.genre = genre;
+    public Genre(String name) {
+        this.name = name;
     }
 
 }

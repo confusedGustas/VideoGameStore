@@ -22,10 +22,10 @@ public class Platform {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String platform;
+    private String platformName;
 
-    public Platform(String platform) {
-        this.platform = platform;
+    public Platform(String platformName) {
+        this.platformName = platformName;
     }
 
 }

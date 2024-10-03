@@ -1,7 +1,7 @@
 package com.gustas.videogamestore.dao;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
-import com.gustas.videogamestore.dao.Region.RegionDao;
+import com.gustas.videogamestore.dao.region.RegionDao;
 import com.gustas.videogamestore.domain.Region;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class RegionDaoTest extends AbstractIntegrationTest {
         Optional<Region> region = regionDao.findByRegionName(VALID_REGION_NAME);
 
         assertNotNull(region);
-        region.ifPresent(value -> assertEquals(VALID_REGION_NAME, value.getRegion()));
+        region.ifPresent(value -> assertEquals(VALID_REGION_NAME, value.getRegionName()));
     }
 
     @Test

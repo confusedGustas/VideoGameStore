@@ -26,10 +26,10 @@ public class Image {
     private String name;
 
     @Lob
-    private byte[] image;
+    private byte[] imageData;
 
-    public Image(byte[] bytes, String name) {
-        this.image = bytes;
+    public Image(byte[] imageData, String name) {
+        this.imageData = imageData;
         this.name = name;
     }
 

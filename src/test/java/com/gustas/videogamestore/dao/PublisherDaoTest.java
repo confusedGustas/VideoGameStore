@@ -1,7 +1,7 @@
 package com.gustas.videogamestore.dao;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
-import com.gustas.videogamestore.dao.Publisher.PublisherDao;
+import com.gustas.videogamestore.dao.publisher.PublisherDao;
 import com.gustas.videogamestore.domain.Publisher;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class PublisherDaoTest extends AbstractIntegrationTest {
         Optional<Publisher> publisher = publisherDao.findByPublisherName(VALID_PUBLISHER_NAME);
 
         assertNotNull(publisher);
-        publisher.ifPresent(value -> assertEquals(VALID_PUBLISHER_NAME, value.getPublisher()));
+        publisher.ifPresent(value -> assertEquals(VALID_PUBLISHER_NAME, value.getPublisherName()));
     }
 
     @Test

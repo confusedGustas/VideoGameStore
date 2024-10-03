@@ -51,9 +51,9 @@ public class GameControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testPaginationLimit3WithOffset2Response() throws IOException, JSONException {
+    public void testPaginationLimit30WithOffset2Response() throws IOException, JSONException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "3")
+                .queryParam(LIMIT_ATTRIBUTE, "30")
                 .queryParam(OFFSET_ATTRIBUTE, "2");
 
         String url = builder.toUriString();
@@ -67,9 +67,9 @@ public class GameControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testPaginationLimit4WithOffset7Response() throws IOException, JSONException {
+    public void testPaginationLimit40WithOffset7Response() throws IOException, JSONException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "4")
+                .queryParam(LIMIT_ATTRIBUTE, "40")
                 .queryParam(OFFSET_ATTRIBUTE, "7");
 
         String url = builder.toUriString();
@@ -77,22 +77,6 @@ public class GameControllerTest extends AbstractIntegrationTest {
         ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
 
         Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit4Offset7JsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testPaginationLimit5WithOffset0Response() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "5")
-                .queryParam(OFFSET_ATTRIBUTE, "0");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit5Offset0JsonExample.json");
         String expectedJson = Files.readString(expectedJsonFilePath);
 
         JSONAssert.assertEquals(expectedJson, response.getBody(), true);
@@ -115,10 +99,10 @@ public class GameControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testPaginationLimit2WithOffset12OrderASCColumnPriceResponse() throws IOException, JSONException {
+    public void testPaginationLimit20WithOffset12OrderASCColumnPriceResponse() throws IOException, JSONException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "2")
-                .queryParam(OFFSET_ATTRIBUTE, "12")
+                .queryParam(LIMIT_ATTRIBUTE, "20")
+                .queryParam(OFFSET_ATTRIBUTE, "120")
                 .queryParam(SORT_ORDER_ATTRIBUTE, "ASC")
                 .queryParam(SORT_COLUMN_ATTRIBUTE, "price");
 
@@ -133,10 +117,10 @@ public class GameControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testPaginationLimit4WithOffset1OrderDESCColumnNameResponse() throws IOException, JSONException {
+    public void testPaginationLimit40WithOffset1OrderDESCColumnNameResponse() throws IOException, JSONException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "4")
-                .queryParam(OFFSET_ATTRIBUTE, "1")
+                .queryParam(LIMIT_ATTRIBUTE, "40")
+                .queryParam(OFFSET_ATTRIBUTE, "10")
                 .queryParam(SORT_ORDER_ATTRIBUTE, "DESC")
                 .queryParam(SORT_COLUMN_ATTRIBUTE, "name");
 

@@ -1,7 +1,7 @@
 package com.gustas.videogamestore.dao;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
-import com.gustas.videogamestore.dao.Platform.PlatformDao;
+import com.gustas.videogamestore.dao.platform.PlatformDao;
 import com.gustas.videogamestore.domain.Platform;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class PlatformDaoTest extends AbstractIntegrationTest {
         Optional<Platform> platform = platformDao.findByPlatformName(VALID_PLATFORM_NAME);
 
         assertNotNull(platform);
-        platform.ifPresent(value -> assertEquals(VALID_PLATFORM_NAME, value.getPlatform()));
+        platform.ifPresent(value -> assertEquals(VALID_PLATFORM_NAME, value.getPlatformName()));
     }
 
     @Test

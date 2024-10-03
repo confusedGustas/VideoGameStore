@@ -3,7 +3,7 @@ package com.gustas.videogamestore.service;
 import com.gustas.videogamestore.AbstractIntegrationTest;
 import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
-import com.gustas.videogamestore.service.Game.GameService;
+import com.gustas.videogamestore.service.game.GameService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,9 +45,9 @@ public class GameServiceTest extends AbstractIntegrationTest {
         assertEquals(saveGameRequestDto.getDescription(), testGame.getDescription());
         assertEquals(saveGameRequestDto.getImage(), testGame.getImage());
         assertEquals(saveGameRequestDto.getReleaseYear(), testGame.getReleaseYear());
-        assertEquals(saveGameRequestDto.getPlatform(), testGame.getActivationPlatform().getPlatform());
-        assertEquals(saveGameRequestDto.getPublisher(), testGame.getPublisher().getPublisher());
-        assertEquals(saveGameRequestDto.getRegion(), testGame.getActivationRegion().getRegion());
+        assertEquals(saveGameRequestDto.getPlatform(), testGame.getActivationPlatform().getPlatformName());
+        assertEquals(saveGameRequestDto.getPublisher(), testGame.getPublisher().getPublisherName());
+        assertEquals(saveGameRequestDto.getRegion(), testGame.getActivationRegion().getRegionName());
         assertEquals(saveGameRequestDto.getStock(), testGame.getStock());
     }
 

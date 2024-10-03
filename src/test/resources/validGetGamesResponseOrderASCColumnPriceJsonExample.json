@@ -10,19 +10,19 @@
       "stock": 100,
       "activationRegion": {
         "id": 4,
-        "region": "Argentina"
+        "regionName": "Argentina"
       },
       "activationPlatform": {
         "id": 2,
-        "platform": "Ubisoft"
+        "platformName": "Ubisoft"
       },
       "publisher": {
         "id": 2,
-        "publisher": "Ubisoft"
+        "publisherName": "Ubisoft"
       },
       "genre": {
         "id": 1,
-        "genre": "RPG"
+        "name": "RPG"
       },
       "seller": "Test"
     },
@@ -36,19 +36,19 @@
       "stock": 160,
       "activationRegion": {
         "id": 3,
-        "region": "Turkey"
+        "regionName": "Turkey"
       },
       "activationPlatform": {
         "id": 2,
-        "platform": "Ubisoft"
+        "platformName": "Ubisoft"
       },
       "publisher": {
         "id": 1,
-        "publisher": "Activision"
+        "publisherName": "Activision"
       },
       "genre": {
         "id": 5,
-        "genre": "Adventure"
+        "name": "Adventure"
       },
       "seller": "Test"
     },
@@ -62,19 +62,19 @@
       "stock": 180,
       "activationRegion": {
         "id": 1,
-        "region": "Europe"
+        "regionName": "Europe"
       },
       "activationPlatform": {
         "id": 3,
-        "platform": "Epic Games"
+        "platformName": "Epic Games"
       },
       "publisher": {
         "id": 2,
-        "publisher": "Ubisoft"
+        "publisherName": "Ubisoft"
       },
       "genre": {
         "id": 5,
-        "genre": "Adventure"
+        "name": "Adventure"
       },
       "seller": "Test"
     },
@@ -88,19 +88,19 @@
       "stock": 140,
       "activationRegion": {
         "id": 1,
-        "region": "Europe"
+        "regionName": "Europe"
       },
       "activationPlatform": {
         "id": 2,
-        "platform": "Ubisoft"
+        "platformName": "Ubisoft"
       },
       "publisher": {
         "id": 3,
-        "publisher": "Nintendo"
+        "publisherName": "Nintendo"
       },
       "genre": {
         "id": 3,
-        "genre": "Puzzle"
+        "name": "Puzzle"
       },
       "seller": "Test"
     },
@@ -114,19 +114,19 @@
       "stock": 150,
       "activationRegion": {
         "id": 3,
-        "region": "Turkey"
+        "regionName": "Turkey"
       },
       "activationPlatform": {
         "id": 1,
-        "platform": "Steam"
+        "platformName": "Steam"
       },
       "publisher": {
         "id": 1,
-        "publisher": "Activision"
+        "publisherName": "Activision"
       },
       "genre": {
         "id": 5,
-        "genre": "Adventure"
+        "name": "Adventure"
       },
       "seller": "Test"
     },
@@ -140,19 +140,19 @@
       "stock": 110,
       "activationRegion": {
         "id": 1,
-        "region": "Europe"
+        "regionName": "Europe"
       },
       "activationPlatform": {
         "id": 3,
-        "platform": "Epic Games"
+        "platformName": "Epic Games"
       },
       "publisher": {
         "id": 3,
-        "publisher": "Nintendo"
+        "publisherName": "Nintendo"
       },
       "genre": {
         "id": 1,
-        "genre": "RPG"
+        "name": "RPG"
       },
       "seller": "Test"
     },
@@ -166,19 +166,19 @@
       "stock": 90,
       "activationRegion": {
         "id": 3,
-        "region": "Turkey"
+        "regionName": "Turkey"
       },
       "activationPlatform": {
         "id": 2,
-        "platform": "Ubisoft"
+        "platformName": "Ubisoft"
       },
       "publisher": {
         "id": 1,
-        "publisher": "Activision"
+        "publisherName": "Activision"
       },
       "genre": {
         "id": 2,
-        "genre": "Shooter"
+        "name": "Shooter"
       },
       "seller": "Test"
     },
@@ -192,19 +192,19 @@
       "stock": 100,
       "activationRegion": {
         "id": 1,
-        "region": "Europe"
+        "regionName": "Europe"
       },
       "activationPlatform": {
         "id": 1,
-        "platform": "Steam"
+        "platformName": "Steam"
       },
       "publisher": {
         "id": 1,
-        "publisher": "Activision"
+        "publisherName": "Activision"
       },
       "genre": {
         "id": 5,
-        "genre": "Adventure"
+        "name": "Adventure"
       },
       "seller": "Test"
     },
@@ -218,19 +218,19 @@
       "stock": 85,
       "activationRegion": {
         "id": 2,
-        "region": "JAV"
+        "regionName": "JAV"
       },
       "activationPlatform": {
         "id": 1,
-        "platform": "Steam"
+        "platformName": "Steam"
       },
       "publisher": {
         "id": 1,
-        "publisher": "Activision"
+        "publisherName": "Activision"
       },
       "genre": {
         "id": 2,
-        "genre": "Shooter"
+        "name": "Shooter"
       },
       "seller": "Test"
     },
@@ -244,19 +244,19 @@
       "stock": 120,
       "activationRegion": {
         "id": 4,
-        "region": "Argentina"
+        "regionName": "Argentina"
       },
       "activationPlatform": {
         "id": 2,
-        "platform": "Ubisoft"
+        "platformName": "Ubisoft"
       },
       "publisher": {
         "id": 3,
-        "publisher": "Nintendo"
+        "publisherName": "Nintendo"
       },
       "genre": {
         "id": 3,
-        "genre": "Puzzle"
+        "name": "Puzzle"
       },
       "seller": "Test"
     }

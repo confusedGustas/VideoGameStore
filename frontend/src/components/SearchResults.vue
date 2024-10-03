@@ -7,9 +7,9 @@
         <img :src="getImageUrl(game.image)" :alt="game.name" />
         <h3>{{ game.name }}</h3>
         <p class="price">${{ game.price.toFixed(2) }}</p>
-        <p class="genre">{{ game.genre.genre }}</p>
-        <p class="publisher">{{ game.publisher.publisher }}</p>
-        <p class="platform">{{ game.activationPlatform.platform }}</p>
+        <p class="genre">{{ game.genre.name }}</p>
+        <p class="publisher">{{ game.publisher.publisherName }}</p>
+        <p class="platform">{{ game.activationPlatform.platformName }}</p>
       </div>
     </div>
   </div>

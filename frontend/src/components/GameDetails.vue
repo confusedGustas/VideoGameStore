@@ -9,10 +9,10 @@
         <h2>{{ game.name }}</h2>
         <p class="price">${{ game.price.toFixed(2) }}</p>
         <div class="details">
-          <p><strong>Genre:</strong> {{ game.genre.genre }}</p>
-          <p><strong>Publisher:</strong> {{ game.publisher.publisher }}</p>
-          <p><strong>Platform:</strong> {{ game.activationPlatform.platform }}</p>
-          <p><strong>Region:</strong> {{ game.activationRegion.region }}</p>
+          <p><strong>Genre:</strong> {{ game.genre.name }}</p>
+          <p><strong>Publisher:</strong> {{ game.publisher.publisherName }}</p>
+          <p><strong>Platform:</strong> {{ game.activationPlatform.platformName }}</p>
+          <p><strong>Region:</strong> {{ game.activationRegion.regionName }}</p>
           <p><strong>Release Year:</strong> {{ game.releaseYear }}</p>
           <p><strong>Stock:</strong> {{ game.stock }} available</p>
         </div>

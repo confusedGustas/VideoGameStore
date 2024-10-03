@@ -31,7 +31,7 @@ public class InsertImageUtil {
                     Image imageEntity = new Image();
 
                     imageEntity.setName(filePath.getFileName().toString());
-                    imageEntity.setImage(ImageUtil.compressImage(imageBytes));
+                    imageEntity.setImageData(ImageUtil.compressImage(imageBytes));
 
                     imageRepository.save(imageEntity);
                 } catch (IOException e) {

@@ -18,10 +18,10 @@ public class GameMapper {
     }
 
     public static Game toEntity(SaveGameRequestDto saveGameRequestDto,
-                                 Genre genre,
-                                 Platform platform,
-                                 Region region,
-                                 Publisher publisher) {
+                                Genre genre,
+                                Platform platform,
+                                Region region,
+                                Publisher publisher) {
         Game game = new Game();
 
         game.setName(saveGameRequestDto.getName());
@@ -57,12 +57,12 @@ public class GameMapper {
         return dto;
     }
 
-    public static List<GameResponseDto> toDto(List<Game> games) {
-        if (games == null || games.isEmpty()) {
+    public static List<GameResponseDto> toDto(List<Game> Games) {
+        if (Games == null || Games.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return games.stream()
+        return Games.stream()
                 .map(GameMapper::toDto)
                 .toList();
     }

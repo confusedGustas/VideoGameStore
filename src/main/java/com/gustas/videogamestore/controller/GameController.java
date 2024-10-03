@@ -5,7 +5,7 @@ import com.gustas.videogamestore.domain.SortOrder;
 import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
-import com.gustas.videogamestore.service.Game.GameService;
+import com.gustas.videogamestore.service.game.GameService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

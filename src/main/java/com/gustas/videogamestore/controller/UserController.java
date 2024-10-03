@@ -3,7 +3,7 @@ package com.gustas.videogamestore.controller;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.UserResponseDto;
-import com.gustas.videogamestore.service.User.UserService;
+import com.gustas.videogamestore.service.user.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
