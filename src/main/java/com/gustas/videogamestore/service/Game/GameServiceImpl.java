@@ -100,10 +100,10 @@ public class GameServiceImpl implements GameService {
 
     private Pageable createPageable(GameSearchCriteria gameSearchCriteria) {
         int pageOffset = Optional.ofNullable(gameSearchCriteria.getOffset()).orElse(0);
-        int pageLimit = Optional.ofNullable(gameSearchCriteria.getLimit()).orElse(Integer.MAX_VALUE);
+        int pageLimit = Optional.ofNullable(gameSearchCriteria.getLimit()).orElse(10);
         Sort sortOrder = determineSortOrder(gameSearchCriteria);
 
-        return PageRequest.of(pageOffset, pageLimit, sortOrder);
+        return PageRequest.of(pageOffset, Math.min(pageLimit, 20), sortOrder);
     }
 
     private Sort determineSortOrder(GameSearchCriteria gameSearchCriteria) {

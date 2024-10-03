@@ -1,29 +1,29 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import GameList from '../components/GameList.vue'
-import GameDetails from '../components/GameDetails.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import LandingPage from "@/components/LandingPage.vue";
+import SearchResults from "@/components/SearchResults.vue";
+import GameDetails from "@/components/GameDetails.vue";
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        name: 'home',
+        component: LandingPage,
     },
     {
-        path: '/games',
-        name: 'GameList',
-        component: GameList
+        path: '/search',
+        name: 'search',
+        component: SearchResults,
     },
     {
         path: '/game/:id',
-        name: 'GameDetails',
-        component: GameDetails
-    }
-]
+        name: 'details',
+        component: GameDetails,
+    },
+];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
-})
+    history: createWebHistory(),
+    routes,
+});
 
-export default router
+export default router;

@@ -1,103 +1,157 @@
 <template>
-  <div v-if="game" class="game-details">
-    <h1>{{ game.name }}</h1>
-    <img :src="imageUrl" :alt="game.name" class="game-image" />
-    <p class="description">{{ game.description }}</p>
-    <div class="game-info">
-      <p><strong>Price:</strong> ${{ game.price?.toFixed(2) }}</p>
-      <p><strong>Release Year:</strong> {{ game.releaseYear }}</p>
-      <p><strong>Stock:</strong> {{ game.stock }}</p>
+  <div class="game-details">
+    <h1 class="title">Video Game Store</h1>
+    <div v-if="game" class="game-info">
+      <div class="image-container">
+        <img :src="getImageUrl(game.image)" :alt="game.name" />
+      </div>
+      <div class="info-container">
+        <h2>{{ game.name }}</h2>
+        <p class="price">${{ game.price.toFixed(2) }}</p>
+        <div class="details">
+          <p><strong>Genre:</strong> {{ game.genre.genre }}</p>
+          <p><strong>Publisher:</strong> {{ game.publisher.publisher }}</p>
+          <p><strong>Platform:</strong> {{ game.activationPlatform.platform }}</p>
+          <p><strong>Region:</strong> {{ game.activationRegion.region }}</p>
+          <p><strong>Release Year:</strong> {{ game.releaseYear }}</p>
+          <p><strong>Stock:</strong> {{ game.stock }} available</p>
+        </div>
+        <button @click="goBack" class="back-button">Back to Games</button>
+      </div>
     </div>
-    <button @click="goBack" class="back-btn">Back to Search</button>
+    <div class="description-box" v-if="game">
+      <p class="description">{{ game.description }}</p>
+    </div>
   </div>
-  <div v-else class="loading">Loading game details...</div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 
-const route = useRoute();
 const router = useRouter();
-const store = useStore();
-
+const route = useRoute();
 const game = ref(null);
-const imageUrl = ref('/default-image.jpg'); // Set default image
 
-const fetchGameDetails = async (id) => {
+onMounted(async () => {
   try {
-    game.value = await store.dispatch('games/fetchGameById', id);
-    await fetchGameImage(game.value.image);
+    const response = await axios.get(`http://localhost:8080/api/games/get/${route.params.id}`);
+    game.value = response.data;
   } catch (error) {
     console.error('Error fetching game details:', error);
   }
-};
-
-const fetchGameImage = async (name) => {
-  if (!name) return; // Early return if no name provided
-  try {
-    const { data, headers } = await axios.get(`http://localhost:8080/api/images/get/${name}`, {
-      responseType: 'arraybuffer'
-    });
-    const blob = new Blob([data], { type: headers['content-type'] });
-    imageUrl.value = URL.createObjectURL(blob);
-  } catch (error) {
-    console.error('Error fetching image:', error);
-  }
-};
-
-const goBack = () => router.go(-1);
-
-onMounted(() => fetchGameDetails(route.params.id));
-
-onUnmounted(() => {
-  if (imageUrl.value.startsWith('blob:')) {
-    URL.revokeObjectURL(imageUrl.value);
-  }
 });
+
+const goBack = () => {
+  router.push({ name: 'home' });
+};
+
+const getImageUrl = (imageName) => {
+  return `http://localhost:8080/api/images/get/${imageName}`;
+};
 </script>
 
 <style scoped>
-.game-details {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+.title {
+  text-align: center;
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
-.game-image {
-  max-width: 100%;
-  height: auto;
+
+.game-info {
+  display: flex;
+  background-color: white;
   border-radius: 8px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.description {
-  font-size: 1.1em;
-  line-height: 1.6;
-  margin: 20px 0;
+
+.image-container {
+  flex: 1;
+  margin-right: 2rem;
 }
-.game-info {
-  background-color: #f0f0f0;
-  padding: 16px;
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 20px;
 }
-.back-btn {
-  background-color: #4a5568;
+
+.info-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 1rem;
+}
+
+.details {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.details p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
-.back-btn:hover {
-  background-color: #2d3748;
+
+.back-button:hover {
+  background-color: #45a049;
 }
-.loading {
-  text-align: center;
-  font-size: 1.2em;
-  margin-top: 50px;
+
+.description-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-height: 150px;
+  overflow-y: auto;
 }
 </style>

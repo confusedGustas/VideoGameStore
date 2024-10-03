@@ -1,14 +1,5 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
 
-const app = createApp(App)
-
-app.config.errorHandler = (err, vm, info) => {
-    console.error('Global error:', err, info)
-}
-
-app.use(store)
-app.use(router)
-app.mount('#app')
+createApp(App).use(router).mount('#app');
