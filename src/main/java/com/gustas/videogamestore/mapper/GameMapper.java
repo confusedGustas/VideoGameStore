@@ -10,9 +10,12 @@ import com.gustas.videogamestore.dto.response.GameResponseDto;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameMapper {
+
+    private GameMapper() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated.");
+    }
 
     public static Game toEntity(SaveGameRequestDto saveGameRequestDto,
                                  Genre genre,
@@ -55,11 +58,13 @@ public class GameMapper {
     }
 
     public static List<GameResponseDto> toDto(List<Game> games) {
-        if (games == null) return null;
-        if (games.isEmpty()) return Collections.emptyList();
+        if (games == null || games.isEmpty()) {
+            return Collections.emptyList();
+        }
 
-        return games.stream().map(GameMapper::toDto).collect(Collectors.toList());
+        return games.stream()
+                .map(GameMapper::toDto)
+                .toList();
     }
-
 
 }

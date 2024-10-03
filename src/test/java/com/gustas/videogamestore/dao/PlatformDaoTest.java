@@ -22,7 +22,7 @@ public class PlatformDaoTest extends AbstractIntegrationTest {
         Optional<Platform> platform = platformDao.findByPlatformName(VALID_PLATFORM_NAME);
 
         assertNotNull(platform);
-        platform.ifPresent(value -> assertEquals(value.getPlatform(), VALID_PLATFORM_NAME));
+        platform.ifPresent(value -> assertEquals(VALID_PLATFORM_NAME, value.getPlatform()));
     }
 
     @Test

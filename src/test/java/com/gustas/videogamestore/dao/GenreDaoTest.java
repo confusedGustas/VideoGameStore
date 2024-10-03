@@ -22,7 +22,7 @@ public class GenreDaoTest extends AbstractIntegrationTest {
         Optional<Genre> genre = genreDao.findByGenreName(VALID_GENRE_NAME);
 
         assertNotNull(genre);
-        genre.ifPresent(value -> assertEquals(value.getGenre(), VALID_GENRE_NAME));
+        genre.ifPresent(value -> assertEquals(VALID_GENRE_NAME, value.getGenre()));
     }
 
     @Test

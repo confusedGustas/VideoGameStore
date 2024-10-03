@@ -2,14 +2,15 @@ package com.gustas.videogamestore.util;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-@AllArgsConstructor
 @Component
+@AllArgsConstructor
 public class ImageUtil {
 
     public static byte[] compressImage(byte[] data) throws IOException {

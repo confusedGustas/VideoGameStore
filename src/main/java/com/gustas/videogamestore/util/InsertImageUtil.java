@@ -1,6 +1,7 @@
 package com.gustas.videogamestore.util;
 
 import com.gustas.videogamestore.domain.Image;
+import com.gustas.videogamestore.exception.ImageProcessingException;
 import com.gustas.videogamestore.repository.ImageRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class InsertImageUtil {
 
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     @PostConstruct
     public void uploadImagesFromStaticFolder() {
@@ -25,23 +26,20 @@ public class InsertImageUtil {
 
         try (Stream<Path> fileStream = Files.list(staticFolderPath)) {
             fileStream.forEach(filePath -> {
-                byte[] imageBytes;
-                Image imageEntity = new Image();
-
                 try {
-                    imageBytes = Files.readAllBytes(filePath);
+                    byte[] imageBytes = Files.readAllBytes(filePath);
+                    Image imageEntity = new Image();
 
                     imageEntity.setName(filePath.getFileName().toString());
                     imageEntity.setImage(ImageUtil.compressImage(imageBytes));
-                } catch (IOException e) {
-                    throw new RuntimeException("Error reading image bytes: " + filePath, e);
-                }
 
-                imageRepository.save(imageEntity);
+                    imageRepository.save(imageEntity);
+                } catch (IOException e) {
+                    throw new ImageProcessingException("Error reading image bytes: " + filePath, e);
+                }
             });
         } catch (IOException e) {
-            throw new RuntimeException("Error listing files in static folder: " + staticFolderPath, e);
+            throw new ImageProcessingException("Error listing files in static folder: " + staticFolderPath, e);
         }
     }
-
 }

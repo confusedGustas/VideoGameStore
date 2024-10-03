@@ -22,7 +22,7 @@ public class RegionDaoTest extends AbstractIntegrationTest {
         Optional<Region> region = regionDao.findByRegionName(VALID_REGION_NAME);
 
         assertNotNull(region);
-        region.ifPresent(value -> assertEquals(value.getRegion(), VALID_REGION_NAME));
+        region.ifPresent(value -> assertEquals(VALID_REGION_NAME, value.getRegion()));
     }
 
     @Test

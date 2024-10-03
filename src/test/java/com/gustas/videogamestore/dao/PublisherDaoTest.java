@@ -22,7 +22,7 @@ public class PublisherDaoTest extends AbstractIntegrationTest {
         Optional<Publisher> publisher = publisherDao.findByPublisherName(VALID_PUBLISHER_NAME);
 
         assertNotNull(publisher);
-        publisher.ifPresent(value -> assertEquals(value.getPublisher(), VALID_PUBLISHER_NAME));
+        publisher.ifPresent(value -> assertEquals(VALID_PUBLISHER_NAME, value.getPublisher()));
     }
 
     @Test

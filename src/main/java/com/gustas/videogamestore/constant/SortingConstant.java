@@ -14,4 +14,7 @@ public class SortingConstant {
             COLUMN_PRICE
     );
 
+    private SortingConstant() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated.");
+    }
 }

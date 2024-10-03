@@ -6,6 +6,10 @@ import com.gustas.videogamestore.dto.response.UserResponseDto;
 
 public class UserMapper {
 
+    private UserMapper() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated.");
+    }
+
     public static User toEntity(SaveUserRequestDto saveUserRequestDto) {
         User user = new User();
 

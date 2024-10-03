@@ -18,7 +18,7 @@ public class SaveUserRequestDto {
 
     @NotBlank(message = "Password needs to be provided")
     @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(regexp = "^(?=.*[&#!%])(?=.*[0-9]).*$", message = "Password must contain a special character and a digit")
+    @Pattern(regexp = "^(?=.*[&#!%])(?=.*\\d).*$", message = "Password must contain a special character and a digit")
     @Schema(example = "Gustas123!")
     String password;
 
