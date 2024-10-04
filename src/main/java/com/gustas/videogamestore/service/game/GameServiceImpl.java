@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 @AllArgsConstructor
 @Service
@@ -141,10 +142,9 @@ public class GameServiceImpl implements GameService {
     }
 
     private <T> T findOrCreate(String name,
-                               Function<String,
-                               Optional<T>> findFunction,
+                               Function<String, Optional<T>> findFunction,
                                Function<String, T> createFunction,
-                               Function<T, T> saveFunction) {
+                               UnaryOperator<T> saveFunction) {
         return findFunction.apply(name).orElseGet(() -> saveFunction.apply(createFunction.apply(name)));
     }
 

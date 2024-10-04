@@ -55,7 +55,7 @@ class UserControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testLoginUserResponse() {
+    void testLoginUserResponse() {
         LoginUserRequestDto loginUserRequestDto = new LoginUserRequestDto(
                 "Test",
                 "Test123!"
