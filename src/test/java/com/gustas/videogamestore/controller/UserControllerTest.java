@@ -3,6 +3,7 @@ package com.gustas.videogamestore.controller;
 import com.gustas.videogamestore.AbstractIntegrationTest;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,16 +13,15 @@ import org.springframework.http.ResponseEntity;
 
 import static com.gustas.videogamestore.constants.TestConstants.LOGIN_USER_URL;
 import static com.gustas.videogamestore.constants.TestConstants.REGISTER_USER_URL;
-import static org.junit.Assert.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest extends AbstractIntegrationTest {
+class UserControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void testValidRegisterUserResponse() {
+    void testValidRegisterUserResponse() {
         SaveUserRequestDto saveUserRequestDto = new SaveUserRequestDto(
                 "testUser",
                 "testPassword123!",
@@ -34,11 +34,11 @@ public class UserControllerTest extends AbstractIntegrationTest {
                 String.class
         );
 
-        assertEquals(HttpStatus.OK, postResponse.getStatusCode());
+        Assertions.assertEquals(HttpStatus.OK, postResponse.getStatusCode());
     }
 
     @Test
-    public void testInvalidRegisterUserResponse() {
+    void testInvalidRegisterUserResponse() {
         SaveUserRequestDto saveUserRequestDto = new SaveUserRequestDto(
                 "testUser",
                 "testPassword",
@@ -51,7 +51,7 @@ public class UserControllerTest extends AbstractIntegrationTest {
                 String.class
         );
 
-        assertEquals(HttpStatus.BAD_REQUEST, postResponse.getStatusCode());
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, postResponse.getStatusCode());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class UserControllerTest extends AbstractIntegrationTest {
                 String.class
         );
 
-        assertEquals(HttpStatus.OK, postResponse.getStatusCode());
+        Assertions.assertEquals(HttpStatus.OK, postResponse.getStatusCode());
     }
 
 }

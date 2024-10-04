@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class ContainerTest extends AbstractIntegrationTest {
+class ContainerTest extends AbstractIntegrationTest {
 
     @Test
-    public void containerIsAlive() {
+    void containerIsAlive() {
         assertThat(postgresqlContainer.isCreated()).isTrue();
         assertThat(postgresqlContainer.isRunning()).isTrue();
     }

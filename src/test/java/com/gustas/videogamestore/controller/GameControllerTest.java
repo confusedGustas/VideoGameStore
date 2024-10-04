@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,7 +23,7 @@ import static com.gustas.videogamestore.constants.TestConstants.SORT_COLUMN_ATTR
 import static com.gustas.videogamestore.constants.TestConstants.SORT_ORDER_ATTRIBUTE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GameControllerTest extends AbstractIntegrationTest {
+class GameControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -46,7 +45,7 @@ public class GameControllerTest extends AbstractIntegrationTest {
 
     @ParameterizedTest
     @MethodSource("gameResponseProvider")
-    public void testGetGamesResponses(String limit, String offset, String sortOrder, String sortColumn, String expectedJsonFilePath) throws IOException, JSONException {
+    void testGetGamesResponses(String limit, String offset, String sortOrder, String sortColumn, String expectedJsonFilePath) throws IOException, JSONException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL);
 
         if (limit != null) {

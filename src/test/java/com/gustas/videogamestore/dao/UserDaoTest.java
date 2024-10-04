@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class UserDaoTest extends AbstractIntegrationTest {
+class UserDaoTest extends AbstractIntegrationTest {
 
     @Autowired
     UserDao userDao;
 
     @Test
-    public void getValidUser() {
+    void getValidUser() {
         User user = userDao.findById(VALID_ID);
 
         assertNotNull(user);
@@ -26,7 +26,7 @@ public class UserDaoTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void getInvalidUser() {
+    void getInvalidUser() {
         User user = userDao.findById(INVALID_ID_NEGATIVE);
 
         assertNull(user);

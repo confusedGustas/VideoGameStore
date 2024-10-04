@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
-public class GameServiceTest extends AbstractIntegrationTest {
+class GameServiceTest extends AbstractIntegrationTest {
 
     private GameResponseDto testGame;
 
@@ -22,7 +22,7 @@ public class GameServiceTest extends AbstractIntegrationTest {
     private GameService gameService;
 
     @Test
-    public void testSaveNormalGame() {
+    void testSaveNormalGame() {
         SaveGameRequestDto saveGameRequestDto = new SaveGameRequestDto(
                 "Test Game",
                 BigDecimal.valueOf(14.99),
@@ -51,7 +51,7 @@ public class GameServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testSaveNullGames() {
+    void testSaveNullGames() {
         SaveGameRequestDto saveGameRequestDto = new SaveGameRequestDto(
                 null,
                 null,

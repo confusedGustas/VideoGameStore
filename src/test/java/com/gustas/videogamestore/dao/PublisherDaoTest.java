@@ -3,6 +3,7 @@ package com.gustas.videogamestore.dao;
 import com.gustas.videogamestore.AbstractIntegrationTest;
 import com.gustas.videogamestore.dao.publisher.PublisherDao;
 import com.gustas.videogamestore.domain.Publisher;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,26 +12,25 @@ import java.util.Optional;
 import static com.gustas.videogamestore.constants.TestConstants.INVALID_PUBLISHER_NAME;
 import static com.gustas.videogamestore.constants.TestConstants.VALID_PUBLISHER_NAME;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.Assert.assertEquals;
 
-public class PublisherDaoTest extends AbstractIntegrationTest {
+class PublisherDaoTest extends AbstractIntegrationTest {
 
     @Autowired
     private PublisherDao publisherDao;
 
     @Test
-    public void getValidPublisher() {
+    void getValidPublisher() {
         Optional<Publisher> publisher = publisherDao.findByPublisherName(VALID_PUBLISHER_NAME);
 
         assertNotNull(publisher);
-        publisher.ifPresent(value -> assertEquals(VALID_PUBLISHER_NAME, value.getPublisherName()));
+        publisher.ifPresent(value -> Assertions.assertEquals(VALID_PUBLISHER_NAME, value.getPublisherName()));
     }
 
     @Test
-    public void getInvalidPublisher() {
+    void getInvalidPublisher() {
         Optional<Publisher> publisher = publisherDao.findByPublisherName(INVALID_PUBLISHER_NAME);
 
-        assertEquals(Optional.empty(), publisher);
+        Assertions.assertEquals(Optional.empty(), publisher);
     }
 
 }
