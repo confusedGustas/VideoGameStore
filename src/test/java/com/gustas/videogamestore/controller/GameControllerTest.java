@@ -1,201 +1,71 @@
 package com.gustas.videogamestore.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gustas.videogamestore.AbstractIntegrationTest;
-import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import org.json.JSONException;
-import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import static com.gustas.videogamestore.constants.TestConstants.GET_GAMES_URL;
 import static com.gustas.videogamestore.constants.TestConstants.LIMIT_ATTRIBUTE;
 import static com.gustas.videogamestore.constants.TestConstants.OFFSET_ATTRIBUTE;
 import static com.gustas.videogamestore.constants.TestConstants.SORT_COLUMN_ATTRIBUTE;
 import static com.gustas.videogamestore.constants.TestConstants.SORT_ORDER_ATTRIBUTE;
-import static org.junit.Assert.assertEquals;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GameControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
-    public void testGetGamesResponse() throws IOException, JSONException {
-        ResponseEntity<PaginatedResponseDto> getResponse = testRestTemplate.getForEntity(
-                GET_GAMES_URL,
-                PaginatedResponseDto.class
+    static Stream<Arguments> gameResponseProvider() {
+        return Stream.of(
+                Arguments.of(null, null, null, null, "src/test/resources/validGetGamesResponseJsonExample.json"),
+                Arguments.of("30", "2", null, null, "src/test/resources/validGetGamesResponseLimit3Offset2JsonExample.json"),
+                Arguments.of("40", "7", null, null, "src/test/resources/validGetGamesResponseLimit4Offset7JsonExample.json"),
+                Arguments.of("10", "10", null, null, "src/test/resources/validGetGamesResponseLimit10Offset10JsonExample.json"),
+                Arguments.of("20", "120", "ASC", "price", "src/test/resources/validGetGamesResponseLimit2Offset12OrderASCColumnPriceJsonExample.json"),
+                Arguments.of("40", "10", "DESC", "name", "src/test/resources/validGetGamesResponseLimit4Offset1OrderDESCColumnNameJsonExample.json"),
+                Arguments.of(null, null, "ASC", "price", "src/test/resources/validGetGamesResponseOrderASCColumnPriceJsonExample.json"),
+                Arguments.of(null, null, "DESC", "name", "src/test/resources/validGetGamesResponseOrderDESCColumnNameJsonExample.json"),
+                Arguments.of(null, null, "DESC", "price", "src/test/resources/validGetGamesResponseOrderDESCColumnPriceJsonExample.json"),
+                Arguments.of(null, null, "ASC", "name", "src/test/resources/validGetGamesResponseOrderASCColumnNameJsonExample.json")
         );
-
-        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
-
-        String responseToJson = objectMapper.writeValueAsString(getResponse.getBody());
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, responseToJson, true);
     }
 
-    @Test
-    public void testPaginationLimit30WithOffset2Response() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "30")
-                .queryParam(OFFSET_ATTRIBUTE, "2");
+    @ParameterizedTest
+    @MethodSource("gameResponseProvider")
+    public void testGetGamesResponses(String limit, String offset, String sortOrder, String sortColumn, String expectedJsonFilePath) throws IOException, JSONException {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL);
+
+        if (limit != null) {
+            builder.queryParam(LIMIT_ATTRIBUTE, limit);
+        }
+        if (offset != null) {
+            builder.queryParam(OFFSET_ATTRIBUTE, offset);
+        }
+        if (sortOrder != null) {
+            builder.queryParam(SORT_ORDER_ATTRIBUTE, sortOrder);
+        }
+        if (sortColumn != null) {
+            builder.queryParam(SORT_COLUMN_ATTRIBUTE, sortColumn);
+        }
 
         String url = builder.toUriString();
 
         ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit3Offset2JsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
+        String expectedJson = Files.readString(Path.of(expectedJsonFilePath));
         JSONAssert.assertEquals(expectedJson, response.getBody(), true);
     }
-
-    @Test
-    public void testPaginationLimit40WithOffset7Response() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "40")
-                .queryParam(OFFSET_ATTRIBUTE, "7");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit4Offset7JsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testPaginationLimit10WithOffset10Response() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "10")
-                .queryParam(OFFSET_ATTRIBUTE, "10");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit10Offset10JsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testPaginationLimit20WithOffset12OrderASCColumnPriceResponse() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "20")
-                .queryParam(OFFSET_ATTRIBUTE, "120")
-                .queryParam(SORT_ORDER_ATTRIBUTE, "ASC")
-                .queryParam(SORT_COLUMN_ATTRIBUTE, "price");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit2Offset12OrderASCColumnPriceJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testPaginationLimit40WithOffset1OrderDESCColumnNameResponse() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(LIMIT_ATTRIBUTE, "40")
-                .queryParam(OFFSET_ATTRIBUTE, "10")
-                .queryParam(SORT_ORDER_ATTRIBUTE, "DESC")
-                .queryParam(SORT_COLUMN_ATTRIBUTE, "name");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseLimit4Offset1OrderDESCColumnNameJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testGetGamesSortOrderASCSortColumnPriceResponse() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(SORT_ORDER_ATTRIBUTE, "ASC")
-                .queryParam(SORT_COLUMN_ATTRIBUTE, "price");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseOrderASCColumnPriceJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testGetGamesSortOrderDESCSortColumnNameResponse() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(SORT_ORDER_ATTRIBUTE, "DESC")
-                .queryParam(SORT_COLUMN_ATTRIBUTE, "name");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseOrderDESCColumnNameJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testGetGamesSortOrderDESCSortColumnPriceResponse() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(SORT_ORDER_ATTRIBUTE, "DESC")
-                .queryParam(SORT_COLUMN_ATTRIBUTE, "price");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseOrderDESCColumnPriceJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
-    @Test
-    public void testGetGamesSortOrderASCSortColumnNameResponse() throws IOException, JSONException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_GAMES_URL)
-                .queryParam(SORT_ORDER_ATTRIBUTE, "ASC")
-                .queryParam(SORT_COLUMN_ATTRIBUTE, "name");
-
-        String url = builder.toUriString();
-
-        ResponseEntity<String> response = testRestTemplate.getForEntity(url, String.class);
-
-        Path expectedJsonFilePath = Path.of("src/test/resources/validGetGamesResponseOrderASCColumnNameJsonExample.json");
-        String expectedJson = Files.readString(expectedJsonFilePath);
-
-        JSONAssert.assertEquals(expectedJson, response.getBody(), true);
-    }
-
 }

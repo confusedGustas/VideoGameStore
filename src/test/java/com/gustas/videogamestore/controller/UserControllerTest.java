@@ -3,20 +3,17 @@ package com.gustas.videogamestore.controller;
 import com.gustas.videogamestore.AbstractIntegrationTest;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
-import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.gustas.videogamestore.constants.TestConstants.LOGIN_USER_URL;
 import static com.gustas.videogamestore.constants.TestConstants.REGISTER_USER_URL;
 import static org.junit.Assert.assertEquals;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest extends AbstractIntegrationTest {
 

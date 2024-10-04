@@ -57,12 +57,12 @@ public class GameMapper {
         return dto;
     }
 
-    public static List<GameResponseDto> toDto(List<Game> Games) {
-        if (Games == null || Games.isEmpty()) {
+    public static List<GameResponseDto> toDto(List<Game> games) {
+        if (games == null || games.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return Games.stream()
+        return games.stream()
                 .map(GameMapper::toDto)
                 .toList();
     }

@@ -3,8 +3,9 @@ package com.gustas.videogamestore.dao;
 import com.gustas.videogamestore.AbstractIntegrationTest;
 import com.gustas.videogamestore.dao.genre.GenreDao;
 import com.gustas.videogamestore.domain.Genre;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Optional;
 
 import static com.gustas.videogamestore.constants.TestConstants.INVALID_GENRE_NAME;

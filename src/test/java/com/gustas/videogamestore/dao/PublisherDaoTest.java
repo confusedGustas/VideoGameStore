@@ -3,8 +3,9 @@ package com.gustas.videogamestore.dao;
 import com.gustas.videogamestore.AbstractIntegrationTest;
 import com.gustas.videogamestore.dao.publisher.PublisherDao;
 import com.gustas.videogamestore.domain.Publisher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Optional;
 
 import static com.gustas.videogamestore.constants.TestConstants.INVALID_PUBLISHER_NAME;
