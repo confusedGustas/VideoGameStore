@@ -1,18 +1,26 @@
 package com.gustas.videogamestore.service.user;
 
+import com.gustas.videogamestore.dao.game.GameDao;
 import com.gustas.videogamestore.dao.user.UserDao;
+import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.Role;
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.CheckUserResponse;
-import com.gustas.videogamestore.dto.response.UserResponseDto;
+import com.gustas.videogamestore.dto.response.GameResponseDto;
+import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
+import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
+import com.gustas.videogamestore.mapper.GameMapper;
 import com.gustas.videogamestore.mapper.UserMapper;
 import com.gustas.videogamestore.service.session.SessionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +32,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -32,6 +41,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private SessionService sessionService;
+    private GameDao gameDao;
 
     @Override
     public void loginUser(LoginUserRequestDto loginUserRequestDto, HttpSession session) {
@@ -46,8 +56,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto getUserDetails() {
+    public UserDetailsResponseDto getUserDetails() {
         return UserMapper.toDto(sessionService.getUserFromSessionId());
+    }
+    @Override
+    public PaginatedResponseDto getUserGames(int pageOffset) {
+        Page<Game> gamePage = gameDao.findAll(Specification.anyOf(), PageRequest.of(pageOffset, 10));
+
+        List<GameResponseDto> dtoList = GameMapper.toDto(gamePage.getContent());
+
+        return new PaginatedResponseDto(
+                dtoList, gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
     }
 
     @Override

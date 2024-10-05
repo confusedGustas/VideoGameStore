@@ -2,7 +2,7 @@ package com.gustas.videogamestore.mapper;
 
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
-import com.gustas.videogamestore.dto.response.UserResponseDto;
+import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
 
 public class UserMapper {
 
@@ -20,14 +20,13 @@ public class UserMapper {
         return user;
     }
 
-    public static UserResponseDto toDto(User user) {
-        UserResponseDto userResponseDto = new UserResponseDto();
+    public static UserDetailsResponseDto toDto(User user) {
+        UserDetailsResponseDto userDetailsResponseDto = new UserDetailsResponseDto();
 
-        userResponseDto.setUsername(user.getUsername());
-        userResponseDto.setEmail(user.getEmail());
-        userResponseDto.setGames(GameMapper.toDto(user.getGames()));
+        userDetailsResponseDto.setUsername(user.getUsername());
+        userDetailsResponseDto.setEmail(user.getEmail());
 
-        return userResponseDto;
+        return userDetailsResponseDto;
     }
 
 }

@@ -3,7 +3,8 @@ package com.gustas.videogamestore.controller;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.CheckUserResponse;
-import com.gustas.videogamestore.dto.response.UserResponseDto;
+import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
+import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
 import com.gustas.videogamestore.service.user.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -53,10 +55,16 @@ public class UserController {
         userService.deleteUser(request, response);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/get-details")
     @ResponseStatus(HttpStatus.OK)
-    public UserResponseDto getUser() {
+    public UserDetailsResponseDto getUser() {
         return userService.getUserDetails();
+    }
+
+    @GetMapping("/get-games")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginatedResponseDto getUserGames(@RequestParam int offset) {
+        return userService.getUserGames(offset);
     }
 
     @GetMapping("/check")
