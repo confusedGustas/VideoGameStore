@@ -1,6 +1,9 @@
 <template>
+  <div>
+    <NavbarComponent />
+  </div>
+
   <div class="landing-page">
-    <h1 class="title">Video Game Store</h1>
     <div class="search-bar">
       <input v-model="searchQuery" @keyup.enter="search" placeholder="Search Games..." />
       <button @click="search">Search</button>
@@ -43,6 +46,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import NavbarComponent from "@/components/NavbarComponent.vue";
 
 const router = useRouter();
 const Games = ref([]);
@@ -112,21 +116,15 @@ const formatPrice = (price) => {
 </script>
 
 <style scoped>
-.title {
-  text-align: center;
-  color: #333;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
 .search-bar {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .search-bar input {
-  width: 300px;
+  width: 500px;
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -239,7 +237,7 @@ const formatPrice = (price) => {
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: white;
-  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="gray" stroke-width="2"%3E%3Cpath d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/svg%3E'); /* Custom arrow */
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="gray" stroke-width="2"%3E%3Cpath d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/svg%3E');
   background-repeat: no-repeat;
   background-position: right 0.5rem top 50%;
   background-size: 10px;

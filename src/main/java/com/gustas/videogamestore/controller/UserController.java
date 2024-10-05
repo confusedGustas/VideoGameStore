@@ -2,6 +2,7 @@ package com.gustas.videogamestore.controller;
 
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
+import com.gustas.videogamestore.dto.response.CheckUserResponse;
 import com.gustas.videogamestore.dto.response.UserResponseDto;
 import com.gustas.videogamestore.service.user.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,6 +57,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserResponseDto getUser() {
         return userService.getUserDetails();
+    }
+
+    @GetMapping("/check")
+    @ResponseStatus(HttpStatus.OK)
+    public CheckUserResponse checkUser() {
+        return userService.checkUser();
     }
 
 }

@@ -1,6 +1,9 @@
 <template>
+  <div>
+    <NavbarComponent />
+  </div>
+
   <div class="search-results">
-    <h1 class="title">Video Game Store</h1>
     <h2>Search Results for "{{ searchQuery }}"</h2>
     <div class="game-grid">
       <div v-for="game in games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
@@ -19,6 +22,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
+import NavbarComponent from "@/components/NavbarComponent.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -54,13 +58,6 @@ const getImageUrl = (imageName) => {
 </script>
 
 <style scoped>
-.title {
-  text-align: center;
-  color: #333;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
 h2 {
   text-align: center;
   color: #666;

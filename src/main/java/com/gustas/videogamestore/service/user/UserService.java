@@ -2,6 +2,7 @@ package com.gustas.videogamestore.service.user;
 
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
+import com.gustas.videogamestore.dto.response.CheckUserResponse;
 import com.gustas.videogamestore.dto.response.UserResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,5 +18,6 @@ public interface UserService {
     void logoutUser(Authentication authentication, HttpServletRequest request, HttpServletResponse response);
     UserResponseDto getUserDetails();
     void deleteUser(HttpServletRequest request, HttpServletResponse response);
+    CheckUserResponse checkUser();
 
 }

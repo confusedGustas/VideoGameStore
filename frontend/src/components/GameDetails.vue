@@ -1,6 +1,9 @@
 <template>
+  <div>
+    <NavbarComponent />
+  </div>
+
   <div class="game-details">
-    <h1 class="title">Video Game Store</h1>
     <div v-if="game" class="game-info">
       <div class="image-container">
         <img :src="getImageUrl(game.image)" :alt="game.name" />
@@ -29,6 +32,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
+import NavbarComponent from "@/components/NavbarComponent.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -53,13 +57,6 @@ const getImageUrl = (imageName) => {
 </script>
 
 <style scoped>
-.title {
-  text-align: center;
-  color: #333;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-}
-
 .game-info {
   display: flex;
   background-color: white;

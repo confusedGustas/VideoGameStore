@@ -5,6 +5,7 @@ import com.gustas.videogamestore.domain.Role;
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
+import com.gustas.videogamestore.dto.response.CheckUserResponse;
 import com.gustas.videogamestore.dto.response.UserResponseDto;
 import com.gustas.videogamestore.mapper.UserMapper;
 import com.gustas.videogamestore.service.session.SessionService;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 
 @Service
@@ -57,12 +59,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public CheckUserResponse checkUser() {
+        try {
+            sessionService.getUserFromSessionId();
+            return buildCheckUserResponse(true);
+        } catch (Exception e) {
+            return buildCheckUserResponse(false);
+        }
+    }
+
+    @Override
     public void saveUser(SaveUserRequestDto saveUserRequestDto) {
         validateRegistrationCredentials(saveUserRequestDto);
 
         User user = createUserEntity(saveUserRequestDto);
 
         userDao.saveUser(user);
+    }
+
+    private CheckUserResponse buildCheckUserResponse(boolean isUserLoggedIn) {
+        return new CheckUserResponse(isUserLoggedIn);
     }
 
     public void authenticateUser(User user, HttpSession session) {

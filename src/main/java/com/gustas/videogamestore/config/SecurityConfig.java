@@ -23,8 +23,10 @@ public class SecurityConfig {
                                 "api/games",
                                 "api/users/login",
                                 "api/users/register",
+                                "api/users/logout",
                                 "api/images/get/{name}",
                                 "api/games/get/{gameId}",
+                                "api/users/check",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html/**"
