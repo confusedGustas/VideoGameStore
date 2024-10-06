@@ -1,11 +1,13 @@
 package com.gustas.videogamestore.dao;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
+import com.gustas.videogamestore.TestConfiguration;
 import com.gustas.videogamestore.dao.region.RegionDao;
 import com.gustas.videogamestore.domain.Region;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Optional;
 
@@ -13,6 +15,7 @@ import static com.gustas.videogamestore.constants.TestConstants.INVALID_REGION_N
 import static com.gustas.videogamestore.constants.TestConstants.VALID_REGION_NAME;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
+@ContextConfiguration(classes = {TestConfiguration.class})
 class RegionDaoTest extends AbstractIntegrationTest {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.gustas.videogamestore.service;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
+import com.gustas.videogamestore.TestConfiguration;
 import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.service.game.GameService;
@@ -8,12 +9,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.math.BigDecimal;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
+@ContextConfiguration(classes = {TestConfiguration.class})
 class GameServiceTest extends AbstractIntegrationTest {
 
     private GameResponseDto testGame;

@@ -59,15 +59,20 @@ public class UserServiceImpl implements UserService {
     public UserDetailsResponseDto getUserDetails() {
         return UserMapper.toDto(sessionService.getUserFromSessionId());
     }
+
     @Override
     public PaginatedResponseDto getUserGames(int pageOffset) {
-        Page<Game> gamePage = gameDao.findAll(Specification.anyOf(), PageRequest.of(pageOffset, 10));
+        Specification<Game> userSpec = (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("user").get("id"), sessionService.getUserFromSessionId().getId());
+
+        Page<Game> gamePage = gameDao.findAll(userSpec, PageRequest.of(pageOffset, 10));
 
         List<GameResponseDto> dtoList = GameMapper.toDto(gamePage.getContent());
 
         return new PaginatedResponseDto(
                 dtoList, gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
     }
+
 
     @Override
     public void deleteUser(HttpServletRequest request, HttpServletResponse response) {

@@ -1,6 +1,7 @@
 package com.gustas.videogamestore.controller;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
+import com.gustas.videogamestore.TestConfiguration;
 import org.json.JSONException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +26,7 @@ import static com.gustas.videogamestore.constants.TestConstants.SORT_COLUMN_ATTR
 import static com.gustas.videogamestore.constants.TestConstants.SORT_ORDER_ATTRIBUTE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = {TestConfiguration.class})
 class GameControllerTest extends AbstractIntegrationTest {
 
     @Autowired

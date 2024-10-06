@@ -4,6 +4,7 @@
     <div class="navbar-buttons">
       <button v-if="!isAuthenticated" @click="goToLogin">Login</button>
       <button v-if="!isAuthenticated" @click="goToRegister">Register</button>
+      <button v-if="isAuthenticated" @click="goToProfile">Profile</button>
       <button v-if="isAuthenticated" @click="logout">Logout</button>
     </div>
   </nav>
@@ -12,14 +13,15 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import {ref} from "vue";
+import { ref } from "vue";
 
 const router = useRouter();
 const isAuthenticated = ref(false);
 
 const checkLogin = async () => {
-  const response = await axios.get('http://localhost:8080/api/users/check',
-      { withCredentials: true });
+  const response = await axios.get('http://localhost:8080/api/users/check', {
+    withCredentials: true
+  });
   isAuthenticated.value = response.data.userLoggedIn;
 };
 
@@ -27,7 +29,10 @@ const logout = async () => {
   await axios.post('http://localhost:8080/api/users/logout', {}, {
     withCredentials: true
   });
-  window.location.reload();
+
+  if (window.location.pathname === '/profile') {
+    await router.push({name: 'home'});
+  } else window.location.reload();
 };
 
 const goToLogin = () => {
@@ -36,6 +41,10 @@ const goToLogin = () => {
 
 const goToRegister = () => {
   router.push({ name: 'register' });
+};
+
+const goToProfile = () => {
+  router.push({ name: 'profile' });
 };
 
 checkLogin();

@@ -1,15 +1,17 @@
 package com.gustas.videogamestore.util;
 
 import com.gustas.videogamestore.AbstractIntegrationTest;
+import com.gustas.videogamestore.TestConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.test.context.ContextConfiguration;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 
 import static com.gustas.videogamestore.constants.TestConstants.IMAGE_COMPRESSION_NAME;
 import static org.junit.Assert.assertThrows;
 
+@ContextConfiguration(classes = {TestConfiguration.class})
 class ImageUtilTest extends AbstractIntegrationTest {
 
     @Test

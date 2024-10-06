@@ -26,6 +26,7 @@ const login = async () => {
         { withCredentials: true });
     await router.push({name: 'home'});
   } catch (error) {
+    alert('Login failed. Please check your credentials and try again.');
     console.error('Login error:', error);
   }
 };
