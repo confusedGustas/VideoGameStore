@@ -80,7 +80,7 @@ const fetchUserDetails = async () => {
 
 const fetchGames = async (page = 1) => {
   try {
-    const offset = (page - 1) * itemsPerPage;
+    const offset = (page - 1);
 
     const response = await axios.get('http://localhost:8080/api/users/get-games', {
       params: { offset },
