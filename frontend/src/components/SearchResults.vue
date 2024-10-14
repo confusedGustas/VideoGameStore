@@ -3,16 +3,18 @@
     <NavbarComponent />
   </div>
 
+  <div class="search-bar">
+    <input v-model="searchQuery" @keyup.enter="search" placeholder="Search Games..." />
+    <button @click="search">Search</button>
+  </div>
+
   <div class="search-results">
-    <h2>Search Results for "{{ searchQuery }}"</h2>
+    <h2>Search Results</h2>
     <div class="game-grid">
       <div v-for="game in games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
         <img :src="getImageUrl(game.image)" :alt="game.name" />
-        <h3>{{ game.name }}</h3>
+        <h3 class="game-title">{{ game.name }}</h3>
         <p class="price">${{ game.price.toFixed(2) }}</p>
-        <p class="genre">{{ game.genre.name }}</p>
-        <p class="publisher">{{ game.publisher.publisherName }}</p>
-        <p class="platform">{{ game.activationPlatform.platformName }}</p>
       </div>
     </div>
   </div>
@@ -38,8 +40,12 @@ const fetchGames = async () => {
   }
 };
 
+const search = () => {
+  fetchGames();
+};
+
 onMounted(() => {
-  searchQuery.value = route.query.q;
+  searchQuery.value = route.query.q || '';
   fetchGames();
 });
 
@@ -58,6 +64,36 @@ const getImageUrl = (imageName) => {
 </script>
 
 <style scoped>
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.search-bar input {
+  width: 500px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.search-bar button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #45a049;
+}
+
 h2 {
   text-align: center;
   color: #666;
@@ -76,12 +112,12 @@ h2 {
   padding: 1rem;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .game-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .game-card img {
@@ -90,6 +126,14 @@ h2 {
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
+}
+
+.game-title {
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .game-card h3 {
@@ -105,11 +149,5 @@ h2 {
 .game-card .price {
   font-weight: bold;
   color: #4CAF50;
-}
-
-.game-card .genre,
-.game-card .publisher,
-.game-card .platform {
-  color: #666;
 }
 </style>

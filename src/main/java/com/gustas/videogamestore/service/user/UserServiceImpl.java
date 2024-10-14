@@ -7,7 +7,7 @@ import com.gustas.videogamestore.domain.Role;
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
-import com.gustas.videogamestore.dto.response.CheckUserResponse;
+import com.gustas.videogamestore.dto.response.CheckUserResponseDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CheckUserResponse checkUser() {
+    public CheckUserResponseDto checkUser() {
         try {
             sessionService.getUserFromSessionId();
             return buildCheckUserResponse(true);
@@ -101,8 +101,8 @@ public class UserServiceImpl implements UserService {
         userDao.saveUser(user);
     }
 
-    private CheckUserResponse buildCheckUserResponse(boolean isUserLoggedIn) {
-        return new CheckUserResponse(isUserLoggedIn);
+    private CheckUserResponseDto buildCheckUserResponse(boolean isUserLoggedIn) {
+        return new CheckUserResponseDto(isUserLoggedIn);
     }
 
     public void authenticateUser(User user, HttpSession session) {

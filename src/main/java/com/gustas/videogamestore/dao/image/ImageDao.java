@@ -8,5 +8,6 @@ public interface ImageDao {
 
     Optional<Image> getImage(String name);
     void save(Image image);
+    void deleteImage(String name);
 
 }

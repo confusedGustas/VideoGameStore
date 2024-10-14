@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class CheckUserResponse {
+public class CheckUserResponseDto {
     boolean userLoggedIn;
 }

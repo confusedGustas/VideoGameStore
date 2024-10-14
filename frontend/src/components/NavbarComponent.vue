@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    <h1 class="navbar-title">Video Game Store</h1>
+    <router-link to="/" class="navbar-title" exact-active-class="active-link">Video Game Store</router-link>
     <div class="navbar-buttons">
       <button v-if="!isAuthenticated" @click="goToLogin">Login</button>
       <button v-if="!isAuthenticated" @click="goToRegister">Register</button>
@@ -26,7 +26,7 @@ const checkLogin = async () => {
 };
 
 const logout = async () => {
-  await axios.post('http://localhost:8080/api/users/logout', {}, {
+  await axios.post('/api/users/logout', {}, {
     withCredentials: true
   });
 
@@ -68,6 +68,12 @@ checkLogin();
   transform: translateX(-50%);
   color: #333;
   font-size: 2.5rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-title:hover {
+  color: #4CAF50;
 }
 
 .navbar-buttons {

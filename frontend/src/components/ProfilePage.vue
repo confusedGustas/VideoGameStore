@@ -9,18 +9,16 @@
     </nav>
 
     <div v-if="userDetails">
-      <h1>Hello {{ userDetails.username }}</h1>
-
       <div v-if="games.length > 0">
-        <p>Your Listings:</p>
+        <button class="add-game-button" @click="showAddGamePopup = true">Add Game</button>
         <div class="game-grid">
-          <div v-for="game in games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
+          <div v-for="game in games" :key="game.id" class="game-card">
             <img :src="getImageUrl(game.image)" :alt="game.name" />
-            <h3>{{ game.name }}</h3>
-            <p class="price">${{ game.price.toFixed(2) }}</p>
-            <p class="genre">{{ game.genre.name }}</p>
-            <p class="publisher">{{ game.publisher.publisherName }}</p>
-            <p class="platform">{{ game.activationPlatform.platformName }}</p>
+            <h3 class="game-title">{{ game.name }}</h3>
+            <div class="game-actions">
+              <button @click="goToDetails(game.id)" class="details-button">Details</button>
+              <button @click="deleteGame(game.id)" class="delete-button">Delete</button>
+            </div>
           </div>
         </div>
 
@@ -39,10 +37,62 @@
       <p>Redirecting to login...</p>
     </div>
   </div>
+
+  <transition name="fade">
+    <div v-if="showAddGamePopup" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Add New Game</h2>
+        <form @submit.prevent="saveGame">
+          <label for="name">Name:</label>
+          <input v-model="newGame.name" type="text" id="name" required />
+
+          <label for="price">Price:</label>
+          <input v-model="newGame.price" type="number" id="price" min="0" step="0.01" required />
+
+          <label for="description">Description:</label>
+          <textarea
+              v-model="newGame.description"
+              id="description"
+              required
+              maxlength="200"
+              rows="4"
+              class="fixed-textarea"
+          ></textarea>
+          <small>{{ newGame.description.length }}/200 characters</small>
+
+          <label for="image">Image:</label>
+          <input type="file" id="image" @change="handleImageUpload" accept="image/*" required />
+
+          <label for="releaseYear">Release Year:</label>
+          <input v-model="newGame.releaseYear" type="number" id="releaseYear" min="1950" :max="currentYear" required />
+
+          <label for="region">Region:</label>
+          <input v-model="newGame.region" type="text" id="region" required />
+
+          <label for="platform">Platform:</label>
+          <input v-model="newGame.platform" type="text" id="platform" required />
+
+          <label for="publisher">Publisher:</label>
+          <input v-model="newGame.publisher" type="text" id="publisher" required />
+
+          <label for="genre">Genre:</label>
+          <input v-model="newGame.genre" type="text" id="genre" required />
+
+          <label for="stock">Stock:</label>
+          <input v-model="newGame.stock" type="number" id="stock" min="0" required />
+
+          <div class="modal-actions">
+            <button type="submit">Save</button>
+            <button @click="showAddGamePopup = false" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import axios from 'axios';
 import { useRouter } from "vue-router";
 
@@ -53,6 +103,63 @@ const currentPage = ref(1);
 const itemsPerPage = 10;
 const hasMoreGames = ref(true);
 const userLoggedIn = ref(false);
+const showAddGamePopup = ref(false);
+const newGame = ref({
+  name: '',
+  price: null,
+  description: '',
+  image: null,
+  releaseYear: null,
+  region: '',
+  platform: '',
+  publisher: '',
+  genre: '',
+  stock: null,
+  imageFile: null
+});
+
+const currentYear = computed(() => new Date().getFullYear());
+
+const generateUniqueFilename = (originalName) => {
+  const randomString = Math.random().toString(36).slice(2, 11);
+  const fileExtension = originalName.split('.').pop();
+  return `${randomString}.${fileExtension}`;
+};
+
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const uniqueFilename = generateUniqueFilename(file.name);
+    newGame.value.image = uniqueFilename;
+
+    newGame.value.imageFile = file;
+  }
+};
+
+const saveGame = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('image', new File([newGame.value.imageFile], newGame.value.image));
+    await axios.post('/api/images/save', formData, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
+    const gameData = { ...newGame.value };
+    delete gameData.imageFile;
+
+    await axios.post('/api/games/save', gameData, {
+      withCredentials: true
+    });
+
+    showAddGamePopup.value = false;
+    await fetchGames(currentPage.value);
+  } catch (error) {
+    console.error('Error saving the game:', error);
+  }
+};
 
 const checkUserLoggedIn = async () => {
   try {
@@ -81,12 +188,10 @@ const fetchUserDetails = async () => {
 const fetchGames = async (page = 1) => {
   try {
     const offset = (page - 1);
-
     const response = await axios.get('http://localhost:8080/api/users/get-games', {
       params: { offset },
       withCredentials: true
     });
-
     games.value = response.data.items;
     const totalGames = response.data.totalItems;
     hasMoreGames.value = response.data.items.length === itemsPerPage && (currentPage.value * itemsPerPage) < totalGames;
@@ -131,9 +236,29 @@ const logout = async () => {
   }
 };
 
+const deleteGame = async (gameId) => {
+  try {
+    await axios.delete(`/api/games/delete`, {
+      params: { gameId },
+      withCredentials: true,
+      headers: { }
+    });
+    await fetchGames(currentPage.value);
+  } catch (error) {
+    console.error('Error deleting game:', error);
+  }
+};
+
+watch(showAddGamePopup, (newVal) => {
+  if (newVal) {
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
+});
+
 onMounted(async () => {
   const loggedIn = await checkUserLoggedIn();
-
   if (!loggedIn) {
     await router.push({ name: 'login' });
   } else {
@@ -143,7 +268,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style>
 .navbar {
   display: flex;
   align-items: center;
@@ -153,6 +278,14 @@ onMounted(async () => {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
   margin-bottom: 2rem;
+}
+
+.game-title {
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .navbar-title {
@@ -185,15 +318,19 @@ onMounted(async () => {
 
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
 }
 
 .game-card {
+  max-width: 240px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: white;
   border-radius: 8px;
   padding: 1rem;
-  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -211,9 +348,40 @@ onMounted(async () => {
   margin-bottom: 1rem;
 }
 
-.game-card .price {
+.game-card {
   font-weight: bold;
-  color: #4CAF50;
+}
+
+.game-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.details-button, .delete-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.details-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.details-button:hover {
+  background-color: #1976D2;
+}
+
+.delete-button {
+  background-color: #F44336;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #D32F2F;
 }
 
 .pagination-controls {
@@ -221,6 +389,22 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
+}
+
+.fixed-textarea {
+  width: 382px;
+  height: 100px;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.modal-content small {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
 }
 
 .pagination-controls button {
@@ -243,5 +427,101 @@ onMounted(async () => {
 .pagination-controls span {
   font-size: 1.25rem;
   color: #333;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content label {
+  margin-top: 0.5rem;
+}
+
+.modal-content input,
+.modal-content textarea {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.modal-actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.modal-actions button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.add-game-button {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.no-scroll {
+  overflow: hidden;
 }
 </style>

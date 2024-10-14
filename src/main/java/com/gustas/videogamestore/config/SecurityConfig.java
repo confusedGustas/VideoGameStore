@@ -23,7 +23,6 @@ public class SecurityConfig {
                                 "api/games",
                                 "api/users/login",
                                 "api/users/register",
-                                "api/users/logout",
                                 "api/images/get/{name}",
                                 "api/games/get/{gameId}",
                                 "api/users/check",

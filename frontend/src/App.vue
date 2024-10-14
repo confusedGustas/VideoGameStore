@@ -21,4 +21,9 @@ body {
   margin: 0 auto;
   padding: 20px;
 }
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
 </style>

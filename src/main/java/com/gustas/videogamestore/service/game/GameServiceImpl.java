@@ -3,6 +3,7 @@ package com.gustas.videogamestore.service.game;
 import com.gustas.videogamestore.constant.SortingConstant;
 import com.gustas.videogamestore.dao.game.GameDao;
 import com.gustas.videogamestore.dao.genre.GenreDao;
+import com.gustas.videogamestore.dao.image.ImageDao;
 import com.gustas.videogamestore.dao.platform.PlatformDao;
 import com.gustas.videogamestore.dao.publisher.PublisherDao;
 import com.gustas.videogamestore.dao.region.RegionDao;
@@ -45,6 +46,7 @@ public class GameServiceImpl implements GameService {
     private RegionDao regionDao;
     private PublisherDao publisherDao;
     private SessionService sessionService;
+    private ImageDao imageDao;
 
     @Override
     public PaginatedResponseDto getGames(GameSearchCriteria gameSearchCriteria) {
@@ -61,7 +63,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void deleteGame(Long gameId) {
+        Game game = gameDao.getGame(gameId);
         gameDao.deleteGame(gameId);
+        imageDao.deleteImage(game.getImage());
     }
 
     @Override

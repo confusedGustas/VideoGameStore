@@ -2,7 +2,7 @@ package com.gustas.videogamestore.controller;
 
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
-import com.gustas.videogamestore.dto.response.CheckUserResponse;
+import com.gustas.videogamestore.dto.response.CheckUserResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
 import com.gustas.videogamestore.service.user.UserService;
@@ -69,7 +69,7 @@ public class UserController {
 
     @GetMapping("/check")
     @ResponseStatus(HttpStatus.OK)
-    public CheckUserResponse checkUser() {
+    public CheckUserResponseDto checkUser() {
         return userService.checkUser();
     }
 

@@ -5,7 +5,6 @@ import com.gustas.videogamestore.repository.ImageRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -23,6 +22,12 @@ public class ImageDaoImpl implements ImageDao {
     @Override
     public void save(Image image) {
         imageRepository.save(image);
+    }
+
+    @Override
+    @Transactional
+    public void deleteImage(String name) {
+        imageRepository.deleteByName(name);
     }
 
 }

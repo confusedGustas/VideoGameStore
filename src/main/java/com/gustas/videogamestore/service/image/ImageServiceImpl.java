@@ -37,8 +37,11 @@ public class ImageServiceImpl implements ImageService {
             throw new IllegalArgumentException("Invalid image");
         }
 
-        Image image = new Image(ImageUtil.compressImage(file.getBytes()), file.getOriginalFilename());
+        if (imageDao.getImage(file.getOriginalFilename()).isPresent()) {
+            throw new IllegalArgumentException("Image with name " + file.getOriginalFilename() + " already exists");
+        }
 
+        Image image = new Image(ImageUtil.compressImage(file.getBytes()), file.getOriginalFilename());
         imageDao.save(image);
     }
 

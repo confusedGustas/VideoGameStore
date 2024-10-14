@@ -26,11 +26,8 @@
     <div class="game-grid">
       <div v-for="game in Games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
         <img :src="getImageUrl(game.image)" :alt="game.name" />
-        <h3>{{ game.name }}</h3>
+        <h3 class="game-title">{{ game.name }}</h3>
         <p class="price">{{ formatPrice(game.price) }}</p>
-        <p class="genre">{{ game.genre?.name || 'N/A' }}</p>
-        <p class="publisher">{{ game.publisher?.publisherName || 'N/A' }}</p>
-        <p class="platform">{{ game.activationPlatform?.platformName || 'N/A' }}</p>
       </div>
     </div>
 
@@ -175,8 +172,17 @@ const formatPrice = (price) => {
   margin-bottom: 1rem;
 }
 
+.game-title {
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 .game-card h3 {
   font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .game-card p {
@@ -187,12 +193,6 @@ const formatPrice = (price) => {
 .game-card .price {
   font-weight: bold;
   color: #4CAF50;
-}
-
-.game-card .genre,
-.game-card .publisher,
-.game-card .platform {
-  color: #666;
 }
 
 .pagination-controls {
@@ -228,6 +228,7 @@ const formatPrice = (price) => {
   display: flex;
   justify-content: center;
   margin: 1rem 0;
+  padding-left: 2rem;
 }
 
 .filter-sort select {
