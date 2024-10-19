@@ -4,36 +4,43 @@
     <form @submit.prevent="register">
       <input v-model="username" type="text" placeholder="Username" required />
       <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Password" required />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="Password"
+        required
+      />
       <button type="submit">Register</button>
     </form>
-    <p>Already have an account? <router-link to="/login">Login here</router-link></p>
+    <p>
+      Already have an account? <router-link to="/login">Login here</router-link>
+    </p>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
-const router = useRouter();
-const username = ref('');
-const email = ref('');
-const password = ref('');
+const router = useRouter()
+const username = ref('')
+const email = ref('')
+const password = ref('')
 
 const register = async () => {
   try {
-    await axios.post('http://localhost:8080/api/users/register', {
+    await axios.post('/api/users/register', {
       username: username.value,
       email: email.value,
       password: password.value,
-    });
-    await router.push({name: 'login'});
+    })
+    await router.push({ name: 'login' })
   } catch (error) {
-    console.error('Registration error:', error);
-    alert('Registration failed. Please try again.');
+    console.error('Registration error:', error)
+    alert('Registration failed. Please try again.')
   }
-};
+}
 </script>
 
 <style scoped>
@@ -65,7 +72,7 @@ input {
 
 button {
   padding: 0.75rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;

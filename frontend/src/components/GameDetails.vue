@@ -14,7 +14,10 @@
         <div class="details">
           <p><strong>Genre:</strong> {{ game.genre.name }}</p>
           <p><strong>Publisher:</strong> {{ game.publisher.publisherName }}</p>
-          <p><strong>Platform:</strong> {{ game.activationPlatform.platformName }}</p>
+          <p>
+            <strong>Platform:</strong>
+            {{ game.activationPlatform.platformName }}
+          </p>
           <p><strong>Region:</strong> {{ game.activationRegion.regionName }}</p>
           <p><strong>Release Year:</strong> {{ game.releaseYear }}</p>
           <p><strong>Stock:</strong> {{ game.stock }} available</p>
@@ -29,31 +32,31 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import axios from 'axios';
-import NavbarComponent from "@/components/NavbarComponent.vue";
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import axios from 'axios'
+import NavbarComponent from '@/components/NavbarComponent.vue'
 
-const router = useRouter();
-const route = useRoute();
-const game = ref(null);
+const router = useRouter()
+const route = useRoute()
+const game = ref(null)
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/games/get/${route.params.id}`);
-    game.value = response.data;
+    const response = await axios.get(`/api/games/get/${route.params.id}`)
+    game.value = response.data
   } catch (error) {
-    console.error('Error fetching game details:', error);
+    console.error('Error fetching game details:', error)
   }
-});
+})
 
 const goBack = () => {
-  router.push({ name: 'home' });
-};
+  router.push({ name: 'home' })
+}
 
-const getImageUrl = (imageName) => {
-  return `http://localhost:8080/api/images/get/${imageName}`;
-};
+const getImageUrl = imageName => {
+  return `/api/images/get/${imageName}`
+}
 </script>
 
 <style scoped>
@@ -100,7 +103,7 @@ const getImageUrl = (imageName) => {
 .price {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
   margin-bottom: 1rem;
 }
 
@@ -121,7 +124,7 @@ const getImageUrl = (imageName) => {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;

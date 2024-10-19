@@ -1,6 +1,8 @@
 <template>
   <nav class="navbar">
-    <router-link to="/" class="navbar-title" exact-active-class="active-link">Video Game Store</router-link>
+    <router-link to="/" class="navbar-title" exact-active-class="active-link"
+      >Video Game Store</router-link
+    >
     <div class="navbar-buttons">
       <button v-if="!isAuthenticated" @click="goToLogin">Login</button>
       <button v-if="!isAuthenticated" @click="goToRegister">Register</button>
@@ -11,43 +13,41 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import axios from 'axios';
-import { ref } from "vue";
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { ref } from 'vue'
 
-const router = useRouter();
-const isAuthenticated = ref(false);
+const router = useRouter()
+const isAuthenticated = ref(false)
 
 const checkLogin = async () => {
-  const response = await axios.get('http://localhost:8080/api/users/check', {
-    withCredentials: true
-  });
-  isAuthenticated.value = response.data.userLoggedIn;
-};
+  const response = await axios.get('/api/users/check', {
+    withCredentials: true,
+  })
+  isAuthenticated.value = response.data.userLoggedIn
+}
 
 const logout = async () => {
-  await axios.post('/api/users/logout', {}, {
-    withCredentials: true
-  });
+  await axios.post('/api/users/logout', {}, { withCredentials: true })
 
   if (window.location.pathname === '/profile') {
-    await router.push({name: 'home'});
-  } else window.location.reload();
-};
+    await router.push({ name: 'home' })
+  } else window.location.reload()
+}
 
 const goToLogin = () => {
-  router.push({ name: 'login' });
-};
+  router.push({ name: 'login' })
+}
 
 const goToRegister = () => {
-  router.push({ name: 'register' });
-};
+  router.push({ name: 'register' })
+}
 
 const goToProfile = () => {
-  router.push({ name: 'profile' });
-};
+  router.push({ name: 'profile' })
+}
 
-checkLogin();
+checkLogin()
 </script>
 
 <style scoped>
@@ -57,7 +57,7 @@ checkLogin();
   padding: 1.5rem;
   background-color: white;
   border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
   margin-bottom: 2rem;
 }
@@ -73,7 +73,7 @@ checkLogin();
 }
 
 .navbar-title:hover {
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 .navbar-buttons {
@@ -84,7 +84,7 @@ checkLogin();
   margin-left: 10px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;

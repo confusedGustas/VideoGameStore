@@ -5,7 +5,11 @@
 
   <div class="landing-page">
     <div class="search-bar">
-      <input v-model="searchQuery" @keyup.enter="search" placeholder="Search Games..." />
+      <input
+        v-model="searchQuery"
+        @keyup.enter="search"
+        placeholder="Search Games..."
+      />
       <button @click="search">Search</button>
     </div>
 
@@ -24,7 +28,12 @@
     </div>
 
     <div class="game-grid">
-      <div v-for="game in Games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
+      <div
+        v-for="game in Games"
+        :key="game.id"
+        class="game-card"
+        @click="goToDetails(game.id)"
+      >
         <img :src="getImageUrl(game.image)" :alt="game.name" />
         <h3 class="game-title">{{ game.name }}</h3>
         <p class="price">{{ formatPrice(game.price) }}</p>
@@ -40,76 +49,84 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
-import NavbarComponent from "@/components/NavbarComponent.vue";
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import NavbarComponent from '@/components/NavbarComponent.vue'
 
-const router = useRouter();
-const Games = ref([]);
-const searchQuery = ref('');
-const currentPage = ref(1);
-const hasMorePages = ref(true);
-const itemsPerPage = 10;
-const selectedSortColumn = ref('');
-const selectedSortOrder = ref('');
+const router = useRouter()
+const Games = ref([])
+const searchQuery = ref('')
+const currentPage = ref(1)
+const hasMorePages = ref(true)
+const itemsPerPage = 10
+const selectedSortColumn = ref('')
+const selectedSortOrder = ref('')
 
 const fetchGames = async (page = 1) => {
   try {
-    const offset = page - 1;
+    const offset = page - 1
 
     const params = {
       offset,
       ...(selectedSortColumn.value && { sortColumn: selectedSortColumn.value }),
-      ...(selectedSortOrder.value && { sortOrder: selectedSortOrder.value })
-    };
+      ...(selectedSortOrder.value && { sortOrder: selectedSortOrder.value }),
+    }
 
-    const response = await axios.get(`http://localhost:8080/api/games`, { params });
+    const response = await axios.get(`/api/games`, { params })
 
-    Games.value = response.data.items;
+    if (response.data && response.data.items) {
+      Games.value = response.data.items
 
-    const totalItems = response.data.totalItems;
-    hasMorePages.value = response.data.items.length === itemsPerPage && (currentPage.value * itemsPerPage) < totalItems;
+      const totalItems = response.data.totalItems || 0
+      hasMorePages.value =
+        response.data.items.length === itemsPerPage &&
+        currentPage.value * itemsPerPage < totalItems
+    } else {
+      Games.value = []
+      hasMorePages.value = false
+    }
   } catch (err) {
-    console.error('Error fetching Games:', err);
+    Games.value = []
+    hasMorePages.value = false
   }
-};
+}
 
 onMounted(() => {
-  fetchGames(currentPage.value);
-});
+  fetchGames(currentPage.value)
+})
 
 const search = () => {
   if (searchQuery.value) {
-    router.push({ name: 'search', query: { q: searchQuery.value } });
+    router.push({ name: 'search', query: { q: searchQuery.value } })
   }
-};
+}
 
-const goToDetails = (id) => {
-  router.push({ name: 'details', params: { id } });
-};
+const goToDetails = id => {
+  router.push({ name: 'details', params: { id } })
+}
 
 const nextPage = () => {
   if (hasMorePages.value) {
-    currentPage.value++;
-    fetchGames(currentPage.value);
+    currentPage.value++
+    fetchGames(currentPage.value)
   }
-};
+}
 
 const prevPage = () => {
   if (currentPage.value > 1) {
-    currentPage.value--;
-    fetchGames(currentPage.value);
+    currentPage.value--
+    fetchGames(currentPage.value)
   }
-};
+}
 
-const getImageUrl = (imageName) => {
-  return `http://localhost:8080/api/images/get/${imageName}`;
-};
+const getImageUrl = imageName => {
+  return `/api/images/get/${imageName}`
+}
 
-const formatPrice = (price) => {
-  return price !== undefined ? `$${price.toFixed(2)}` : 'Price not available';
-};
+const formatPrice = price => {
+  return price !== undefined ? `$${price.toFixed(2)}` : 'Price not available'
+}
 </script>
 
 <style scoped>
@@ -131,7 +148,7 @@ const formatPrice = (price) => {
 .search-bar button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 0 4px 4px 0;
@@ -155,13 +172,15 @@ const formatPrice = (price) => {
   border-radius: 8px;
   padding: 1rem;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .game-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .game-card img {
@@ -192,7 +211,7 @@ const formatPrice = (price) => {
 
 .game-card .price {
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 .pagination-controls {
@@ -206,7 +225,7 @@ const formatPrice = (price) => {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   margin: 0 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -248,7 +267,7 @@ const formatPrice = (price) => {
 }
 
 .filter-sort select:focus {
-  border-color: #4CAF50;
+  border-color: #4caf50;
   outline: none;
 }
 </style>

@@ -3,27 +3,37 @@
     <nav class="navbar">
       <div class="navbar-buttons">
         <button @click="goHome">Home</button>
-        <button v-if="userLoggedIn" @click="logout" class="logout">Logout</button>
+        <button v-if="userLoggedIn" @click="logout" class="logout">
+          Logout
+        </button>
       </div>
       <h1 class="navbar-title">Profile</h1>
     </nav>
 
     <div v-if="userDetails">
       <div v-if="games.length > 0">
-        <button class="add-game-button" @click="showAddGamePopup = true">Add Game</button>
+        <button class="add-game-button" @click="showAddGamePopup = true">
+          Add Game
+        </button>
         <div class="game-grid">
           <div v-for="game in games" :key="game.id" class="game-card">
             <img :src="getImageUrl(game.image)" :alt="game.name" />
             <h3 class="game-title">{{ game.name }}</h3>
             <div class="game-actions">
-              <button @click="goToDetails(game.id)" class="details-button">Details</button>
-              <button @click="deleteGame(game.id)" class="delete-button">Delete</button>
+              <button @click="goToDetails(game.id)" class="details-button">
+                Details
+              </button>
+              <button @click="deleteGame(game.id)" class="delete-button">
+                Delete
+              </button>
             </div>
           </div>
         </div>
 
         <div class="pagination-controls">
-          <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+          <button @click="prevPage" :disabled="currentPage === 1">
+            Previous
+          </button>
           <span>Page {{ currentPage }}</span>
           <button @click="nextPage" :disabled="!hasMoreGames">Next</button>
         </div>
@@ -47,43 +57,81 @@
           <input v-model="newGame.name" type="text" id="name" required />
 
           <label for="price">Price:</label>
-          <input v-model="newGame.price" type="number" id="price" min="0" step="0.01" required />
+          <input
+            v-model="newGame.price"
+            type="number"
+            id="price"
+            min="0"
+            step="0.01"
+            required
+          />
 
           <label for="description">Description:</label>
           <textarea
-              v-model="newGame.description"
-              id="description"
-              required
-              maxlength="200"
-              rows="4"
-              class="fixed-textarea"
+            v-model="newGame.description"
+            id="description"
+            required
+            maxlength="200"
+            rows="4"
+            class="fixed-textarea"
           ></textarea>
           <small>{{ newGame.description.length }}/200 characters</small>
 
           <label for="image">Image:</label>
-          <input type="file" id="image" @change="handleImageUpload" accept="image/*" required />
+          <input
+            type="file"
+            id="image"
+            @change="handleImageUpload"
+            accept="image/*"
+            required
+          />
 
           <label for="releaseYear">Release Year:</label>
-          <input v-model="newGame.releaseYear" type="number" id="releaseYear" min="1950" :max="currentYear" required />
+          <input
+            v-model="newGame.releaseYear"
+            type="number"
+            id="releaseYear"
+            min="1950"
+            :max="currentYear"
+            required
+          />
 
           <label for="region">Region:</label>
           <input v-model="newGame.region" type="text" id="region" required />
 
           <label for="platform">Platform:</label>
-          <input v-model="newGame.platform" type="text" id="platform" required />
+          <input
+            v-model="newGame.platform"
+            type="text"
+            id="platform"
+            required
+          />
 
           <label for="publisher">Publisher:</label>
-          <input v-model="newGame.publisher" type="text" id="publisher" required />
+          <input
+            v-model="newGame.publisher"
+            type="text"
+            id="publisher"
+            required
+          />
 
           <label for="genre">Genre:</label>
           <input v-model="newGame.genre" type="text" id="genre" required />
 
           <label for="stock">Stock:</label>
-          <input v-model="newGame.stock" type="number" id="stock" min="0" required />
+          <input
+            v-model="newGame.stock"
+            type="number"
+            id="stock"
+            min="0"
+            required
+          />
 
           <div class="modal-actions">
             <button type="submit">Save</button>
-            <button @click="showAddGamePopup = false" type="button">Cancel</button>
+            <button @click="showAddGamePopup = false" type="button">
+              Cancel
+            </button>
           </div>
         </form>
       </div>
@@ -92,18 +140,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
-import axios from 'axios';
-import { useRouter } from "vue-router";
+import { ref, onMounted, watch, computed } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
-const userDetails = ref(null);
-const games = ref([]);
-const currentPage = ref(1);
-const itemsPerPage = 10;
-const hasMoreGames = ref(true);
-const userLoggedIn = ref(false);
-const showAddGamePopup = ref(false);
+const router = useRouter()
+const userDetails = ref(null)
+const games = ref([])
+const currentPage = ref(1)
+const itemsPerPage = 10
+const hasMoreGames = ref(true)
+const userLoggedIn = ref(false)
+const showAddGamePopup = ref(false)
 const newGame = ref({
   name: '',
   price: null,
@@ -115,157 +163,159 @@ const newGame = ref({
   publisher: '',
   genre: '',
   stock: null,
-  imageFile: null
-});
+  imageFile: null,
+})
 
-const currentYear = computed(() => new Date().getFullYear());
+const currentYear = computed(() => new Date().getFullYear())
 
-const generateUniqueFilename = (originalName) => {
-  const randomString = Math.random().toString(36).slice(2, 11);
-  const fileExtension = originalName.split('.').pop();
-  return `${randomString}.${fileExtension}`;
-};
+const generateUniqueFilename = originalName => {
+  return `${Math.random().toString(36).slice(2, 11)}.${originalName.split('.').pop()}`
+}
 
-const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const uniqueFilename = generateUniqueFilename(file.name);
-    newGame.value.image = uniqueFilename;
-
-    newGame.value.imageFile = file;
+const handleImageUpload = event => {
+  const files = event.target.files
+  if (files && files.length > 0) {
+    const lastFile = files[files.length - 1]
+    newGame.value.image = generateUniqueFilename(lastFile.name)
+    newGame.value.imageFile = lastFile
   }
-};
+}
 
 const saveGame = async () => {
   try {
-    const formData = new FormData();
-    formData.append('image', new File([newGame.value.imageFile], newGame.value.image));
+    const formData = new FormData()
+    formData.append(
+      'image',
+      new File([newGame.value.imageFile], newGame.value.image),
+    )
     await axios.post('/api/images/save', formData, {
       withCredentials: true,
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+        'Content-Type': 'multipart/form-data',
+      },
+    })
 
-    const gameData = { ...newGame.value };
-    delete gameData.imageFile;
+    const gameData = { ...newGame.value }
+    delete gameData.imageFile
 
     await axios.post('/api/games/save', gameData, {
-      withCredentials: true
-    });
+      withCredentials: true,
+    })
 
-    showAddGamePopup.value = false;
-    await fetchGames(currentPage.value);
+    showAddGamePopup.value = false
+    await fetchGames(currentPage.value)
   } catch (error) {
-    console.error('Error saving the game:', error);
+    console.error('Error saving the game:', error)
   }
-};
+}
 
 const checkUserLoggedIn = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/users/check', {
-      withCredentials: true
-    });
-    userLoggedIn.value = response.data.userLoggedIn;
-    return response.data.userLoggedIn;
+    const response = await axios.get('/api/users/check', {
+      withCredentials: true,
+    })
+    userLoggedIn.value = response.data.userLoggedIn
+    return response.data.userLoggedIn
   } catch (error) {
-    console.error('Error checking user login status:', error);
-    return false;
+    console.error('Error checking user login status:', error)
+    return false
   }
-};
+}
 
 const fetchUserDetails = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/users/get-details', {
-      withCredentials: true
-    });
-    userDetails.value = response.data;
+    const response = await axios.get('/api/users/get-details', {
+      withCredentials: true,
+    })
+    userDetails.value = response.data
   } catch (error) {
-    console.error('Error fetching user details:', error);
+    console.error('Error fetching user details:', error)
   }
-};
+}
 
 const fetchGames = async (page = 1) => {
   try {
-    const offset = (page - 1);
-    const response = await axios.get('http://localhost:8080/api/users/get-games', {
+    const offset = page - 1
+    const response = await axios.get('/api/users/get-games', {
       params: { offset },
-      withCredentials: true
-    });
-    games.value = response.data.items;
-    const totalGames = response.data.totalItems;
-    hasMoreGames.value = response.data.items.length === itemsPerPage && (currentPage.value * itemsPerPage) < totalGames;
+      withCredentials: true,
+    })
+    games.value = response.data.items
+    const totalGames = response.data.totalItems
+    hasMoreGames.value =
+      response.data.items.length === itemsPerPage &&
+      currentPage.value * itemsPerPage < totalGames
   } catch (error) {
-    console.error('Error fetching games:', error);
+    console.error('Error fetching games:', error)
   }
-};
+}
 
-const goToDetails = (id) => {
-  router.push({ name: 'details', params: { id } });
-};
+const goToDetails = id => {
+  router.push({ name: 'details', params: { id } })
+}
 
 const nextPage = () => {
   if (hasMoreGames.value) {
-    currentPage.value++;
-    fetchGames(currentPage.value);
+    currentPage.value++
+    fetchGames(currentPage.value)
   }
-};
+}
 
 const prevPage = () => {
   if (currentPage.value > 1) {
-    currentPage.value--;
-    fetchGames(currentPage.value);
+    currentPage.value--
+    fetchGames(currentPage.value)
   }
-};
+}
 
-const getImageUrl = (imageName) => {
-  return `http://localhost:8080/api/images/get/${imageName}`;
-};
+const getImageUrl = imageName => {
+  return `/api/images/get/${imageName}`
+}
 
 const goHome = () => {
-  router.push({ name: 'home' });
-};
+  router.push({ name: 'home' })
+}
 
 const logout = async () => {
   try {
-    await axios.post('http://localhost:8080/api/users/logout', {}, { withCredentials: true });
-    userLoggedIn.value = false;
-    await router.push({name: 'home'});
+    await axios.post('/api/users/logout', {}, { withCredentials: true })
+    userLoggedIn.value = false
+    await router.push({ name: 'home' })
   } catch (error) {
-    console.error('Error logging out:', error);
+    console.error('Error logging out:', error)
   }
-};
+}
 
-const deleteGame = async (gameId) => {
+const deleteGame = async gameId => {
   try {
     await axios.delete(`/api/games/delete`, {
       params: { gameId },
       withCredentials: true,
-      headers: { }
-    });
-    await fetchGames(currentPage.value);
+      headers: {},
+    })
+    await fetchGames(currentPage.value)
   } catch (error) {
-    console.error('Error deleting game:', error);
+    console.error('Error deleting game:', error)
   }
-};
+}
 
-watch(showAddGamePopup, (newVal) => {
+watch(showAddGamePopup, newVal => {
   if (newVal) {
-    document.body.classList.add('no-scroll');
+    document.body.classList.add('no-scroll')
   } else {
-    document.body.classList.remove('no-scroll');
+    document.body.classList.remove('no-scroll')
   }
-});
+})
 
 onMounted(async () => {
-  const loggedIn = await checkUserLoggedIn();
+  const loggedIn = await checkUserLoggedIn()
   if (!loggedIn) {
-    await router.push({ name: 'login' });
+    await router.push({ name: 'login' })
   } else {
-    await fetchUserDetails();
-    await fetchGames(currentPage.value);
+    await fetchUserDetails()
+    await fetchGames(currentPage.value)
   }
-});
+})
 </script>
 
 <style>
@@ -304,7 +354,7 @@ onMounted(async () => {
   margin-left: 10px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -331,7 +381,9 @@ onMounted(async () => {
   background-color: white;
   border-radius: 8px;
   padding: 1rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -358,7 +410,8 @@ onMounted(async () => {
   justify-content: space-between;
 }
 
-.details-button, .delete-button {
+.details-button,
+.delete-button {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   border: none;
@@ -367,21 +420,21 @@ onMounted(async () => {
 }
 
 .details-button {
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
 }
 
 .details-button:hover {
-  background-color: #1976D2;
+  background-color: #1976d2;
 }
 
 .delete-button {
-  background-color: #F44336;
+  background-color: #f44336;
   color: white;
 }
 
 .delete-button:hover {
-  background-color: #D32F2F;
+  background-color: #d32f2f;
 }
 
 .pagination-controls {
@@ -411,7 +464,7 @@ onMounted(async () => {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   margin: 0 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -492,12 +545,12 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.modal-actions button[type="submit"] {
-  background-color: #4CAF50;
+.modal-actions button[type='submit'] {
+  background-color: #4caf50;
   color: white;
 }
 
-.modal-actions button[type="button"] {
+.modal-actions button[type='button'] {
   background-color: #f44336;
   color: white;
 }
@@ -505,7 +558,7 @@ onMounted(async () => {
 .add-game-button {
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;

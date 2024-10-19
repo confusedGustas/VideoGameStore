@@ -4,14 +4,23 @@
   </div>
 
   <div class="search-bar">
-    <input v-model="searchQuery" @keyup.enter="search" placeholder="Search Games..." />
+    <input
+      v-model="searchQuery"
+      @keyup.enter="search"
+      placeholder="Search Games..."
+    />
     <button @click="search">Search</button>
   </div>
 
   <div class="search-results">
     <h2>Search Results</h2>
     <div class="game-grid">
-      <div v-for="game in games" :key="game.id" class="game-card" @click="goToDetails(game.id)">
+      <div
+        v-for="game in games"
+        :key="game.id"
+        class="game-card"
+        @click="goToDetails(game.id)"
+      >
         <img :src="getImageUrl(game.image)" :alt="game.name" />
         <h3 class="game-title">{{ game.name }}</h3>
         <p class="price">${{ game.price.toFixed(2) }}</p>
@@ -21,46 +30,49 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import axios from 'axios';
-import NavbarComponent from "@/components/NavbarComponent.vue";
+import { ref, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import axios from 'axios'
+import NavbarComponent from '@/components/NavbarComponent.vue'
 
-const router = useRouter();
-const route = useRoute();
-const games = ref([]);
-const searchQuery = ref('');
+const router = useRouter()
+const route = useRoute()
+const games = ref([])
+const searchQuery = ref('')
 
 const fetchGames = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/games?search=${searchQuery.value}`);
-    games.value = response.data.items;
+    const response = await axios.get(`/api/games?search=${searchQuery.value}`)
+    games.value = response.data.items
   } catch (error) {
-    console.error('Error fetching games:', error);
+    console.error('Error fetching games:', error)
   }
-};
+}
 
 const search = () => {
-  fetchGames();
-};
+  fetchGames()
+}
 
 onMounted(() => {
-  searchQuery.value = route.query.q || '';
-  fetchGames();
-});
+  searchQuery.value = route.query.q || ''
+  fetchGames()
+})
 
-watch(() => route.query.q, (newQuery) => {
-  searchQuery.value = newQuery;
-  fetchGames();
-});
+watch(
+  () => route.query.q,
+  newQuery => {
+    searchQuery.value = newQuery
+    fetchGames()
+  },
+)
 
-const goToDetails = (id) => {
-  router.push({ name: 'details', params: { id } });
-};
+const goToDetails = id => {
+  router.push({ name: 'details', params: { id } })
+}
 
-const getImageUrl = (imageName) => {
-  return `http://localhost:8080/api/images/get/${imageName}`;
-};
+const getImageUrl = imageName => {
+  return `/api/images/get/${imageName}`
+}
 </script>
 
 <style scoped>
@@ -82,7 +94,7 @@ const getImageUrl = (imageName) => {
 .search-bar button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 0 4px 4px 0;
@@ -111,7 +123,9 @@ h2 {
   border-radius: 8px;
   padding: 1rem;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -148,6 +162,6 @@ h2 {
 
 .game-card .price {
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
 }
 </style>
