@@ -12,7 +12,7 @@ import lombok.Getter;
 public class SaveUserRequestDto {
 
     @NotBlank(message = "First name needs to be provided")
-    @Pattern(regexp = ".*[A-Za-z].*", message = "First name must contain at least one English letter")
+    @Pattern(regexp = "^[^A-Za-z]*[A-Za-z].*$", message = "First name must contain at least one English letter")
     @Schema(example = "Gustas")
     String username;
 

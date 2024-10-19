@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ChangeUserUsernameDto {
 
     @NotBlank(message = "New Username needs to be provided")
-    @Pattern(regexp = ".*[A-Za-z].*", message = "New Username at least one English letter")
+    @Pattern(regexp = "^[^A-Za-z]*[A-Za-z].*$", message = "New Username must contain at least one English letter")
     @Schema(example = "Antanas321")
     private String username;
 
