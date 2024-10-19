@@ -113,9 +113,12 @@ h2 {
 }
 
 .game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  margin-left: 0;
+  margin-top: -0.88rem;
 }
 
 .game-card {

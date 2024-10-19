@@ -169,43 +169,50 @@ const newGame = ref({
 const currentYear = computed(() => new Date().getFullYear())
 
 const generateUniqueFilename = originalName => {
-  return `${Math.random().toString(36).slice(2, 11)}.${originalName.split('.').pop()}`
+  const now = new Date();
+  const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+  const extension = originalName.split('.').pop();
+  return `${timestamp}.${extension}`;
 }
 
 const handleImageUpload = event => {
-  const files = event.target.files
+  const files = event.target.files;
   if (files && files.length > 0) {
-    const lastFile = files[files.length - 1]
-    newGame.value.image = generateUniqueFilename(lastFile.name)
-    newGame.value.imageFile = lastFile
+    const lastFile = files[files.length - 1];
+    newGame.value.image = generateUniqueFilename(lastFile.name);
+    newGame.value.imageFile = lastFile;
   }
 }
 
 const saveGame = async () => {
   try {
-    const formData = new FormData()
+    const formData = new FormData();
     formData.append(
       'image',
-      new File([newGame.value.imageFile], newGame.value.image),
-    )
+      new File([newGame.value.imageFile], newGame.value.image)
+    );
     await axios.post('/api/images/save', formData, {
       withCredentials: true,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    })
+    });
 
-    const gameData = { ...newGame.value }
-    delete gameData.imageFile
+    const gameData = { ...newGame.value };
+    delete gameData.imageFile;
 
     await axios.post('/api/games/save', gameData, {
       withCredentials: true,
-    })
+    });
 
-    showAddGamePopup.value = false
-    await fetchGames(currentPage.value)
+    document.querySelector('input[type="file"]').value = '';
+    newGame.value.imageFile = null;
+    newGame.value.image = '';
+
+    showAddGamePopup.value = false;
+    await fetchGames(currentPage.value);
   } catch (error) {
-    console.error('Error saving the game:', error)
+    console.error('Error saving the game:', error);
   }
 }
 
@@ -367,9 +374,11 @@ onMounted(async () => {
 }
 
 .game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  margin-left: 0;
 }
 
 .game-card {
