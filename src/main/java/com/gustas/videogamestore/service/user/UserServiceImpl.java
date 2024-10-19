@@ -5,6 +5,9 @@ import com.gustas.videogamestore.dao.user.UserDao;
 import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.Role;
 import com.gustas.videogamestore.domain.User;
+import com.gustas.videogamestore.dto.request.ChangeUserEmailDto;
+import com.gustas.videogamestore.dto.request.ChangeUserPasswordDto;
+import com.gustas.videogamestore.dto.request.ChangeUserUsernameDto;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.CheckUserResponseDto;
@@ -13,6 +16,7 @@ import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
 import com.gustas.videogamestore.mapper.GameMapper;
 import com.gustas.videogamestore.mapper.UserMapper;
+import com.gustas.videogamestore.repository.UserRepository;
 import com.gustas.videogamestore.service.session.SessionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,6 +46,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private SessionService sessionService;
     private GameDao gameDao;
+    private UserRepository userRepository;
 
     @Override
     public void loginUser(LoginUserRequestDto loginUserRequestDto, HttpSession session) {
@@ -90,6 +95,33 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             return buildCheckUserResponse(false);
         }
+    }
+
+    @Override
+    public void changeUsername(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                               ChangeUserUsernameDto changeUserUsernameDto) {
+        User user = sessionService.getUserFromSessionId();
+        user.setUsername(changeUserUsernameDto.getUsername());
+        userRepository.save(user);
+        logoutUser(authentication, request, response);
+    }
+
+    @Override
+    public void changePassword(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                               ChangeUserPasswordDto changeUserPasswordDto) {
+        User user = sessionService.getUserFromSessionId();
+        user.setPassword(encodeUserPassword(changeUserPasswordDto.getPassword()));
+        userRepository.save(user);
+        logoutUser(authentication, request, response);
+    }
+
+    @Override
+    public void changeEmail(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                            ChangeUserEmailDto changeUserEmailDto) {
+        User user = sessionService.getUserFromSessionId();
+        user.setEmail(changeUserEmailDto.getEmail());
+        userRepository.save(user);
+        logoutUser(authentication, request, response);
     }
 
     @Override

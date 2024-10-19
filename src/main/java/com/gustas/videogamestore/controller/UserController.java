@@ -1,5 +1,8 @@
 package com.gustas.videogamestore.controller;
 
+import com.gustas.videogamestore.dto.request.ChangeUserEmailDto;
+import com.gustas.videogamestore.dto.request.ChangeUserPasswordDto;
+import com.gustas.videogamestore.dto.request.ChangeUserUsernameDto;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.CheckUserResponseDto;
@@ -71,6 +74,27 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public CheckUserResponseDto checkUser() {
         return userService.checkUser();
+    }
+
+    @PostMapping("/update-username")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUsername(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                               @Valid @RequestBody ChangeUserUsernameDto changeUserUsernameDto) {
+        userService.changeUsername(authentication, request, response, changeUserUsernameDto);
+    }
+
+    @PostMapping("/update-password")
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePassword(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                               @Valid @RequestBody ChangeUserPasswordDto changeUserPasswordDto) {
+        userService.changePassword(authentication, request, response, changeUserPasswordDto);
+    }
+
+    @PostMapping("/update-email")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateEmail(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                            @Valid @RequestBody ChangeUserEmailDto changeUserEmailDto) {
+        userService.changeEmail(authentication, request, response, changeUserEmailDto);
     }
 
 }

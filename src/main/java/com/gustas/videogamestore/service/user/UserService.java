@@ -1,5 +1,8 @@
 package com.gustas.videogamestore.service.user;
 
+import com.gustas.videogamestore.dto.request.ChangeUserEmailDto;
+import com.gustas.videogamestore.dto.request.ChangeUserPasswordDto;
+import com.gustas.videogamestore.dto.request.ChangeUserUsernameDto;
 import com.gustas.videogamestore.dto.request.LoginUserRequestDto;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.CheckUserResponseDto;
@@ -21,5 +24,11 @@ public interface UserService {
     PaginatedResponseDto getUserGames(int pageOffset);
     void deleteUser(HttpServletRequest request, HttpServletResponse response);
     CheckUserResponseDto checkUser();
+    void changeUsername(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                        ChangeUserUsernameDto changeUserUsernameDto);
+    void changePassword(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                        ChangeUserPasswordDto changeUserPasswordDto);
+    void changeEmail(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
+                     ChangeUserEmailDto changeUserEmailDto);
 
 }
