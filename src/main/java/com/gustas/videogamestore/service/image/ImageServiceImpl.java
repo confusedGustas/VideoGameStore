@@ -1,48 +1,56 @@
 package com.gustas.videogamestore.service.image;
 
+import com.gustas.videogamestore.dao.game.GameDao;
 import com.gustas.videogamestore.dao.image.ImageDao;
+import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.Image;
-import com.gustas.videogamestore.exception.ImageNotFoundException;
-import com.gustas.videogamestore.util.ImageUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 
+import static com.gustas.videogamestore.util.ImageUtil.getRandomFilenameWithExtension;
+
 @Service
 @AllArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
     private ImageDao imageDao;
+    private GameDao gameDao;
 
     @Override
-    public byte[] getImage(String name) throws DataFormatException, IOException {
-        Optional<Image> image = imageDao.getImage(name);
+    public byte[] getImage(Long gameId) throws DataFormatException, IOException {
+        Game game = gameDao.getGame(gameId);
 
-        if (image.isEmpty()) {
-            throw new ImageNotFoundException("Image " + name + " not found");
+        if (game == null) {
+            throw new IllegalArgumentException("Game not found");
         }
 
-        return ImageUtil.decompressImage(image.get().getImageData());
+        Optional<Image> image = imageDao.getImage(game.getImage().getId());
+
+        if (image.isEmpty()) {
+            throw new IllegalArgumentException("Image not found");
+        }
+
+        return image.get().getImageData();
     }
 
     @Override
-    public void saveImage(MultipartFile file) throws IOException {
+    public Image saveImage(MultipartFile file) throws IOException {
         BufferedImage isImage = ImageIO.read(file.getInputStream());
         if (isImage == null) {
             throw new IllegalArgumentException("Invalid image");
         }
 
-        if (imageDao.getImage(file.getOriginalFilename()).isPresent()) {
-            throw new IllegalArgumentException("Image with name " + file.getOriginalFilename() + " already exists");
-        }
-
-        Image image = new Image(ImageUtil.compressImage(file.getBytes()), file.getOriginalFilename());
+        Image image = new Image(file.getBytes(), getRandomFilenameWithExtension(file));
         imageDao.save(image);
+
+        return image;
     }
 
 }

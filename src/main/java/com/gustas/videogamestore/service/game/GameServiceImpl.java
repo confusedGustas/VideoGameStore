@@ -10,18 +10,21 @@ import com.gustas.videogamestore.dao.region.RegionDao;
 import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.GameSearchCriteria;
 import com.gustas.videogamestore.domain.Genre;
+import com.gustas.videogamestore.domain.Image;
 import com.gustas.videogamestore.domain.Platform;
 import com.gustas.videogamestore.domain.Publisher;
 import com.gustas.videogamestore.domain.Region;
 import com.gustas.videogamestore.domain.SortOrder;
-import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
+import com.gustas.videogamestore.dto.request.GameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.mapper.GameMapper;
+import com.gustas.videogamestore.service.image.ImageService;
 import com.gustas.videogamestore.service.session.SessionService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +32,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +51,8 @@ public class GameServiceImpl implements GameService {
     private RegionDao regionDao;
     private PublisherDao publisherDao;
     private SessionService sessionService;
-    private ImageDao imageDao;
+    private ImageService imageService;
+    private ImageDao imageDoa;
 
     @Override
     public PaginatedResponseDto getGames(GameSearchCriteria gameSearchCriteria) {
@@ -62,22 +68,53 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @Transactional
     public void deleteGame(Long gameId) {
-        Game game = gameDao.getGame(gameId);
         gameDao.deleteGame(gameId);
-        imageDao.deleteImage(game.getImage());
     }
 
     @Override
+    @Transactional
     public GameResponseDto getGame(Long gameId) {
         return GameMapper.toDto(gameDao.getGame(gameId));
     }
 
     @Override
-    public GameResponseDto saveGame(SaveGameRequestDto saveGameRequestDto) {
-        Game game = createGameEntity(saveGameRequestDto);
+    @Transactional
+    public void updateGame(Long gameId, GameRequestDto gameRequestDto, MultipartFile file) throws IOException {
+        Game game = gameDao.getGame(gameId);
+
+        if (game == null) {
+            throw new IllegalArgumentException("Game with id " + gameId + " not found");
+        }
+
+        Image image = game.getImage();
+        image.setImageData(file.getBytes());
+
+        imageDoa.save(image);
+        gameDao.saveGame(updateInstance(gameRequestDto, file, game));
+    }
+
+    @Override
+    @Transactional
+    public GameResponseDto saveGame(GameRequestDto gameRequestDto, MultipartFile file) throws IOException {
+        Game game = createGameEntity(gameRequestDto, file);
 
         return GameMapper.toDto(gameDao.saveGame(game));
+    }
+
+    private Game updateInstance(GameRequestDto gameRequestDto, MultipartFile file, Game game) throws IOException {
+        game.setName(gameRequestDto.getName());
+        game.setStock(gameRequestDto.getStock());
+        game.setPrice(gameRequestDto.getPrice());
+        game.setDescription(gameRequestDto.getDescription());
+        game.setReleaseYear(gameRequestDto.getReleaseYear());
+        game.setGenre(getOrCreateGenre(gameRequestDto));
+        game.setActivationPlatform(getOrCreatePlatform(gameRequestDto));
+        game.setActivationRegion(getOrCreateRegion(gameRequestDto));
+        game.setPublisher(getOrCreatePublisher(gameRequestDto));
+
+        return game;
     }
 
     private Specification<Game> createBookSpecification(GameSearchCriteria gameSearchCriteria) {
@@ -122,27 +159,41 @@ public class GameServiceImpl implements GameService {
         return Sort.by(sortOrder == SortOrder.DESC ? Sort.Order.desc(sortColumn) : Sort.Order.asc(sortColumn));
     }
 
-    private Game createGameEntity(SaveGameRequestDto saveGameRequestDto) {
-        Game game = validateRequest(saveGameRequestDto);
+    private Game createGameEntity(GameRequestDto gameRequestDto, MultipartFile file) throws IOException {
+        Game game = validateRequest(gameRequestDto);
         game.setUser(sessionService.getUserFromSessionId());
+        game.setImage(imageService.saveImage(file));
 
         return game;
     }
 
-    private Game validateRequest(SaveGameRequestDto saveGameRequestDto) {
-        Genre genre = findOrCreate(saveGameRequestDto.getGenre(),
-                genreDao::findByGenreName, Genre::new, genreDao::save);
+    private Game validateRequest(GameRequestDto gameRequestDto) {
+        Genre genre = getOrCreateGenre(gameRequestDto);
+        Platform platform = getOrCreatePlatform(gameRequestDto);
+        Region region = getOrCreateRegion(gameRequestDto);
+        Publisher publisher = getOrCreatePublisher(gameRequestDto);
 
-        Platform platform = findOrCreate(saveGameRequestDto.getPlatform(),
-                platformDao::findByPlatformName, Platform::new, platformDao::save);
+        return GameMapper.toEntity(gameRequestDto, genre, platform, region, publisher);
+    }
 
-        Region region = findOrCreate(saveGameRequestDto.getRegion(),
-                regionDao::findByRegionName, Region::new, regionDao::save);
-
-        Publisher publisher = findOrCreate(saveGameRequestDto.getPublisher(),
+    private Publisher getOrCreatePublisher(GameRequestDto gameRequestDto) {
+        return findOrCreate(gameRequestDto.getPublisher(),
                 publisherDao::findByPublisherName, Publisher::new, publisherDao::save);
+    }
 
-        return GameMapper.toEntity(saveGameRequestDto, genre, platform, region, publisher);
+    private Region getOrCreateRegion(GameRequestDto gameRequestDto) {
+        return findOrCreate(gameRequestDto.getRegion(),
+                regionDao::findByRegionName, Region::new, regionDao::save);
+    }
+
+    private Platform getOrCreatePlatform(GameRequestDto gameRequestDto) {
+        return findOrCreate(gameRequestDto.getPlatform(),
+                platformDao::findByPlatformName, Platform::new, platformDao::save);
+    }
+
+    private Genre getOrCreateGenre(GameRequestDto gameRequestDto) {
+        return findOrCreate(gameRequestDto.getGenre(),
+                genreDao::findByGenreName, Genre::new, genreDao::save);
     }
 
     private <T> T findOrCreate(String name,

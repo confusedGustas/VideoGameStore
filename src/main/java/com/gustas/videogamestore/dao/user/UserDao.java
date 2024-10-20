@@ -10,5 +10,8 @@ public interface UserDao {
     Optional<User> findByEmail(String email);
     User findById(Long id);
     void deleteUser(User user);
+    void updateUsername(User user, String username);
+    void updateEmail(User user, String email);
+    void updatePassword(User user, String password);
     
 }

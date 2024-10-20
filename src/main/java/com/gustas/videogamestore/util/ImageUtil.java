@@ -2,48 +2,37 @@ package com.gustas.videogamestore.util;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
+import org.springframework.web.multipart.MultipartFile;
+import java.util.Random;
 
 @Component
 @AllArgsConstructor
 public class ImageUtil {
 
-    public static byte[] compressImage(byte[] data) throws IOException {
-        Deflater deflater = new Deflater();
-        deflater.setLevel(Deflater.BEST_COMPRESSION);
-        deflater.setInput(data);
-        deflater.finish();
+    public static String getRandomFilenameWithExtension(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename != null && originalFilename.contains(".")) {
+            int dotIndex = originalFilename.lastIndexOf('.');
+            String extension = originalFilename.substring(dotIndex);
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        while (!deflater.finished()) {
-            int size = deflater.deflate(tmp);
-            outputStream.write(tmp, 0, size);
+            String randomString = generateRandomString(10);
+
+            return randomString + extension;
         }
-
-        outputStream.close();
-
-        return outputStream.toByteArray();
+        return generateRandomString(10);
     }
 
-    public static byte[] decompressImage(byte[] data) throws IOException, DataFormatException {
-        Inflater inflater = new Inflater();
-        inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+    public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder(length);
 
-        byte[] tmp = new byte[4*1024];
-
-        while (!inflater.finished()) {
-            int count = inflater.inflate(tmp);
-            outputStream.write(tmp, 0, count);
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            stringBuilder.append(characters.charAt(randomIndex));
         }
-        outputStream.close();
 
-        return outputStream.toByteArray();
+        return stringBuilder.toString();
     }
 
 }

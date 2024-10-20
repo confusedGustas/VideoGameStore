@@ -16,7 +16,6 @@ public class GameResponseDto {
     private String name;
     private BigDecimal price;
     private String description;
-    private String image;
     private Integer releaseYear;
     private BigDecimal stock;
     private Region activationRegion;

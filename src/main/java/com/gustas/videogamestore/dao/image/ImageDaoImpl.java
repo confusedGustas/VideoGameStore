@@ -15,19 +15,13 @@ public class ImageDaoImpl implements ImageDao {
 
     @Override
     @Transactional
-    public Optional<Image> getImage(String name) {
-        return imageRepository.findByName(name);
+    public Optional<Image> getImage(Long gameId) {
+        return imageRepository.findById(gameId);
     }
 
     @Override
     public void save(Image image) {
         imageRepository.save(image);
-    }
-
-    @Override
-    @Transactional
-    public void deleteImage(String name) {
-        imageRepository.deleteByName(name);
     }
 
 }

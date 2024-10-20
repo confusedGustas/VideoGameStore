@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
-public class SaveGameRequestDto {
+public class GameRequestDto {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -17,8 +17,6 @@ public class SaveGameRequestDto {
     private BigDecimal price;
     @NotBlank(message = "Description is required")
     private String description;
-    @NotBlank(message = "Image is required")
-    private String image;
     @NotNull @Min(value = 0, message = "Release date must be greater than 0")
     private Integer releaseYear;
     @NotBlank(message = "Region is required")

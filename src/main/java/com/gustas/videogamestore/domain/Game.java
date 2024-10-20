@@ -1,5 +1,6 @@
 package com.gustas.videogamestore.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -28,7 +30,6 @@ public class Game {
     private String name;
     private BigDecimal price;
     private String description;
-    private String image;
     private Integer releaseYear;
     private BigDecimal stock;
 
@@ -51,5 +52,9 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "image_id")
+    private Image image;
 
 }

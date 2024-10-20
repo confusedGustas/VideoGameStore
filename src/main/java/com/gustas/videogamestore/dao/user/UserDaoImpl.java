@@ -2,6 +2,7 @@ package com.gustas.videogamestore.dao.user;
 
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public User findById(Long id) {
         return userRepository.findByIdWithGames(id);
     }
@@ -35,6 +37,24 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+    @Override
+    public void updateUsername(User user, String username) {
+        user.setUsername(username);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateEmail(User user, String email) {
+        user.setEmail(email);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updatePassword(User user, String password) {
+        user.setPassword(password);
+        userRepository.save(user);
     }
 
 }

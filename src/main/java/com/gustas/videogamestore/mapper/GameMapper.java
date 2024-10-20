@@ -5,7 +5,7 @@ import com.gustas.videogamestore.domain.Genre;
 import com.gustas.videogamestore.domain.Platform;
 import com.gustas.videogamestore.domain.Publisher;
 import com.gustas.videogamestore.domain.Region;
-import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
+import com.gustas.videogamestore.dto.request.GameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 
 import java.util.Collections;
@@ -17,21 +17,20 @@ public class GameMapper {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated.");
     }
 
-    public static Game toEntity(SaveGameRequestDto saveGameRequestDto,
+    public static Game toEntity(GameRequestDto gameRequestDto,
                                 Genre genre,
                                 Platform platform,
                                 Region region,
                                 Publisher publisher) {
         Game game = new Game();
 
-        game.setName(saveGameRequestDto.getName());
-        game.setPrice(saveGameRequestDto.getPrice());
-        game.setReleaseYear(saveGameRequestDto.getReleaseYear());
+        game.setName(gameRequestDto.getName());
+        game.setPrice(gameRequestDto.getPrice());
+        game.setReleaseYear(gameRequestDto.getReleaseYear());
         game.setGenre(genre);
         game.setActivationPlatform(platform);
-        game.setStock(saveGameRequestDto.getStock());
-        game.setImage(saveGameRequestDto.getImage());
-        game.setDescription(saveGameRequestDto.getDescription());
+        game.setStock(gameRequestDto.getStock());
+        game.setDescription(gameRequestDto.getDescription());
         game.setActivationRegion(region);
         game.setPublisher(publisher);
 
@@ -48,7 +47,6 @@ public class GameMapper {
         dto.setGenre(game.getGenre());
         dto.setActivationPlatform(game.getActivationPlatform());
         dto.setStock(game.getStock());
-        dto.setImage(game.getImage());
         dto.setDescription(game.getDescription());
         dto.setActivationRegion(game.getActivationRegion());
         dto.setPublisher(game.getPublisher());

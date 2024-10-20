@@ -21,7 +21,7 @@
         class="game-card"
         @click="goToDetails(game.id)"
       >
-        <img :src="getImageUrl(game.image)" :alt="game.name" />
+        <img :src="getImageUrl(game.id)" :alt="game.name" />
         <h3 class="game-title">{{ game.name }}</h3>
         <p class="price">${{ game.price.toFixed(2) }}</p>
       </div>
@@ -70,8 +70,8 @@ const goToDetails = id => {
   router.push({ name: 'details', params: { id } })
 }
 
-const getImageUrl = imageName => {
-  return `/api/images/get/${imageName}`
+const getImageUrl = imageId => {
+  return `/api/images/get/${imageId}`
 }
 </script>
 

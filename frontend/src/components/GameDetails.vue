@@ -6,7 +6,7 @@
   <div class="game-details">
     <div v-if="game" class="game-info">
       <div class="image-container">
-        <img :src="getImageUrl(game.image)" :alt="game.name" />
+        <img :src="getImageUrl(game.id)" :alt="game.name" />
       </div>
       <div class="info-container">
         <h2>{{ game.name }}</h2>
@@ -54,8 +54,8 @@ const goBack = () => {
   router.push({ name: 'home' })
 }
 
-const getImageUrl = imageName => {
-  return `/api/images/get/${imageName}`
+const getImageUrl = imageId => {
+  return `/api/images/get/${imageId}`
 }
 </script>
 

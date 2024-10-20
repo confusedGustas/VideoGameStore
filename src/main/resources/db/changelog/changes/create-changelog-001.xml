@@ -34,7 +34,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
         <addAutoIncrement columnName="id" tableName="users" startWith="50"/>
 
         <createTable tableName="genres">
@@ -88,7 +87,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="TEXT"/>
-            <column name="image" type="VARCHAR(255)"/>
+            <column name="image_id" type="BIGINT"/>
             <column name="release_year" type="INTEGER"/>
             <column name="region_id" type="BIGINT"/>
             <column name="platform_id" type="BIGINT"/>
@@ -116,6 +115,19 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <createTable tableName="images">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="image_data" type="blob">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement columnName="id" tableName="images" startWith="50"/>
 
         <addForeignKeyConstraint baseTableName="games"
                                  baseColumnNames="region_id"
@@ -147,32 +159,10 @@
                                  referencedTableName="users"
                                  referencedColumnNames="id"/>
 
-        <addForeignKeyConstraint baseTableName="game_available_platforms"
-                                 baseColumnNames="game_id"
-                                 constraintName="fk_game_available_platforms_game_id"
-                                 referencedTableName="games"
-                                 referencedColumnNames="id"/>
-
-        <addForeignKeyConstraint baseTableName="game_languages"
-                                 baseColumnNames="game_id"
-                                 constraintName="fk_game_languages_game_id"
-                                 referencedTableName="games"
+        <addForeignKeyConstraint baseTableName="games"
+                                 baseColumnNames="image_id"
+                                 constraintName="fk_game_images_game_id"
+                                 referencedTableName="images"
                                  referencedColumnNames="id"/>
     </changeSet>
-
-    <changeSet id="2" author="Gustas Antanas Gaigalas">
-        <createTable tableName="images">
-            <column name="id" type="BIGINT">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="image_data" type="blob">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <addAutoIncrement columnName="id" tableName="images" startWith="50"/>
-    </changeSet>
-
 </databaseChangeLog>

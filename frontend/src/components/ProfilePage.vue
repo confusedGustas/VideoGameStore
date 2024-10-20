@@ -17,7 +17,7 @@
         </button>
         <div class="game-grid">
           <div v-for="game in games" :key="game.id" class="game-card">
-            <img :src="getImageUrl(game.image)" :alt="game.name" />
+            <img :src="getImageUrl(game.id)" :alt="game.name" />
             <h3 class="game-title">{{ game.name }}</h3>
             <div class="game-actions">
               <button @click="goToDetails(game.id)" class="details-button">
@@ -187,22 +187,29 @@ const handleImageUpload = event => {
 const saveGame = async () => {
   try {
     const formData = new FormData();
-    formData.append(
-      'image',
-      new File([newGame.value.imageFile], newGame.value.image)
-    );
-    await axios.post('/api/images/save', formData, {
+
+    formData.append('name', newGame.value.name);
+    formData.append('price', newGame.value.price);
+    formData.append('description', newGame.value.description);
+    formData.append('releaseYear', newGame.value.releaseYear);
+    formData.append('region', newGame.value.region);
+    formData.append('platform', newGame.value.platform);
+    formData.append('publisher', newGame.value.publisher);
+    formData.append('genre', newGame.value.genre);
+    formData.append('stock', newGame.value.stock);
+
+    if (newGame.value.imageFile) {
+      formData.append(
+        'image',
+        new File([newGame.value.imageFile], newGame.value.image)
+      );
+    }
+
+    await axios.post('/api/games/save', formData, {
       withCredentials: true,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    });
-
-    const gameData = { ...newGame.value };
-    delete gameData.imageFile;
-
-    await axios.post('/api/games/save', gameData, {
-      withCredentials: true,
     });
 
     document.querySelector('input[type="file"]').value = '';
@@ -214,7 +221,7 @@ const saveGame = async () => {
   } catch (error) {
     console.error('Error saving the game:', error);
   }
-}
+};
 
 const checkUserLoggedIn = async () => {
   try {
@@ -275,8 +282,8 @@ const prevPage = () => {
   }
 }
 
-const getImageUrl = imageName => {
-  return `/api/images/get/${imageName}`
+const getImageUrl = imageId => {
+  return `/api/images/get/${imageId}`
 }
 
 const goHome = () => {

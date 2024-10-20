@@ -2,17 +2,26 @@ package com.gustas.videogamestore.controller;
 
 import com.gustas.videogamestore.domain.GameSearchCriteria;
 import com.gustas.videogamestore.domain.SortOrder;
-import com.gustas.videogamestore.dto.request.SaveGameRequestDto;
+import com.gustas.videogamestore.dto.request.GameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
 import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.service.game.GameService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("api/games")
@@ -22,16 +31,15 @@ public class GameController {
 
     private GameService gameService;
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    @CacheEvict(value = "games", allEntries = true)
-    public GameResponseDto saveGame(@Valid @RequestBody SaveGameRequestDto saveGameRequestDto) {
-        return gameService.saveGame(saveGameRequestDto);
+    public GameResponseDto saveGame(@ModelAttribute @Valid GameRequestDto gameRequestDto,
+                                    @RequestParam("image") MultipartFile file) throws IOException {
+        return gameService.saveGame(gameRequestDto, file);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @Cacheable(value = "games", key = "{#limit, #offset, #sortOrder, #sortColumn, #search}")
     public PaginatedResponseDto getGames(@RequestParam(required = false) Integer limit,
                                          @RequestParam(required = false) Integer offset,
                                          @RequestParam(required = false) SortOrder sortOrder,
@@ -42,7 +50,6 @@ public class GameController {
 
     @DeleteMapping("/delete")
     @ResponseStatus(HttpStatus.OK)
-    @CacheEvict(value = "games", allEntries = true)
     public void deleteGame(@RequestParam Long gameId) {
         gameService.deleteGame(gameId);
     }
@@ -51,6 +58,13 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public GameResponseDto getGame(@PathVariable Long gameId) {
         return gameService.getGame(gameId);
+    }
+
+    @PostMapping(value = "/update-game", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateGame(@ModelAttribute @Valid GameRequestDto gameRequestDto, Long gameId,
+                                      @RequestParam("image") MultipartFile file) throws IOException {
+        gameService.updateGame(gameId, gameRequestDto, file);
     }
 
 }

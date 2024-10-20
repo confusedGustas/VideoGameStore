@@ -16,7 +16,6 @@ import com.gustas.videogamestore.dto.response.PaginatedResponseDto;
 import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
 import com.gustas.videogamestore.mapper.GameMapper;
 import com.gustas.videogamestore.mapper.UserMapper;
-import com.gustas.videogamestore.repository.UserRepository;
 import com.gustas.videogamestore.service.session.SessionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,7 +45,6 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private SessionService sessionService;
     private GameDao gameDao;
-    private UserRepository userRepository;
 
     @Override
     public void loginUser(LoginUserRequestDto loginUserRequestDto, HttpSession session) {
@@ -100,27 +98,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeUsername(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
                                ChangeUserUsernameDto changeUserUsernameDto) {
-        User user = sessionService.getUserFromSessionId();
-        user.setUsername(changeUserUsernameDto.getUsername());
-        userRepository.save(user);
+        userDao.updateUsername(sessionService.getUserFromSessionId(), changeUserUsernameDto.getUsername());
         logoutUser(authentication, request, response);
     }
 
     @Override
     public void changePassword(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
                                ChangeUserPasswordDto changeUserPasswordDto) {
-        User user = sessionService.getUserFromSessionId();
-        user.setPassword(encodeUserPassword(changeUserPasswordDto.getPassword()));
-        userRepository.save(user);
+        userDao.updatePassword(sessionService.getUserFromSessionId(), encodeUserPassword(changeUserPasswordDto.getPassword()));
         logoutUser(authentication, request, response);
     }
 
     @Override
     public void changeEmail(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
                             ChangeUserEmailDto changeUserEmailDto) {
-        User user = sessionService.getUserFromSessionId();
-        user.setEmail(changeUserEmailDto.getEmail());
-        userRepository.save(user);
+        userDao.updateEmail(sessionService.getUserFromSessionId(), changeUserEmailDto.getEmail());
         logoutUser(authentication, request, response);
     }
 
