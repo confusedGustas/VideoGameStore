@@ -92,7 +92,7 @@ public class GameServiceImpl implements GameService {
         image.setImageData(file.getBytes());
 
         imageDoa.save(image);
-        gameDao.saveGame(updateInstance(gameRequestDto, file, game));
+        gameDao.saveGame(updateInstance(gameRequestDto, game));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class GameServiceImpl implements GameService {
         return GameMapper.toDto(gameDao.saveGame(game));
     }
 
-    private Game updateInstance(GameRequestDto gameRequestDto, MultipartFile file, Game game) throws IOException {
+    private Game updateInstance(GameRequestDto gameRequestDto, Game game) throws IOException {
         game.setName(gameRequestDto.getName());
         game.setStock(gameRequestDto.getStock());
         game.setPrice(gameRequestDto.getPrice());

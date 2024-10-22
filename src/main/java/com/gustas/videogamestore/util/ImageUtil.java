@@ -9,6 +9,8 @@ import java.util.Random;
 @AllArgsConstructor
 public class ImageUtil {
 
+    private static final Random RANDOM = new Random();
+
     public static String getRandomFilenameWithExtension(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         if (originalFilename != null && originalFilename.contains(".")) {
@@ -24,11 +26,10 @@ public class ImageUtil {
 
     public static String generateRandomString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(characters.length());
+            int randomIndex = RANDOM.nextInt(characters.length());
             stringBuilder.append(characters.charAt(randomIndex));
         }
 
