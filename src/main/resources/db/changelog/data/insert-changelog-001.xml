@@ -16,26 +16,4 @@
         </insert>
     </changeSet>
 
-    <changeSet id="2" author="Gustas Antanas Gaigalas">
-        <insert tableName="genres">
-            <column name="id" value="1"/>
-            <column name="name" value="Example"/>
-        </insert>
-
-        <insert tableName="platforms">
-            <column name="id" value="1"/>
-            <column name="platform_name" value="Example"/>
-        </insert>
-
-        <insert tableName="regions">
-            <column name="id" value="1"/>
-            <column name="region_name" value="Example"/>
-        </insert>
-
-        <insert tableName="publishers">
-            <column name="id" value="1"/>
-            <column name="publisher_name" value="Example"/>
-        </insert>
-    </changeSet>
-
 </databaseChangeLog>
