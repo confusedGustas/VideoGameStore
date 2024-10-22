@@ -14,16 +14,24 @@
 
   <div class="search-results">
     <h2>Search Results</h2>
-    <div class="game-grid">
-      <div
-        v-for="game in games"
-        :key="game.id"
-        class="game-card"
-        @click="goToDetails(game.id)"
-      >
-        <img :src="getImageUrl(game.id)" :alt="game.name" />
-        <h3 class="game-title">{{ game.name }}</h3>
-        <p class="price">${{ game.price.toFixed(2) }}</p>
+    <div v-if="games.length > 0">
+      <div class="game-grid">
+        <div
+          v-for="game in games"
+          :key="game.id"
+          class="game-card"
+          @click="goToDetails(game.id)"
+        >
+          <img :src="getImageUrl(game.id)" :alt="game.name" />
+          <h3 class="game-title">{{ game.name }}</h3>
+          <p class="price">${{ game.price.toFixed(2) }}</p>
+        </div>
+      </div>
+
+      <div class="pagination-controls">
+        <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }}</span>
+        <button @click="nextPage" :disabled="!hasMorePages">Next</button>
       </div>
     </div>
   </div>
@@ -39,38 +47,69 @@ const router = useRouter()
 const route = useRoute()
 const games = ref([])
 const searchQuery = ref('')
+const currentPage = ref(1)
+const hasMorePages = ref(true)
+const itemsPerPage = 10
 
-const fetchGames = async () => {
+const fetchGames = async (page = 1) => {
   try {
-    const response = await axios.get(`/api/games?search=${searchQuery.value}`)
-    games.value = response.data.items
+    const offset = (page - 1)
+    const response = await axios.get(`/api/games`, {
+      params: {
+        search: searchQuery.value,
+        offset,
+        limit: itemsPerPage
+      }
+    })
+
+    games.value = response.data.items || []
+
+    const totalItems = response.data.totalItems || 0
+    hasMorePages.value = games.value.length === itemsPerPage && currentPage.value * itemsPerPage < totalItems
   } catch (error) {
     console.error('Error fetching games:', error)
+    games.value = []
+    hasMorePages.value = false
   }
 }
 
 const search = () => {
-  fetchGames()
+  currentPage.value = 1
+  fetchGames(currentPage.value)
 }
 
 onMounted(() => {
   searchQuery.value = route.query.q || ''
-  fetchGames()
+  fetchGames(currentPage.value)
 })
 
 watch(
   () => route.query.q,
-  newQuery => {
+  (newQuery) => {
     searchQuery.value = newQuery
-    fetchGames()
-  },
+    fetchGames(currentPage.value)
+  }
 )
 
-const goToDetails = id => {
+const nextPage = () => {
+  if (hasMorePages.value) {
+    currentPage.value++
+    fetchGames(currentPage.value)
+  }
+}
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+    fetchGames(currentPage.value)
+  }
+}
+
+const goToDetails = (id) => {
   router.push({ name: 'details', params: { id } })
 }
 
-const getImageUrl = imageId => {
+const getImageUrl = (imageId) => {
   return `/api/images/get/${imageId}`
 }
 </script>

@@ -4,46 +4,52 @@
   </div>
 
   <div class="landing-page">
-    <div class="search-bar">
-      <input
-        v-model="searchQuery"
-        @keyup.enter="search"
-        placeholder="Search Games..."
-      />
-      <button @click="search">Search</button>
-    </div>
+    <div v-if="Games.length > 0">
+      <div class="search-bar">
+        <input
+          v-model="searchQuery"
+          @keyup.enter="search"
+          placeholder="Search Games..."
+        />
+        <button @click="search">Search</button>
+      </div>
 
-    <div class="filter-sort">
-      <select v-model="selectedSortColumn" @change="fetchGames(currentPage)">
-        <option value="">Sort By</option>
-        <option value="name">Name</option>
-        <option value="price">Price</option>
-      </select>
+      <div class="filter-sort">
+        <select v-model="selectedSortColumn" @change="fetchGames(currentPage)">
+          <option value="">Sort By</option>
+          <option value="name">Name</option>
+          <option value="price">Price</option>
+        </select>
 
-      <select v-model="selectedSortOrder" @change="fetchGames(currentPage)">
-        <option value="">Order</option>
-        <option value="ASC">Ascending</option>
-        <option value="DESC">Descending</option>
-      </select>
-    </div>
+        <select v-model="selectedSortOrder" @change="fetchGames(currentPage)">
+          <option value="">Order</option>
+          <option value="ASC">Ascending</option>
+          <option value="DESC">Descending</option>
+        </select>
+      </div>
 
-    <div class="game-grid">
-      <div
-        v-for="game in Games"
-        :key="game.id"
-        class="game-card"
-        @click="goToDetails(game.id)"
-      >
-        <img :src="getImageUrl(game.id)" :alt="game.name" />
-        <h3 class="game-title">{{ game.name }}</h3>
-        <p class="price">{{ formatPrice(game.price) }}</p>
+      <div class="game-grid">
+        <div
+          v-for="game in Games"
+          :key="game.id"
+          class="game-card"
+          @click="goToDetails(game.id)"
+        >
+          <img :src="getImageUrl(game.id)" :alt="game.name" />
+          <h3 class="game-title">{{ game.name }}</h3>
+          <p class="price">{{ formatPrice(game.price) }}</p>
+        </div>
+      </div>
+
+      <div class="pagination-controls">
+        <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }}</span>
+        <button @click="nextPage" :disabled="!hasMorePages">Next</button>
       </div>
     </div>
 
-    <div class="pagination-controls">
-      <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-      <span>Page {{ currentPage }}</span>
-      <button @click="nextPage" :disabled="!hasMorePages">Next</button>
+    <div v-else>
+      <p>No listings available</p>
     </div>
   </div>
 </template>
@@ -270,5 +276,10 @@ const formatPrice = price => {
 .filter-sort select:focus {
   border-color: #4caf50;
   outline: none;
+}
+
+.landing-page p {
+  font-size: 1rem;
+  color: #555;
 }
 </style>
