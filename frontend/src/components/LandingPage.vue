@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div v-else>
+    <div v-else class="no-listings-message">
       <p>No listings available</p>
     </div>
   </div>
@@ -279,6 +279,12 @@ const formatPrice = price => {
 }
 
 .landing-page p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.no-listings-message {
+  text-align: center;
   font-size: 1rem;
   color: #555;
 }

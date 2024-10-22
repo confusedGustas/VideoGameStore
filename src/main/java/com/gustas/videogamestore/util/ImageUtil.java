@@ -3,13 +3,13 @@ package com.gustas.videogamestore.util;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.Random;
+import java.security.SecureRandom;
 
 @Component
 @AllArgsConstructor
 public class ImageUtil {
 
-    private static final Random RANDOM = new Random();
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     public static String getRandomFilenameWithExtension(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
@@ -29,7 +29,7 @@ public class ImageUtil {
         StringBuilder stringBuilder = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
-            int randomIndex = RANDOM.nextInt(characters.length());
+            int randomIndex = SECURE_RANDOM.nextInt(characters.length());
             stringBuilder.append(characters.charAt(randomIndex));
         }
 
