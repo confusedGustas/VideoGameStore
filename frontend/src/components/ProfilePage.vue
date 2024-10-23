@@ -24,6 +24,9 @@
               <button @click="goToDetails(game.id)" class="details-button">
                 Details
               </button>
+              <button @click="editGame(game.id)" class="edit-button">
+                Edit
+              </button>
               <button @click="deleteGame(game.id)" class="delete-button">
                 Delete
               </button>
@@ -58,7 +61,16 @@
             <input v-model="newGame.name" type="text" id="name" required />
 
             <label for="price">Price:</label>
-            <input v-model="newGame.price" type="number" id="price" required />
+            <input
+              v-model="newGame.price"
+              type="text"
+              id="price"
+              pattern="^\d*(\.\d{0,2})?$"
+              inputmode="decimal"
+              step="0.01"
+              required
+              @input="validatePrice($event, 'newGame')"
+            />
 
             <label for="description">Description:</label>
             <textarea
@@ -73,7 +85,6 @@
               v-model="newGame.releaseYear"
               type="number"
               id="releaseYear"
-              :max="currentYear"
               required
             />
 
@@ -105,11 +116,81 @@
         </div>
       </div>
     </transition>
+
+    <transition name="fade">
+      <div v-if="showEditGamePopup" class="modal-overlay">
+        <div class="modal-content">
+          <h2>Edit Game</h2>
+          <form @submit.prevent="updateGame">
+            <label for="editName">Name:</label>
+            <input v-model="editingGame.name" type="text" id="editName" required />
+
+            <label for="editPrice">Price:</label>
+            <input
+              v-model="editingGame.price"
+              type="text"
+              id="editPrice"
+              pattern="^\d*(\.\d{0,2})?$"
+              inputmode="decimal"
+              step="0.01"
+              required
+              @input="validatePrice($event, 'editingGame')"
+            />
+
+            <label for="editDescription">Description:</label>
+            <textarea
+              v-model="editingGame.description"
+              id="editDescription"
+              maxlength="200"
+              required
+            ></textarea>
+
+            <label for="editReleaseYear">Release Year:</label>
+            <input
+              v-model="editingGame.releaseYear"
+              type="number"
+              id="editReleaseYear"
+              required
+            />
+
+            <label for="editRegion">Region:</label>
+            <input v-model="editingGame.activationRegion.regionName" type="text" id="editRegion" required />
+
+            <label for="editPlatform">Platform:</label>
+            <input v-model="editingGame.activationPlatform.platformName" type="text" id="editPlatform" required />
+
+            <label for="editPublisher">Publisher:</label>
+            <input v-model="editingGame.publisher.publisherName" type="text" id="editPublisher" required />
+
+            <label for="editGenre">Genre:</label>
+            <input v-model="editingGame.genre.name" type="text" id="editGenre" required />
+
+            <label for="editStock">Stock:</label>
+            <input v-model="editingGame.stock" type="number" id="editStock" required />
+
+            <label for="editImage">Image:</label>
+            <input
+              type="file"
+              id="editImage"
+              @change="handleEditImageUpload"
+              ref="editImageInput"
+            />
+
+            <div class="modal-actions">
+              <button type="submit">Update</button>
+              <button @click="showEditGamePopup = false" type="button">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, nextTick } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
@@ -121,6 +202,7 @@ const itemsPerPage = 10;
 const hasMoreGames = ref(true);
 const userLoggedIn = ref(false);
 const showAddGamePopup = ref(false);
+const showEditGamePopup = ref(false);
 const newGame = ref({
   name: '',
   price: null,
@@ -134,8 +216,22 @@ const newGame = ref({
   stock: null,
   imageFile: null,
 });
-
-const currentYear = computed(() => new Date().getFullYear());
+const editingGame = ref({
+  id: null,
+  name: '',
+  price: null,
+  description: '',
+  releaseYear: null,
+  stock: null,
+  activationRegion: { id: null, regionName: '' },
+  activationPlatform: { id: null, platformName: '' },
+  publisher: { id: null, publisherName: '' },
+  genre: { id: null, name: '' },
+  seller: '',
+  imageFile: null,
+  imagePreview: null,
+});
+const editImageInput = ref(null);
 
 const generateUniqueFilename = (originalName) => {
   const now = new Date();
@@ -164,11 +260,20 @@ const handleImageUpload = (event) => {
   }
 };
 
+const handleEditImageUpload = (event) => {
+  const files = event.target.files;
+  if (files && files.length > 0) {
+    const lastFile = files[files.length - 1];
+    editingGame.value.imageFile = lastFile;
+    editingGame.value.imagePreview = URL.createObjectURL(lastFile);
+  }
+};
+
 const saveGame = async () => {
   try {
     const formData = new FormData();
     formData.append('name', newGame.value.name);
-    formData.append('price', newGame.value.price);
+    formData.append('price', parseFloat(newGame.value.price));
     formData.append('description', newGame.value.description);
     formData.append('releaseYear', newGame.value.releaseYear);
     formData.append('region', newGame.value.region);
@@ -304,6 +409,96 @@ const deleteGame = async (gameId) => {
   }
 };
 
+const editGame = async (gameId) => {
+  try {
+    const response = await axios.get(`/api/games/get/${gameId}`, {
+      withCredentials: true,
+    });
+    editingGame.value = { ...response.data, imageFile: null };
+
+    // Fetch the image
+    try {
+      const imageResponse = await axios.get(`/api/images/get/${gameId}`, {
+        responseType: 'blob',
+      });
+      const imageBlob = imageResponse.data;
+      const imageFile = new File([imageBlob], 'current-image.jpg', { type: 'image/jpeg' });
+
+      // Create a FileList object with the fetched image
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(imageFile);
+      editingGame.value.imageFile = dataTransfer.files;
+
+      // Create a preview URL for the image
+      editingGame.value.imagePreview = URL.createObjectURL(imageFile);
+    } catch (imageError) {
+      console.error('Error fetching game image:', imageError);
+    }
+
+    showEditGamePopup.value = true;
+    setEditImageValue();
+  } catch (error) {
+    console.error('Error fetching game details:', error);
+  }
+};
+
+const updateGame = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('name', editingGame.value.name);
+    formData.append('price', parseFloat(editingGame.value.price));
+    formData.append('description', editingGame.value.description);
+    formData.append('releaseYear', editingGame.value.releaseYear);
+    formData.append('region', editingGame.value.activationRegion.regionName);
+    formData.append('platform', editingGame.value.activationPlatform.platformName);
+    formData.append('publisher', editingGame.value.publisher.publisherName);
+    formData.append('genre', editingGame.value.genre.name);
+    formData.append('stock', editingGame.value.stock);
+    formData.append('gameId', editingGame.value.id);
+
+    if (editingGame.value.imageFile) {
+      formData.append('image', editingGame.value.imageFile[0]); // Use the first file from the FileList
+    }
+
+    await axios.post('/api/games/update-game', formData, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    showEditGamePopup.value = false;
+
+    // Reload the page
+    window.location.reload();
+  } catch (error) {
+    console.error('Error updating the game:', error);
+  }
+};
+
+const validatePrice = (event, formType) => {
+  const input = event.target;
+  const value = input.value;
+  const regex = /^\d*(\.\d{0,2})?$/;
+
+  if (!regex.test(value)) {
+    input.value = value.substring(0, value.length - 1);
+    if (formType === 'newGame') {
+      newGame.price = input.value;
+    } else {
+      editingGame.price = input.value;
+    }
+  }
+};
+
+const setEditImageValue = () => {
+  nextTick(() => {
+    if (editImageInput.value && editingGame.value.imageFile) {
+      editImageInput.value.files = editingGame.value.imageFile;
+    }
+  });
+};
+
 onMounted(async () => {
   const isLoggedIn = await checkUserLoggedIn();
   if (isLoggedIn) {
@@ -380,9 +575,8 @@ onMounted(async () => {
   background-color: white;
   border-radius: 8px;
   padding: 1rem;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+  transition: transform 0.2s,
+  box-shadow 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -410,7 +604,8 @@ onMounted(async () => {
 }
 
 .details-button,
-.delete-button {
+.delete-button,
+.edit-button {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   border: none;
@@ -434,6 +629,15 @@ onMounted(async () => {
 
 .delete-button:hover {
   background-color: #d32f2f;
+}
+
+.edit-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
 }
 
 .pagination-controls {
@@ -577,6 +781,7 @@ textarea {
 .fade-leave-to {
   opacity: 0;
 }
+
 .no-scroll {
   overflow: hidden;
 }
