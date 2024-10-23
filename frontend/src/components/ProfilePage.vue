@@ -1,14 +1,73 @@
 <template>
   <div>
     <nav class="navbar">
+      <div class="navbar-left">
+        <button @click="showChangeUsernameModal = true">Change Username</button>
+        <button @click="showChangeEmailModal = true">Change Email</button>
+        <button @click="showChangePasswordModal = true">Change Password</button>
+      </div>
+      <h1 class="navbar-title">Profile</h1>
       <div class="navbar-buttons">
         <button @click="goHome">Home</button>
         <button v-if="userLoggedIn" @click="logout" class="logout">
           Logout
         </button>
       </div>
-      <h1 class="navbar-title">Profile</h1>
     </nav>
+
+    <transition name="fade">
+      <div v-if="showChangeUsernameModal" class="modal-overlay">
+        <div class="modal-content">
+          <h2>Change Username</h2>
+          <form @submit.prevent="updateUsername">
+            <label for="newUsername">New Username:</label>
+            <input v-model="newUsername" type="text" id="newUsername" required />
+            <div class="modal-actions">
+              <button type="submit">Save</button>
+              <button @click="showChangeUsernameModal = false" type="button">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div v-if="showChangeEmailModal" class="modal-overlay">
+        <div class="modal-content">
+          <h2>Change Email</h2>
+          <form @submit.prevent="updateEmail">
+            <label for="newEmail">New Email:</label>
+            <input v-model="newEmail" type="email" id="newEmail" required />
+            <div class="modal-actions">
+              <button type="submit">Save</button>
+              <button @click="showChangeEmailModal = false" type="button">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div v-if="showChangePasswordModal" class="modal-overlay">
+        <div class="modal-content">
+          <h2>Change Password</h2>
+          <form @submit.prevent="updatePassword">
+            <label for="newPassword">New Password:</label>
+            <input v-model="newPassword" type="password" id="newPassword" required />
+            <div class="modal-actions">
+              <button type="submit">Save</button>
+              <button @click="showChangePasswordModal = false" type="button">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </transition>
 
     <div v-if="userDetails">
       <button class="add-game-button" @click="showAddGamePopup = true">
@@ -232,6 +291,12 @@ const editingGame = ref({
   imagePreview: null,
 });
 const editImageInput = ref(null);
+const showChangeUsernameModal = ref(false);
+const showChangeEmailModal = ref(false);
+const showChangePasswordModal = ref(false);
+const newUsername = ref('');
+const newEmail = ref('');
+const newPassword = ref('');
 
 const generateUniqueFilename = (originalName) => {
   const now = new Date();
@@ -257,6 +322,39 @@ const handleImageUpload = (event) => {
     const lastFile = files[files.length - 1];
     newGame.value.image = generateUniqueFilename(lastFile.name);
     newGame.value.imageFile = lastFile;
+  }
+};
+
+const updateUsername = async () => {
+  try {
+    await axios.post('/api/users/update-username', { username: newUsername.value });
+    showChangeUsernameModal.value = false;
+    newUsername.value = '';
+    router.push({ name: 'home' });
+  } catch (error) {
+    console.error('Error updating username:', error);
+  }
+};
+
+const updateEmail = async () => {
+  try {
+    await axios.post('/api/users/update-email', { email: newEmail.value });
+    showChangeEmailModal.value = false;
+    newEmail.value = '';
+    router.push({ name: 'home' });
+  } catch (error) {
+    console.error('Error updating email:', error);
+  }
+};
+
+const updatePassword = async () => {
+  try {
+    await axios.post('/api/users/update-password', { password: newPassword.value });
+    showChangePasswordModal.value = false;
+    newPassword.value = '';
+    router.push({ name: 'home' });
+  } catch (error) {
+    console.error('Error updating password:', error);
   }
 };
 
@@ -296,7 +394,6 @@ const saveGame = async () => {
       },
     });
 
-    // Clear the form fields
     newGame.value = {
       name: '',
       price: null,
@@ -416,7 +513,6 @@ const editGame = async (gameId) => {
     });
     editingGame.value = { ...response.data, imageFile: null };
 
-    // Fetch the image
     try {
       const imageResponse = await axios.get(`/api/images/get/${gameId}`, {
         responseType: 'blob',
@@ -424,12 +520,10 @@ const editGame = async (gameId) => {
       const imageBlob = imageResponse.data;
       const imageFile = new File([imageBlob], 'current-image.jpg', { type: 'image/jpeg' });
 
-      // Create a FileList object with the fetched image
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(imageFile);
       editingGame.value.imageFile = dataTransfer.files;
 
-      // Create a preview URL for the image
       editingGame.value.imagePreview = URL.createObjectURL(imageFile);
     } catch (imageError) {
       console.error('Error fetching game image:', imageError);
@@ -457,7 +551,7 @@ const updateGame = async () => {
     formData.append('gameId', editingGame.value.id);
 
     if (editingGame.value.imageFile) {
-      formData.append('image', editingGame.value.imageFile[0]); // Use the first file from the FileList
+      formData.append('image', editingGame.value.imageFile[0]);
     }
 
     await axios.post('/api/games/update-game', formData, {
@@ -469,7 +563,6 @@ const updateGame = async () => {
 
     showEditGamePopup.value = false;
 
-    // Reload the page
     window.location.reload();
   } catch (error) {
     console.error('Error updating the game:', error);
@@ -540,10 +633,26 @@ onMounted(async () => {
 
 .navbar-buttons {
   margin-left: auto;
+  display: flex;
 }
 
 .navbar-buttons button {
   margin-left: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navbar-left {
+  display: flex;
+}
+
+.navbar-left button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: #4caf50;
@@ -798,5 +907,10 @@ textarea {
   text-align: center;
   font-size: 1rem;
   color: #555;
+}
+
+.navbar-left {
+  display: flex;
+  gap: 10px;
 }
 </style>
