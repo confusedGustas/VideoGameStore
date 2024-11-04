@@ -6,7 +6,7 @@
         <button @click="showChangeEmailModal = true">Change Email</button>
         <button @click="showChangePasswordModal = true">Change Password</button>
       </div>
-      <h1 class="navbar-title">Profile</h1>
+      <router-link to="/profile" class="navbar-title" exact-active-class="active-link">Profile</router-link>
       <div class="navbar-buttons">
         <button @click="goHome">Home</button>
         <button v-if="userLoggedIn" @click="logout" class="logout">
@@ -615,6 +615,10 @@ onMounted(async () => {
   margin-bottom: 2rem;
 }
 
+.navbar-title:hover {
+  color: #4CAF50;
+}
+
 .game-title {
   font-size: 1.2rem;
   white-space: nowrap;
@@ -629,6 +633,8 @@ onMounted(async () => {
   transform: translateX(-50%);
   color: #333;
   font-size: 2.5rem;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .navbar-buttons {

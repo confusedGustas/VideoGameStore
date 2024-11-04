@@ -143,14 +143,6 @@ const formatPrice = price => {
   margin-top: 2rem;
 }
 
-.search-bar input {
-  width: 500px;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
-}
-
 .search-bar button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -164,6 +156,19 @@ const formatPrice = price => {
 
 .search-bar button:hover {
   background-color: #45a049;
+}
+
+.search-bar input {
+  width: 500px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.search-bar input:focus {
+  border-color: #4CAF50;
 }
 
 .game-grid {

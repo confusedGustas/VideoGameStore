@@ -128,6 +128,11 @@ const getImageUrl = (imageId) => {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.search-bar input:focus {
+  border-color: #4CAF50;
 }
 
 .search-bar button {
