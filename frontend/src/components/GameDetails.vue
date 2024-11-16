@@ -23,6 +23,7 @@
           <p><strong>Stock:</strong> {{ game.stock }} available</p>
         </div>
         <button @click="goBack" class="back-button">Back to Games</button>
+        <button @click="addToCart" class="add-to-cart-button">Add to Cart</button>
       </div>
     </div>
     <div class="description-box" v-if="game">
@@ -56,6 +57,21 @@ const goBack = () => {
 
 const getImageUrl = imageId => {
   return `/api/images/get/${imageId}`
+}
+
+const addToCart = () => {
+  if (game.value) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || []
+    const existingItem = cart.find(item => item.id === game.value.id)
+
+    if (existingItem) {
+      existingItem.quantity += 1
+    } else {
+      cart.push({...game.value, quantity: 1})
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }
 }
 </script>
 
@@ -134,6 +150,23 @@ const getImageUrl = imageId => {
 
 .back-button:hover {
   background-color: #45a049;
+}
+
+.add-to-cart-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #f0c14b;
+  color: #111;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+}
+
+.add-to-cart-button:hover {
+  background-color: #ddb347;
 }
 
 .description-box {

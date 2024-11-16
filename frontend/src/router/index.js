@@ -5,6 +5,8 @@ import GameDetails from '@/components/GameDetails.vue'
 import LoginPage from '@/components/LoginPage.vue'
 import RegisterPage from '@/components/RegisterPage.vue'
 import ProfilePage from '@/components/ProfilePage.vue'
+import CheckoutPage from "@/components/CheckoutPage.vue";
+import OrderConfirmation from "@/components/OrderConfirmation.vue";
 
 const routes = [
   {
@@ -37,6 +39,16 @@ const routes = [
     name: 'profile',
     component: ProfilePage,
   },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: CheckoutPage,
+  },
+  {
+    path: '/order-confirmation',
+    name: 'orderConfirmation',
+    component: OrderConfirmation
+  }
 ]
 
 const router = createRouter({

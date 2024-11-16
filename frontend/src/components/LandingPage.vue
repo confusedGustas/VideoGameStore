@@ -33,11 +33,13 @@
           v-for="game in Games"
           :key="game.id"
           class="game-card"
-          @click="goToDetails(game.id)"
         >
-          <img :src="getImageUrl(game.id)" :alt="game.name" />
-          <h3 class="game-title">{{ game.name }}</h3>
-          <p class="price">{{ formatPrice(game.price) }}</p>
+          <img :src="getImageUrl(game.id)" :alt="game.name" @click="goToDetails(game.id)" />
+          <div class="game-info">
+            <h3 class="game-title" @click="goToDetails(game.id)">{{ game.name }}</h3>
+            <p class="price">{{ formatPrice(game.price) }}</p>
+            <button @click.stop="addToCart(game)" class="add-to-cart-button">Add to Cart</button>
+          </div>
         </div>
       </div>
 
@@ -93,6 +95,7 @@ const fetchGames = async (page = 1) => {
       hasMorePages.value = false
     }
   } catch (err) {
+    console.error('Error fetching games:', err)
     Games.value = []
     hasMorePages.value = false
   }
@@ -132,6 +135,19 @@ const getImageUrl = imageId => {
 
 const formatPrice = price => {
   return price !== undefined ? `$${price.toFixed(2)}` : 'Price not available'
+}
+
+const addToCart = (game) => {
+  let cart = JSON.parse(localStorage.getItem('cart')) || []
+  const existingItem = cart.find(item => item.id === game.id)
+
+  if (existingItem) {
+    existingItem.quantity += 1
+  } else {
+    cart.push({ ...game, quantity: 1 })
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cart))
 }
 </script>
 
@@ -183,47 +199,65 @@ const formatPrice = price => {
   background-color: white;
   border-radius: 8px;
   padding: 1rem;
-  cursor: pointer;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+  width: calc(25% - 1.5rem);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.game-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .game-card img {
   width: 100%;
-  height: 300px;
+  height: 200px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.game-card img:hover {
+  transform: scale(1.05);
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .game-title {
   font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  cursor: pointer;
 }
 
-.game-card h3 {
-  font-size: 1.2rem;
+.game-title:hover {
+  color: #4caf50;
+}
+
+.price {
+  font-weight: bold;
+  color: #4caf50;
   margin-bottom: 0.5rem;
 }
 
-.game-card p {
-  margin: 0.25rem 0;
+.add-to-cart-button {
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
+  background-color: #f0c14b;
+  color: #111;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: auto;
 }
 
-.game-card .price {
-  font-weight: bold;
-  color: #4caf50;
+.add-to-cart-button:hover {
+  background-color: #ddb347;
 }
 
 .pagination-controls {
