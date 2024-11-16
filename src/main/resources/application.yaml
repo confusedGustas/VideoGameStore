@@ -3,7 +3,6 @@ spring:
     import: optional:file:.env[.properties]
   liquibase:
     change-log: db/changelog/db-changelog-master.xml
-    drop-first: true
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}

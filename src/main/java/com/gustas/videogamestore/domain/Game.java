@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -31,7 +30,7 @@ public class Game {
     private BigDecimal price;
     private String description;
     private Integer releaseYear;
-    private BigDecimal stock;
+    private Integer stock;
 
     @ManyToOne
     @JoinColumn(name = "region_id")

@@ -7,21 +7,17 @@ import com.gustas.videogamestore.domain.Publisher;
 import com.gustas.videogamestore.domain.Region;
 import com.gustas.videogamestore.dto.request.GameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class GameMapper {
 
-    private GameMapper() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated.");
-    }
-
-    public static Game toEntity(GameRequestDto gameRequestDto,
-                                Genre genre,
-                                Platform platform,
-                                Region region,
-                                Publisher publisher) {
+    public Game toEntity(GameRequestDto gameRequestDto, Genre genre, Platform platform, Region region, Publisher publisher) {
         Game game = new Game();
 
         game.setName(gameRequestDto.getName());
@@ -37,7 +33,7 @@ public class GameMapper {
         return game;
     }
 
-    public static GameResponseDto toDto(Game game) {
+    public GameResponseDto toDto(Game game) {
         GameResponseDto dto = new GameResponseDto();
 
         dto.setId(game.getId());
@@ -55,14 +51,14 @@ public class GameMapper {
         return dto;
     }
 
-    public static List<GameResponseDto> toDto(List<Game> games) {
+    public List<GameResponseDto> toDto(List<Game> games) {
         if (games == null || games.isEmpty()) {
             return Collections.emptyList();
         }
 
         return games.stream()
-                .map(GameMapper::toDto)
-                .toList();
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
 }

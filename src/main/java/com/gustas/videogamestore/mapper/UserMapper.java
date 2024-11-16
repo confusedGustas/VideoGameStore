@@ -3,14 +3,14 @@ package com.gustas.videogamestore.mapper;
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.dto.request.SaveUserRequestDto;
 import com.gustas.videogamestore.dto.response.UserDetailsResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class UserMapper {
 
-    private UserMapper() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated.");
-    }
-
-    public static User toEntity(SaveUserRequestDto saveUserRequestDto) {
+    public User toEntity(SaveUserRequestDto saveUserRequestDto) {
         User user = new User();
 
         user.setUsername(saveUserRequestDto.getUsername());
@@ -20,7 +20,7 @@ public class UserMapper {
         return user;
     }
 
-    public static UserDetailsResponseDto toDto(User user) {
+    public UserDetailsResponseDto toDto(User user) {
         UserDetailsResponseDto userDetailsResponseDto = new UserDetailsResponseDto();
 
         userDetailsResponseDto.setUsername(user.getUsername());

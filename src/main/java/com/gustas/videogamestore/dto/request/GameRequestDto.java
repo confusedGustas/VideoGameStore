@@ -28,6 +28,6 @@ public class GameRequestDto {
     @NotBlank(message = "Genre is required")
     private String genre;
     @NotNull @Min(value = 0, message = "Stock must be greater than 0")
-    private BigDecimal stock;
+    private Integer stock;
 
 }

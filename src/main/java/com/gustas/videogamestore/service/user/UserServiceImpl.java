@@ -45,6 +45,8 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private SessionService sessionService;
     private GameDao gameDao;
+    private UserMapper userMapper;
+    private GameMapper gameMapper;
 
     @Override
     public void loginUser(LoginUserRequestDto loginUserRequestDto, HttpSession session) {
@@ -60,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsResponseDto getUserDetails() {
-        return UserMapper.toDto(sessionService.getUserFromSessionId());
+        return userMapper.toDto(sessionService.getUserFromSessionId());
     }
 
     @Override
@@ -70,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
         Page<Game> gamePage = gameDao.findAll(userSpec, PageRequest.of(pageOffset, 10));
 
-        List<GameResponseDto> dtoList = GameMapper.toDto(gamePage.getContent());
+        List<GameResponseDto> dtoList = gameMapper.toDto(gamePage.getContent());
 
         return new PaginatedResponseDto(
                 dtoList, gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
@@ -176,7 +178,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User createUserEntity(SaveUserRequestDto saveUserRequestDto) {
-        User user = UserMapper.toEntity(saveUserRequestDto);
+        User user = userMapper.toEntity(saveUserRequestDto);
 
         user.setPassword(encodeUserPassword(user.getPassword()));
         user.setRole(Role.USER);

@@ -53,6 +53,7 @@ public class GameServiceImpl implements GameService {
     private SessionService sessionService;
     private ImageService imageService;
     private ImageDao imageDoa;
+    private GameMapper gameMapper;
 
     @Override
     public PaginatedResponseDto getGames(GameSearchCriteria gameSearchCriteria) {
@@ -61,7 +62,7 @@ public class GameServiceImpl implements GameService {
 
         Page<Game> gamePage = gameDao.findAll(specification, pageable);
 
-        List<GameResponseDto> dtoList = GameMapper.toDto(gamePage.getContent());
+        List<GameResponseDto> dtoList = gameMapper.toDto(gamePage.getContent());
 
         return new PaginatedResponseDto(
                 dtoList, gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
@@ -76,7 +77,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public GameResponseDto getGame(Long gameId) {
-        return GameMapper.toDto(gameDao.getGame(gameId));
+        return gameMapper.toDto(gameDao.getGame(gameId));
     }
 
     @Override
@@ -100,10 +101,10 @@ public class GameServiceImpl implements GameService {
     public GameResponseDto saveGame(GameRequestDto gameRequestDto, MultipartFile file) throws IOException {
         Game game = createGameEntity(gameRequestDto, file);
 
-        return GameMapper.toDto(gameDao.saveGame(game));
+        return gameMapper.toDto(gameDao.saveGame(game));
     }
 
-    private Game updateInstance(GameRequestDto gameRequestDto, Game game) throws IOException {
+    private Game updateInstance(GameRequestDto gameRequestDto, Game game) {
         game.setName(gameRequestDto.getName());
         game.setStock(gameRequestDto.getStock());
         game.setPrice(gameRequestDto.getPrice());
@@ -173,7 +174,7 @@ public class GameServiceImpl implements GameService {
         Region region = getOrCreateRegion(gameRequestDto);
         Publisher publisher = getOrCreatePublisher(gameRequestDto);
 
-        return GameMapper.toEntity(gameRequestDto, genre, platform, region, publisher);
+        return gameMapper.toEntity(gameRequestDto, genre, platform, region, publisher);
     }
 
     private Publisher getOrCreatePublisher(GameRequestDto gameRequestDto) {
