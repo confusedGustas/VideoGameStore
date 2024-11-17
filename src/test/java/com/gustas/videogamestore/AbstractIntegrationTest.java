@@ -3,6 +3,7 @@ package com.gustas.videogamestore;
 import com.gustas.videogamestore.domain.Role;
 import com.gustas.videogamestore.domain.User;
 import com.gustas.videogamestore.repository.UserRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
 import org.junit.jupiter.api.AfterAll;
@@ -22,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -44,12 +46,13 @@ public abstract class AbstractIntegrationTest {
 
     protected Authentication authentication;
     protected User user = new User();
+    private static final Dotenv dotenv = Dotenv.load();
 
     @Container
     protected static PostgreSQLContainer<?> postgresqlContainer = new PostgreSQLContainer<>("postgres:16.0")
-            .withDatabaseName("video_game_store")
-            .withUsername("postgres")
-            .withPassword("admin");
+            .withDatabaseName(dotenv.get("DB_NAME"))
+            .withUsername(dotenv.get("DB_USER"))
+            .withPassword(dotenv.get("DB_PASSWORD"));
 
     static {
         postgresqlContainer.start();
