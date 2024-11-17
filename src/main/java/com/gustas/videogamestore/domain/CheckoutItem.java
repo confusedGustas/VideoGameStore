@@ -1,9 +1,11 @@
 package com.gustas.videogamestore.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +22,8 @@ public class CheckoutItem {
     @ManyToOne
     private Checkout checkout;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "game_id")
     private Game game;
 
     private Integer quantity;

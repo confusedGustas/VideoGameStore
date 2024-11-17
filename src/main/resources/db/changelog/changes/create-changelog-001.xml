@@ -205,4 +205,18 @@
                                  referencedTableName="games"
                                  referencedColumnNames="id"/>
     </changeSet>
+
+    <changeSet id="2" author="Gustas Antanas Gaigalas">
+        <dropForeignKeyConstraint
+                baseTableName="checkout_item"
+                constraintName="fk_checkout_item_game_id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="checkout_item"
+                baseColumnNames="game_id"
+                constraintName="fk_checkout_item_game_id"
+                referencedTableName="games"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>

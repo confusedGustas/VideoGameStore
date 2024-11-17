@@ -34,7 +34,7 @@ public class Checkout {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CheckoutItem> items;
 
     private String shippingAddress;
