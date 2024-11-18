@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.gustas</groupId>
-    <artifactId>video-game-store</artifactId>
+    <artifactId>VideoGameStore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>video-game-store</name>
     <description>video-game-store</description>
