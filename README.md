@@ -31,11 +31,16 @@ Ensure the following tools are installed before setting up the application:
 
 2. **Set up environment variables:**
 
-   Run the following command in the root directory of the project (either in your terminal or IDE console) to create a `.env` file. You can customize the variables or use the defaults. Ensure the credentials match your configured PostgreSQL credentials:
+   create a .env file in the root directory and add the following:
 
-    ```bash
-    (echo DB_URL=jdbc:postgresql://localhost:5432/video_game_store&& echo DOCKER_DB_URL=jdbc:postgresql://database:5432/video_game_store&& echo.&& echo DB_NAME=video_game_store&& echo DB_USER=postgres&& echo DB_PASSWORD=admin&& echo.&& echo SPRING_USER=admin&& echo SPRING_PASSWORD=admin) > .env
-    ```
+    ```properties
+   DB_URL=jdbc:postgresql://localhost:5432/video_game_store
+   DOCKER_DB_URL=jdbc:postgresql://database:5432/video_game_store
+   DB_NAME=video_game_store
+   DB_USER=postgres
+   DB_PASSWORD=admin
+   SPRING_USER=admin
+   SPRING_PASSWORD=admin
 
 3. **Configure PostgreSQL:**
 
@@ -81,7 +86,7 @@ To run the application using Docker, follow these steps:
     - Launch the Vue.js frontend.
 
 3. Access the application:
-    - Backend: [http://localhost:8080](http://localhost:8080)
+    - Backend: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
     - Frontend: [http://localhost:8081](http://localhost:8081)
 
    Use `docker compose down` to stop the containers when done.
