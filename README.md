@@ -25,8 +25,8 @@ Ensure the following tools are installed before setting up the application:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/confusedGustas/Video-Game-Store
-    cd video-game-store
+    git clone https://github.com/confusedGustas/VideoGameStore
+    cd VideoGameStore
     ```
 
 2. **Set up environment variables:**
