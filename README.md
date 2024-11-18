@@ -58,7 +58,7 @@ Ensure the following tools are installed before setting up the application:
     ./mvnw spring-boot:run
     ```
 
-    - The Spring Boot backend will start at [http://localhost:8080](http://localhost:8080).
+    - The Spring Boot backend will start at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
     - The Vue.js frontend will run at [http://localhost:8081](http://localhost:8081).
 
    *(Optional)* To run tests, execute:
