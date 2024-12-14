@@ -8,10 +8,10 @@
     <changeSet id="1" author="Gustas Antanas Gaigalas">
         <insert tableName="users">
             <column name="id" value="1"/>
-            <column name="username" value="Test"/>
-            <column name="password" value="$2a$12$xAndx3LuCJMIvc/T045Xc.k3PTDHU34t6hIlJbapr.k1ZWOzYn82q"/>
-            <column name="email" value="Test@test.com"/>
-            <column name="role" value="USER"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$12$54aY98Avggc1IQByGKRW8euTVquN7VoqRWcPx.8w1fyh3AHVI81uq"/>
+            <column name="email" value="admin@admin.com"/>
+            <column name="role" value="ADMIN"/>
             <column name="enabled" value="true"/>
         </insert>
     </changeSet>

@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LandingPage from '@/components/LandingPage.vue'
-import SearchResults from '@/components/SearchResults.vue'
-import GameDetails from '@/components/GameDetails.vue'
-import LoginPage from '@/components/LoginPage.vue'
-import RegisterPage from '@/components/RegisterPage.vue'
-import ProfilePage from '@/components/ProfilePage.vue'
-import CheckoutPage from "@/components/CheckoutPage.vue";
-import OrderConfirmation from "@/components/OrderConfirmation.vue";
+import LandingPage from '@/pages/LandingPage.vue'
+import SearchResults from '@/pages/SearchResults.vue'
+import GameDetails from '@/pages/GameDetails.vue'
+import LoginPage from '@/pages/LoginPage.vue'
+import RegisterPage from '@/pages/RegisterPage.vue'
+import ProfilePage from '@/pages/ProfilePage.vue'
+import CheckoutPage from "@/pages/CheckoutPage.vue";
+import OrderConfirmation from "@/pages/OrderConfirmation.vue";
+import AdminPanel from "@/pages/AdminPanel.vue";
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: '/order-confirmation',
     name: 'orderConfirmation',
     component: OrderConfirmation
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPanel
   }
 ]
 

@@ -22,7 +22,6 @@ public interface UserService {
     void logoutUser(Authentication authentication, HttpServletRequest request, HttpServletResponse response);
     UserDetailsResponseDto getUserDetails();
     PaginatedResponseDto getUserGames(int pageOffset);
-    void deleteUser(HttpServletRequest request, HttpServletResponse response);
     CheckUserResponseDto checkUser();
     void changeUsername(Authentication authentication, HttpServletRequest request, HttpServletResponse response,
                         ChangeUserUsernameDto changeUserUsernameDto);

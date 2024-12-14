@@ -9,6 +9,7 @@
       <router-link to="/profile" class="navbar-title" exact-active-class="active-link">Profile</router-link>
       <div class="navbar-buttons">
         <button @click="goHome">Home</button>
+        <button v-if="isAdmin" @click="goToAdminPanel">Admin Panel</button>
         <button v-if="userLoggedIn" @click="logout" class="logout">
           Logout
         </button>
@@ -297,6 +298,7 @@ const showChangePasswordModal = ref(false);
 const newUsername = ref('');
 const newEmail = ref('');
 const newPassword = ref('');
+const isAdmin = ref(false);
 
 const generateUniqueFilename = (originalName) => {
   const now = new Date();
@@ -314,6 +316,10 @@ const generateUniqueFilename = (originalName) => {
     .padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
   const extension = originalName.split('.').pop();
   return `${timestamp}.${extension}`;
+};
+
+const goToAdminPanel = () => {
+  router.push({ name: 'admin' });
 };
 
 const handleImageUpload = (event) => {
@@ -423,6 +429,7 @@ const checkUserLoggedIn = async () => {
       withCredentials: true,
     });
     userLoggedIn.value = response.data.userLoggedIn;
+    isAdmin.value = response.data.admin;
     return response.data.userLoggedIn;
   } catch (error) {
     console.error('Error checking user login status:', error);

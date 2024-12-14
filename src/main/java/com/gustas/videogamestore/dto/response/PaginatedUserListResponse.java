@@ -4,17 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetailsResponseDto {
+public class PaginatedUserListResponse {
 
-    private Long id;
-    private String username;
-    private String email;
-    private Boolean enabled;
-    private String role;
+    private List<UserDetailsResponseDto> users;
+    private Integer totalPages;
+    private Integer currentPage;
+    private Long totalUsers;
 
 }

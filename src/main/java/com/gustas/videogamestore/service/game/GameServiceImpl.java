@@ -33,7 +33,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +57,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public PaginatedResponseDto getGames(GameSearchCriteria gameSearchCriteria) {
         Pageable pageable = createPageable(gameSearchCriteria);
-        Specification<Game> specification = createBookSpecification(gameSearchCriteria);
+        Specification<Game> specification = createGameSpecification(gameSearchCriteria);
 
         Page<Game> gamePage = gameDao.findAll(specification, pageable);
 
@@ -118,11 +117,12 @@ public class GameServiceImpl implements GameService {
         return game;
     }
 
-    private Specification<Game> createBookSpecification(GameSearchCriteria gameSearchCriteria) {
+    private Specification<Game> createGameSpecification(GameSearchCriteria gameSearchCriteria) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             addNamePredicate(gameSearchCriteria, root, criteriaBuilder, predicates);
+            predicates.add(criteriaBuilder.isTrue(root.get("user").get("enabled")));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

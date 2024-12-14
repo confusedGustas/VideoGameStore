@@ -78,22 +78,15 @@ public class UserServiceImpl implements UserService {
                 dtoList, gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
     }
 
-
-    @Override
-    public void deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        User user = sessionService.getUserFromSessionId();
-        userDao.deleteUser(user);
-
-        logoutUser(null, request, response);
-    }
-
     @Override
     public CheckUserResponseDto checkUser() {
         try {
-            sessionService.getUserFromSessionId();
-            return buildCheckUserResponse(true);
+            User user = sessionService.getUserFromSessionId();
+            boolean isAdmin = user.getRole() == Role.ADMIN;
+
+            return buildCheckUserResponse(true, isAdmin);
         } catch (Exception e) {
-            return buildCheckUserResponse(false);
+            return buildCheckUserResponse(false, false);
         }
     }
 
@@ -127,8 +120,8 @@ public class UserServiceImpl implements UserService {
         userDao.saveUser(user);
     }
 
-    private CheckUserResponseDto buildCheckUserResponse(boolean isUserLoggedIn) {
-        return new CheckUserResponseDto(isUserLoggedIn);
+    private CheckUserResponseDto buildCheckUserResponse(boolean isUserLoggedIn, boolean isAdmin) {
+        return new CheckUserResponseDto(isUserLoggedIn, isAdmin);
     }
 
     public void authenticateUser(User user, HttpSession session) {
@@ -157,7 +150,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Username"));
 
         if (!user.isEnabled()) {
-            throw new IllegalArgumentException("User is not enabled, please confirm your email");
+            throw new IllegalArgumentException("User is not enabled");
         }
 
         if (!bCryptPasswordEncoder.matches(loginUserRequestDto.getPassword(), user.getPassword())) {
