@@ -2,9 +2,9 @@
   <div class="container mx-auto px-4">
     <NavbarComponent />
 
-    <form @submit.prevent="submitCheckout" class="max-w-2xl mx-auto mt-10" novalidate>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div class="space-y-4">
+    <form @submit.prevent="submitCheckout" class="max-w-2xl mx-auto mt-10 px-4" novalidate>
+      <div class="flex flex-col items-center space-y-8">
+        <div class="w-full max-w-md space-y-4">
           <div>
             <label for="shippingAddress" class="block text-sm font-medium text-gray-700">Shipping Address</label>
             <input
@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <div class="bg-gray-100 p-6 rounded-lg">
+        <div class="bg-gray-100 p-6 rounded-lg w-full max-w-md">
           <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
           <ul v-if="items.length > 0" class="space-y-4">
             <li v-for="item in items" :key="item.id" class="flex justify-between items-center">
@@ -77,7 +77,7 @@
                   <button @click.prevent="increaseQuantity(item)" class="px-2 py-1 bg-gray-200 rounded">+</button>
                 </div>
               </div>
-              <div>
+              <div class="mt-6">
                 <span class="font-medium">${{ (item.price * item.quantity).toFixed(2) }}</span>
                 <button @click="removeItem(item)" class="ml-2 text-red-600 hover:text-red-800">Remove</button>
               </div>
@@ -91,9 +91,11 @@
         </div>
       </div>
 
-      <Button type="submit" :disabled="items.length === 0" class="w-full">
-        Place Order
-      </Button>
+      <div class="mt-8 flex justify-center">
+        <Button type="submit" :disabled="items.length === 0" class="w-full max-w-md">
+          Place Order
+        </Button>
+      </div>
     </form>
   </div>
 </template>

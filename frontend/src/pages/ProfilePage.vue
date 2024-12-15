@@ -220,7 +220,6 @@ const saveGame = async () => {
     }
 
     showAddGamePopup.value = false
-    // Reload the page after successful save
     window.location.reload()
   } catch (error) {
     console.error('Error saving the game:', error)
@@ -248,7 +247,6 @@ const updateGame = async () => {
     })
 
     showEditGamePopup.value = false
-    // Reload the page after successful update
     window.location.reload()
   } catch (error) {
     console.error('Error updating the game:', error)
@@ -261,6 +259,7 @@ const updateUsername = async () => {
     showChangeUsernameModal.value = false
     newUsername.value = ''
     await fetchUserDetails()
+    window.location.reload()
   } catch (error) {
     console.error('Error updating username:', error)
   }
@@ -272,6 +271,7 @@ const updateEmail = async () => {
     showChangeEmailModal.value = false
     newEmail.value = ''
     await fetchUserDetails()
+    window.location.reload()
   } catch (error) {
     console.error('Error updating email:', error)
   }
@@ -282,6 +282,7 @@ const updatePassword = async () => {
     await axios.post('/api/users/update-password', {password: newPassword.value})
     showChangePasswordModal.value = false
     newPassword.value = ''
+    window.location.reload()
   } catch (error) {
     console.error('Error updating password:', error)
   }

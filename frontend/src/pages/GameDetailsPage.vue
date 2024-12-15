@@ -6,15 +6,15 @@
         <img :src="getImageUrl(game.id)" :alt="game.name" class="w-full h-auto rounded-lg shadow-md" />
       </div>
       <div class="md:w-1/2 space-y-4">
-        <h2 class="text-3xl font-bold">{{ game.name }}</h2>
+        <h2 class="text-3xl font-bold truncate w-[30ch]">{{ game.name }}</h2>
         <p class="text-2xl font-semibold">${{ game.price.toFixed(2) }}</p>
         <div class="space-y-2">
-          <p><strong>Genre:</strong> {{ game.genre.name }}</p>
-          <p><strong>Publisher:</strong> {{ game.publisher.publisherName }}</p>
-          <p><strong>Platform:</strong> {{ game.activationPlatform.platformName }}</p>
-          <p><strong>Region:</strong> {{ game.activationRegion.regionName }}</p>
-          <p><strong>Release Year:</strong> {{ game.releaseYear }}</p>
-          <p><strong>Stock:</strong> {{ game.stock }} available</p>
+          <p class="truncate w-[40ch]"><strong>Genre:</strong> {{ game.genre.name }}</p>
+          <p class="truncate w-[40ch]"><strong>Publisher:</strong> {{ game.publisher.publisherName }}</p>
+          <p class="truncate w-[40ch]"><strong>Platform:</strong> {{ game.activationPlatform.platformName }}</p>
+          <p class="truncate w-[40ch]"><strong>Region:</strong> {{ game.activationRegion.regionName }}</p>
+          <p class="truncate w-[40ch]"><strong>Release Year:</strong> {{ game.releaseYear }}</p>
+          <p class="truncate w-[40ch]"><strong>Stock:</strong> {{ game.stock }} available</p>
         </div>
         <p class="text-gray-700 whitespace-pre-wrap break-words">{{ game.description }}</p>
         <div class="space-x-4">
