@@ -6,7 +6,7 @@
     leave-to-class="opacity-0"
   >
     <div v-if="show" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div class="bg-white rounded-lg p-8 max-w-md w-full max-h-[90vh] overflow-y-auto no-scrollbar">
         <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
         <slot></slot>
         <div class="flex justify-end mt-6 space-x-4">
@@ -28,3 +28,13 @@ defineProps({
 
 defineEmits(['close', 'confirm'])
 </script>
+
+<style scoped>
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>
