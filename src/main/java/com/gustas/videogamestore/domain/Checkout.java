@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "checkouts")
+@Table(name = "checkout")
 public class Checkout {
 
     @Id

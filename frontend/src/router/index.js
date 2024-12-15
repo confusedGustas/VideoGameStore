@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingPage from '@/pages/LandingPage.vue'
-import SearchResults from '@/pages/SearchResults.vue'
-import GameDetails from '@/pages/GameDetails.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
 import CheckoutPage from "@/pages/CheckoutPage.vue";
-import OrderConfirmation from "@/pages/OrderConfirmation.vue";
-import AdminPanel from "@/pages/AdminPanel.vue";
+import SearchResultsPage from "@/pages/SearchResultsPage.vue";
+import GameDetailsPage from "@/pages/GameDetailsPage.vue";
+import OrderConfirmationPage from "@/pages/OrderConfirmationPage.vue";
+import AdminPanelPage from "@/pages/AdminPanelPage.vue";
 
 const routes = [
   {
@@ -18,12 +18,12 @@ const routes = [
   {
     path: '/search',
     name: 'search',
-    component: SearchResults,
+    component: SearchResultsPage,
   },
   {
     path: '/game/:id',
     name: 'details',
-    component: GameDetails,
+    component: GameDetailsPage,
   },
   {
     path: '/login',
@@ -48,12 +48,12 @@ const routes = [
   {
     path: '/order-confirmation',
     name: 'orderConfirmation',
-    component: OrderConfirmation
+    component: OrderConfirmationPage
   },
   {
     path: '/admin',
     name: 'admin',
-    component: AdminPanel
+    component: AdminPanelPage
   }
 ]
 

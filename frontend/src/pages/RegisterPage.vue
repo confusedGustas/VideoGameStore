@@ -1,19 +1,14 @@
 <template>
-  <div class="register-page">
-    <h1 class="title">Register</h1>
-    <form @submit.prevent="register">
-      <input v-model="username" type="text" placeholder="Username" required />
-      <input v-model="email" type="email" placeholder="Email" required />
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Register</button>
+  <div class="container mx-auto px-4 max-w-md">
+    <h1 class="text-3xl font-bold text-center mb-8">Register</h1>
+    <form @submit.prevent="register" class="space-y-4">
+      <input v-model="username" type="text" placeholder="Username" required class="w-full p-2 border border-gray-300 rounded-md" />
+      <input v-model="email" type="email" placeholder="Email" required class="w-full p-2 border border-gray-300 rounded-md" />
+      <input v-model="password" type="password" placeholder="Password" required class="w-full p-2 border border-gray-300 rounded-md" />
+      <Button type="submit" class="w-full">Register</Button>
     </form>
-    <p>
-      Already have an account? <router-link to="/login">Login here</router-link>
+    <p class="mt-4 text-center">
+      Already have an account? <router-link to="/login" class="text-blue-600">Login here</router-link>
     </p>
   </div>
 </template>
@@ -22,6 +17,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import Button from '@/components/Button.vue'
 
 const router = useRouter()
 const username = ref('')
@@ -42,44 +38,3 @@ const register = async () => {
   }
 }
 </script>
-
-<style scoped>
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.register-page {
-  max-width: 400px;
-  margin: auto;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 0.75rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-</style>

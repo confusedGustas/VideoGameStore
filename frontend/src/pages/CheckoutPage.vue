@@ -1,99 +1,109 @@
 <template>
-  <nav class="navbar">
-    <router-link to="/" class="navbar-title" exact-active-class="active-link">
-      Video Game Store
-    </router-link>
-    <div class="navbar-buttons">
-      <button @click="goToProfile">Profile</button>
-      <button @click="logout">Logout</button>
-    </div>
-  </nav>
+  <div class="container mx-auto px-4">
+    <NavbarComponent />
 
-  <div class="checkout-page">
-    <h1>Checkout</h1>
-    <form @submit.prevent="submitCheckout" class="checkout-form">
-      <div class="form-group">
-        <label for="shippingAddress">Shipping Address</label>
-        <input
-          id="shippingAddress"
-          v-model="checkoutData.shippingAddress"
-          type="text"
-          required
-        />
-      </div>
+    <form @submit.prevent="submitCheckout" class="max-w-2xl mx-auto mt-10" novalidate>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="space-y-4">
+          <div>
+            <label for="shippingAddress" class="block text-sm font-medium text-gray-700">Shipping Address</label>
+            <input
+              id="shippingAddress"
+              v-model="checkoutData.shippingAddress"
+              type="text"
+              required
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none"
+            />
+          </div>
 
-      <div class="form-group">
-        <label for="buyerName">Buyer's Name</label>
-        <input
-          id="buyerName"
-          v-model="checkoutData.buyerName"
-          type="text"
-          required
-        />
-      </div>
+          <div>
+            <label for="buyerName" class="block text-sm font-medium text-gray-700">Buyer's Name</label>
+            <input
+              id="buyerName"
+              v-model="checkoutData.buyerName"
+              type="text"
+              required
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none"
+            />
+          </div>
 
-      <div class="form-group">
-        <label for="buyerEmail">Email</label>
-        <input
-          id="buyerEmail"
-          v-model="checkoutData.buyerEmail"
-          type="email"
-        />
-      </div>
+          <div>
+            <label for="buyerEmail" class="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              id="buyerEmail"
+              v-model="checkoutData.buyerEmail"
+              type="email"
+              required
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none"
+            />
+          </div>
 
-      <div class="form-group">
-        <label for="buyerPhone">Phone Number</label>
-        <input
-          id="buyerPhone"
-          v-model="checkoutData.buyerPhone"
-          type="tel"
-          required
-        />
-      </div>
+          <div>
+            <label for="buyerPhone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input
+              id="buyerPhone"
+              v-model="checkoutData.buyerPhone"
+              type="tel"
+              required
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none"
+            />
+          </div>
 
-      <div class="form-group">
-        <label for="paymentMethod">Payment Method</label>
-        <select
-          id="paymentMethod"
-          v-model="checkoutData.paymentMethod"
-          required
-        >
-          <option value="CREDIT_CARD">Credit Card</option>
-          <option value="PAYPAL">PayPal</option>
-          <option value="CASH">Cash</option>
-        </select>
-      </div>
+          <div>
+            <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Payment Method</label>
+            <select
+              id="paymentMethod"
+              v-model="checkoutData.paymentMethod"
+              required
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none"
+            >
+              <option value="CREDIT_CARD">Credit Card</option>
+              <option value="PAYPAL">PayPal</option>
+              <option value="CASH">Cash</option>
+            </select>
+          </div>
+        </div>
 
-      <div class="items-list">
-        <h2>Items</h2>
-        <ul v-if="items.length > 0">
-          <li v-for="item in items" :key="item.id" class="cart-item">
-            <div class="item-details">
-              <span :title="item.name">{{ item.name.length > 20 ? item.name.substring(0, 20) + '...' : item.name }}</span>
-              <div class="quantity-controls">
-                <button @click.prevent="decreaseQuantity(item)" class="quantity-btn">-</button>
-                <span>{{ item.quantity }}</span>
-                <button @click.prevent="increaseQuantity(item)" class="quantity-btn">+</button>
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+          <ul v-if="items.length > 0" class="space-y-4">
+            <li v-for="item in items" :key="item.id" class="flex justify-between items-center">
+              <div>
+                <span class="font-medium">{{ truncateText(item.name, 10) }}</span>
+                <div class="text-sm text-gray-600">
+                  Quantity:
+                  <button @click.prevent="decreaseQuantity(item)" class="px-2 py-1 bg-gray-200 rounded">-</button>
+                  {{ item.quantity }}
+                  <button @click.prevent="increaseQuantity(item)" class="px-2 py-1 bg-gray-200 rounded">+</button>
+                </div>
               </div>
-              <span>Price: ${{ (item.price * item.quantity).toFixed(2) }}</span>
-              <button @click.prevent="removeItem(item)" class="remove-btn">Remove</button>
-            </div>
-          </li>
-        </ul>
-        <p v-else>Your cart is empty.</p>
-        <p><strong>Total: ${{ totalPrice.toFixed(2) }}</strong></p>
-        <button v-if="items.length > 0" @click.prevent="clearCart" class="clear-cart-btn">Clear Cart</button>
+              <div>
+                <span class="font-medium">${{ (item.price * item.quantity).toFixed(2) }}</span>
+                <button @click="removeItem(item)" class="ml-2 text-red-600 hover:text-red-800">Remove</button>
+              </div>
+            </li>
+          </ul>
+          <p v-else class="text-gray-600">Your cart is empty.</p>
+          <div class="mt-4 text-xl font-semibold">Total: ${{ totalPrice.toFixed(2) }}</div>
+          <button v-if="items.length > 0" @click="clearCart" class="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+            Clear Cart
+          </button>
+        </div>
       </div>
 
-      <button type="submit" class="submit-button" :disabled="items.length === 0">Place Order</button>
+      <Button type="submit" :disabled="items.length === 0" class="w-full">
+        Place Order
+      </Button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import {computed, onMounted, ref} from 'vue'
+import {useRouter} from 'vue-router'
 import axios from 'axios'
+import NavbarComponent from '@/components/NavbarComponent.vue'
+import Button from '@/components/Button.vue'
 
 const router = useRouter()
 const items = ref([])
@@ -116,8 +126,7 @@ onMounted(() => {
 })
 
 const loadCartItems = () => {
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || []
-  items.value = cartItems
+  items.value = JSON.parse(localStorage.getItem('cart')) || []
   updateCheckoutItems()
 }
 
@@ -179,179 +188,10 @@ const submitCheckout = async () => {
   }
 }
 
-
-const goToProfile = () => {
-  router.push({ name: 'profile' })
-}
-
-const logout = async () => {
-  try {
-    await axios.post('/api/users/logout', {}, { withCredentials: true })
-    await router.push({ name: 'home' })
-  } catch (error) {
-    console.error('Error logging out:', error)
+const truncateText = (text, maxLength) => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '...'
   }
+  return text
 }
 </script>
-
-<style scoped>
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-.navbar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #333;
-  font-size: 2.5rem;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar-title:hover {
-  color: #4caf50;
-}
-
-.navbar-buttons {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-buttons button {
-  margin-left: 10px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.navbar-buttons button:hover {
-  background-color: #45a049;
-}
-
-.checkout-page {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.checkout-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input, select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.items-list {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 4px;
-}
-
-.items-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.cart-item {
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
-}
-
-.item-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.quantity-btn, .remove-btn {
-  padding: 5px 10px;
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.quantity-btn:hover, .remove-btn:hover {
-  background-color: #e0e0e0;
-}
-
-.remove-btn {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.remove-btn:hover {
-  background-color: #ff5252;
-}
-
-.clear-cart-btn {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.clear-cart-btn:hover {
-  background-color: #ff5252;
-}
-
-.submit-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.submit-button:hover {
-  background-color: #45a049;
-}
-
-.submit-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-</style>

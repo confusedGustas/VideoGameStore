@@ -1,35 +1,38 @@
 <template>
-  <nav class="navbar">
-    <router-link to="/" class="navbar-title" exact-active-class="active-link">
-      Video Game Store
-    </router-link>
-    <div class="navbar-buttons">
-      <button v-if="!isAuthenticated" @click="goToLogin">Login</button>
-      <button v-if="!isAuthenticated" @click="goToRegister">Register</button>
-      <button v-if="isAuthenticated" @click="goToProfile">Profile</button>
-      <button v-if="isAuthenticated" @click="logout">Logout</button>
-      <button @click="goToCheckout" class="checkout-button">
-        <ShoppingCartIcon class="checkout-icon" />
-        Checkout
-      </button>
+  <nav class="bg-white shadow-md p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <router-link to="/" class="text-2xl font-bold text-black">
+        Video Game Store
+      </router-link>
+      <div class="flex space-x-4">
+        <Button v-if="!isLandingPage" @click="goToHome">Home</Button>
+        <Button v-if="!isAuthenticated" @click="goToLogin">Login</Button>
+        <Button v-if="!isAuthenticated" @click="goToRegister">Register</Button>
+        <Button v-if="isAuthenticated" @click="goToProfile">Profile</Button>
+        <Button v-if="isAuthenticated" @click="logout">Logout</Button>
+        <Button @click="goToCheckout" class="flex items">
+          <ShoppingCartIcon class="w-5 h-5 mr-2"/>
+          Checkout
+        </Button>
+      </div>
     </div>
   </nav>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import {ref, computed} from 'vue'
+import {useRouter, useRoute} from 'vue-router'
 import axios from 'axios'
-import { ref } from 'vue'
-import { ShoppingCartIcon } from 'lucide-vue-next'
+import {ShoppingCartIcon} from 'lucide-vue-next'
+import Button from './Button.vue'
 
 const router = useRouter()
+const route = useRoute()
 const isAuthenticated = ref(false)
 
 const checkLogin = async () => {
   try {
-    const response = await axios.get('/api/users/check', {
-      withCredentials: true,
-    })
+    const response = await axios.get('/api/users/check', {withCredentials: true})
     isAuthenticated.value = response.data.userLoggedIn
   } catch (error) {
     console.error('Error checking login status:', error)
@@ -51,18 +54,10 @@ const logout = async () => {
   }
 }
 
-const goToLogin = () => {
-  router.push({name: 'login'})
-}
-
-const goToRegister = () => {
-  router.push({name: 'register'})
-}
-
-const goToProfile = () => {
-  router.push({name: 'profile'})
-}
-
+const goToLogin = () => router.push({name: 'login'})
+const goToRegister = () => router.push({name: 'register'})
+const goToProfile = () => router.push({name: 'profile'})
+const goToHome = () => router.push({name: 'home'})
 const goToCheckout = async () => {
   if (isAuthenticated.value) {
     await router.push({name: 'checkout'})
@@ -71,71 +66,7 @@ const goToCheckout = async () => {
   }
 }
 
+const isLandingPage = computed(() => route.name === 'home')
+
 checkLogin()
 </script>
-
-<style scoped>
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-.navbar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #333;
-  font-size: 2.5rem;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar-title:hover {
-  color: #4caf50;
-}
-
-.navbar-buttons {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-buttons button {
-  margin-left: 10px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.navbar-buttons button:hover {
-  background-color: #45a049;
-}
-
-.checkout-button {
-  display: flex;
-  align-items: center;
-  background-color: #f0c14b !important;
-  color: #111 !important;
-}
-
-.checkout-button:hover {
-  background-color: #ddb347 !important;
-}
-
-.checkout-icon {
-  margin-right: 0.5rem;
-  width: 1.2rem;
-  height: 1.2rem;
-}
-</style>
