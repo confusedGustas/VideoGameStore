@@ -34,12 +34,12 @@ public class UserMapper {
         return userDetailsResponseDto;
     }
 
-    public List<UserDetailsResponseDto> toDto(List<User> games) {
-        if (games == null || games.isEmpty()) {
+    public List<UserDetailsResponseDto> toDto(List<User> users) {
+        if (users == null || users.isEmpty()) {
             return Collections.emptyList();
         }
 
-        return games.stream()
+        return users.stream()
                 .map(this::toDto)
                 .toList();
     }

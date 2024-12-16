@@ -219,4 +219,52 @@
                 referencedColumnNames="id"
                 onDelete="CASCADE"/>
     </changeSet>
+
+    <changeSet id="3" author="Gustas Antanas Gaigalas">
+        <!-- Create comments table -->
+        <createTable tableName="comments">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="game_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_comment_id" type="BIGINT"/>
+        </createTable>
+        <addAutoIncrement columnName="id" tableName="comments" startWith="50"/>
+
+        <!-- Add foreign key constraints -->
+        <addForeignKeyConstraint
+                baseTableName="comments"
+                baseColumnNames="game_id"
+                constraintName="fk_comments_game_id"
+                referencedTableName="games"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="comments"
+                baseColumnNames="user_id"
+                constraintName="fk_comments_user_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="comments"
+                baseColumnNames="parent_comment_id"
+                constraintName="fk_comments_parent_comment_id"
+                referencedTableName="comments"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>

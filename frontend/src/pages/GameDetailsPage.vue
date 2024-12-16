@@ -23,6 +23,7 @@
         </div>
       </div>
     </div>
+    <Comments :gameId="Number(route.params.id)" class="mt-8" />
   </div>
 </template>
 
@@ -32,6 +33,7 @@ import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import NavbarComponent from '@/components/NavbarComponent.vue'
 import Button from '@/components/Button.vue'
+import Comments from '@/components/Comments.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -67,3 +69,4 @@ const addToCart = () => {
   }
 }
 </script>
+
