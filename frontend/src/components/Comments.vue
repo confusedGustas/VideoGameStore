@@ -21,6 +21,8 @@
         :key="comment.commentId"
         :comment="comment"
         :gameId="gameId"
+        :loggedInUsername="loggedInUsername"
+        :loggedInRole="loggedInRole"
         @reply="replyToComment"
         @delete="deleteComment"
       />
@@ -44,6 +46,8 @@ const props = defineProps({
 const comments = ref([])
 const newComment = ref('')
 const commentsError = ref(false)
+const loggedInUsername = ref('')
+const loggedInRole = ref('')
 
 const fetchComments = async () => {
   try {
@@ -51,8 +55,16 @@ const fetchComments = async () => {
     comments.value = response.data.comments
     commentsError.value = false
   } catch (error) {
-    console.error('Error fetching comments:', error)
     commentsError.value = true
+  }
+}
+
+const fetchUserDetails = async () => {
+  try {
+    const response = await axios.get('/api/users/get-details')
+    loggedInUsername.value = response.data.username
+    loggedInRole.value = response.data.role
+  } catch (error) {
   }
 }
 
@@ -68,7 +80,6 @@ const addComment = async () => {
     newComment.value = ''
     await fetchComments()
   } catch (error) {
-    console.error('Error adding comment:', error)
   }
 }
 
@@ -81,7 +92,6 @@ const replyToComment = async (parentId, content) => {
     })
     await fetchComments()
   } catch (error) {
-    console.error('Error replying to comment:', error)
   }
 }
 
@@ -92,9 +102,11 @@ const deleteComment = async (commentId) => {
     })
     await fetchComments()
   } catch (error) {
-    console.error('Error deleting comment:', error)
   }
 }
 
-onMounted(fetchComments)
+onMounted(async () => {
+  await fetchUserDetails()
+  await fetchComments()
+})
 </script>

@@ -5,7 +5,12 @@
         <p class="font-semibold">{{ comment.username }}</p>
         <p class="text-sm text-gray-500">{{ formatDate(comment.createdAt) }}</p>
       </div>
-      <Button @click="deleteComment" variant="secondary" class="text-red-500">
+      <Button
+        v-if="canDelete"
+        @click="deleteComment"
+        variant="secondary"
+        class="text-red-500"
+      >
         <TrashIcon class="h-4 w-4" />
       </Button>
     </div>
@@ -33,6 +38,8 @@
         :key="reply.commentId"
         :comment="reply"
         :gameId="gameId"
+        :loggedInUsername="loggedInUsername"
+        :loggedInRole="loggedInRole"
         @reply="(parentId, content) => $emit('reply', parentId, content)"
         @delete="$emit('delete', reply.commentId)"
         class="whitespace-pre-wrap break-words"
@@ -42,7 +49,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import Button from './Button.vue'
 import {TrashIcon} from 'lucide-vue-next'
 
@@ -54,6 +61,14 @@ const props = defineProps({
   gameId: {
     type: Number,
     required: true
+  },
+  loggedInUsername: {
+    type: String,
+    required: true
+  },
+  loggedInRole: {
+    type: String,
+    required: true
   }
 })
 
@@ -61,6 +76,10 @@ const emit = defineEmits(['reply', 'delete'])
 
 const showReplyForm = ref(false)
 const replyText = ref('')
+
+const canDelete = computed(() => {
+  return props.loggedInRole === 'ADMIN' || props.comment.username === props.loggedInUsername
+})
 
 const submitReply = () => {
   if (replyText.value.trim()) {
