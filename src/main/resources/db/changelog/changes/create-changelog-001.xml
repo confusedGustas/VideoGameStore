@@ -120,6 +120,22 @@
         </createTable>
         <addAutoIncrement columnName="id" tableName="images" startWith="50"/>
 
+        <createTable tableName="ratings">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rating" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="game_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement columnName="id" tableName="ratings" startWith="50"/>
+
         <createTable tableName="checkout">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
@@ -187,6 +203,18 @@
                                  referencedTableName="images"
                                  referencedColumnNames="id"/>
 
+        <addForeignKeyConstraint baseTableName="ratings"
+                                 baseColumnNames="game_id"
+                                 constraintName="fk_ratings_game_id"
+                                 referencedTableName="games"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="ratings"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_ratings_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+
         <addForeignKeyConstraint baseTableName="checkout"
                                  baseColumnNames="user_id"
                                  constraintName="fk_checkout_user_id"
@@ -221,7 +249,6 @@
     </changeSet>
 
     <changeSet id="3" author="Gustas Antanas Gaigalas">
-        <!-- Create comments table -->
         <createTable tableName="comments">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
@@ -242,7 +269,6 @@
         </createTable>
         <addAutoIncrement columnName="id" tableName="comments" startWith="50"/>
 
-        <!-- Add foreign key constraints -->
         <addForeignKeyConstraint
                 baseTableName="comments"
                 baseColumnNames="game_id"

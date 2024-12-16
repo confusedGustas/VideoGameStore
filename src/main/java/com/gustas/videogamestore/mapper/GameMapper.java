@@ -1,5 +1,6 @@
 package com.gustas.videogamestore.mapper;
 
+import com.gustas.videogamestore.dao.rating.RatingDao;
 import com.gustas.videogamestore.domain.Game;
 import com.gustas.videogamestore.domain.Genre;
 import com.gustas.videogamestore.domain.Platform;
@@ -7,14 +8,18 @@ import com.gustas.videogamestore.domain.Publisher;
 import com.gustas.videogamestore.domain.Region;
 import com.gustas.videogamestore.dto.request.GameRequestDto;
 import com.gustas.videogamestore.dto.response.GameResponseDto;
-import lombok.RequiredArgsConstructor;
+import com.gustas.videogamestore.service.session.SessionService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class GameMapper {
+
+    private RatingDao ratingDao;
+    private SessionService sessionService;
 
     public Game toEntity(GameRequestDto gameRequestDto, Genre genre, Platform platform, Region region, Publisher publisher) {
         Game game = new Game();
@@ -46,6 +51,9 @@ public class GameMapper {
         dto.setActivationRegion(game.getActivationRegion());
         dto.setPublisher(game.getPublisher());
         dto.setSeller(game.getUser().getUsername());
+
+        Double averageRating = ratingDao.findAverageRatingByGameId(game.getId());
+        dto.setAverageRating(averageRating != null ? (int) Math.round(averageRating) : 0);
 
         return dto;
     }

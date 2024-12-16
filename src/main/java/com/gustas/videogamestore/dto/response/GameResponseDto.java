@@ -27,5 +27,6 @@ public class GameResponseDto {
     private Publisher publisher;
     private Genre genre;
     private String seller;
+    private Integer averageRating;
 
 }
