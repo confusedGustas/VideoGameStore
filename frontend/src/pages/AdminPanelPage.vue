@@ -3,7 +3,7 @@
     <nav class="flex justify-between items-center mb-8">
       <router-link to="/admin" class="text-2xl font-bold">Admin Panel</router-link>
       <div class="space-x-4">
-        <Button @click="goHome">Home</Button>
+        <Button @click="goBack">Back to Profile</Button>
         <Button v-if="userLoggedIn" @click="logout">Logout</Button>
       </div>
     </nav>
@@ -129,8 +129,8 @@ const toggleUserStatus = async (user) => {
   }
 }
 
-const goHome = () => {
-  router.push({ name: 'home' })
+const goBack = () => {
+  router.push({ name: 'profile' })
 }
 
 const logout = async () => {

@@ -8,6 +8,7 @@ import SearchResultsPage from "@/pages/SearchResultsPage.vue";
 import GameDetailsPage from "@/pages/GameDetailsPage.vue";
 import OrderConfirmationPage from "@/pages/OrderConfirmationPage.vue";
 import AdminPanelPage from "@/pages/AdminPanelPage.vue";
+import PurchaseHistoryPage from "@/pages/PurchaseHistoryPage.vue";
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: AdminPanelPage
+  },
+  {
+    path: '/purchase-history',
+    name: 'purchaseHistory',
+    component: PurchaseHistoryPage
   }
 ]
 

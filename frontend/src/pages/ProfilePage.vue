@@ -4,6 +4,7 @@
       <router-link to="/profile" class="text-2xl font-bold">Profile</router-link>
       <div class="space-x-4">
         <Button @click="goHome">Home</Button>
+        <Button @click="goToPurchaseHistory">Purchase History</Button>
         <Button v-if="isAdmin" @click="goToAdminPanel">Admin Panel</Button>
         <Button v-if="userLoggedIn" @click="logout">Logout</Button>
       </div>
@@ -159,6 +160,8 @@ const goHome = () => router.push({name: 'home'})
 
 const goToAdminPanel = () => router.push({name: 'admin'})
 
+const goToPurchaseHistory = () => router.push({ name: 'purchaseHistory' })
+
 const logout = async () => {
   try {
     await axios.post('/api/users/logout', {}, {withCredentials: true})
@@ -310,3 +313,4 @@ onMounted(async () => {
   }
 })
 </script>
+

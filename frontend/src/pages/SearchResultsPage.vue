@@ -36,7 +36,7 @@
       >
         <option value="">Rating</option>
         <option v-for="n in 5" :key="n" :value="n">
-          {{ n }} <span class="text-yellow-500">{{ '★'.repeat(n) }}</span>
+          {{ `${n} ${'★'.repeat(n)}` }}
         </option>
       </select>
     </div>
