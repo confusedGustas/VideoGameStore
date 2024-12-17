@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
-import {useRouter} from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 import Button from '@/components/Button.vue'
 import PurchaseHistoryTable from '@/components/PurchaseHistoryTable.vue'
@@ -29,11 +29,18 @@ const error = ref(null)
 const fetchPurchaseHistory = async () => {
   try {
     loading.value = true
-    const response = await axios.get('/api/checkout/get-purchase-history', {withCredentials: true})
+    const response = await axios.get('/api/checkout/get-purchase-history', { withCredentials: true })
+
     purchaseHistory.value = response.data
-  } catch (error) {
-    console.error('Error fetching purchase history:', error)
-    error.value = 'Failed to fetch purchase history. Please try again later.'
+  } catch (err) {
+    console.error('Error fetching purchase history:', err)
+
+
+    if (err.response && err.response.status === 400) {
+      error.value = 'No purchase history was found'
+    } else {
+      error.value = 'Failed to fetch purchase history. Please try again later.'
+    }
   } finally {
     loading.value = false
   }
@@ -47,4 +54,3 @@ onMounted(() => {
   fetchPurchaseHistory()
 })
 </script>
-
