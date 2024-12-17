@@ -124,7 +124,7 @@
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="rating" type="INTEGER">
+            <column name="value" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="game_id" type="BIGINT">

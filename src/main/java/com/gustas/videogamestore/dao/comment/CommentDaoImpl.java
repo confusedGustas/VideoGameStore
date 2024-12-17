@@ -24,8 +24,8 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public List<Comment> findByGameIdAndParentCommentIsNull(Long gameId) {
-        return commentRepository.findByGameIdAndParentCommentIsNull(gameId);
+    public List<Comment> findByGameIdAndParentCommentIsNullOrderByTimeDesc(Long gameId) {
+        return commentRepository.findByGameIdAndParentCommentIsNullOrderByTimeDesc(gameId);
     }
 
 }

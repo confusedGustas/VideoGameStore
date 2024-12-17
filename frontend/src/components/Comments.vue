@@ -56,6 +56,7 @@ const fetchComments = async () => {
     commentsError.value = false
   } catch (error) {
     commentsError.value = true
+    console.error('Error fetching comments:', error)
   }
 }
 
@@ -65,6 +66,7 @@ const fetchUserDetails = async () => {
     loggedInUsername.value = response.data.username
     loggedInRole.value = response.data.role
   } catch (error) {
+    console.error('Error fetching user details:', error)
   }
 }
 
@@ -72,7 +74,7 @@ const addComment = async () => {
   if (!newComment.value.trim()) return
 
   try {
-    await axios.post(`/api/comment/save-comment/${props.gameId}`, {
+    await axios.post(`/api/comment/save-comment`, {
       gameId: props.gameId,
       content: newComment.value,
       parentCommentId: 0
@@ -80,18 +82,20 @@ const addComment = async () => {
     newComment.value = ''
     await fetchComments()
   } catch (error) {
+    console.error('Error adding comment:', error)
   }
 }
 
 const replyToComment = async (parentId, content) => {
   try {
-    await axios.post(`/api/comment/save-comment/${props.gameId}`, {
+    await axios.post(`/api/comment/save-comment`, {
       gameId: props.gameId,
       content: content,
       parentCommentId: parentId
     })
     await fetchComments()
   } catch (error) {
+    console.error('Error replying to comment:', error)
   }
 }
 
@@ -102,6 +106,7 @@ const deleteComment = async (commentId) => {
     })
     await fetchComments()
   } catch (error) {
+    console.error('Error deleting comment:', error)
   }
 }
 

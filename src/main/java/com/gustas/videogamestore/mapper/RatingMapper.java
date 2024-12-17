@@ -17,7 +17,7 @@ public class RatingMapper {
     public Rating toEntity(RatingSubmitRequestDto ratingSubmitRequestDto) {
         Rating rating = new Rating();
 
-        rating.setRating(ratingSubmitRequestDto.getValue());
+        rating.setValue(ratingSubmitRequestDto.getValue());
         rating.setGame(gameDao.getGame(ratingSubmitRequestDto.getGameId()));
         rating.setUser(sessionService.getUserFromSessionId());
 

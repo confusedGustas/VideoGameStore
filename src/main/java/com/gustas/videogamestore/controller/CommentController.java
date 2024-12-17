@@ -23,7 +23,7 @@ public class CommentController {
 
     private CommentService commentService;
 
-    @PostMapping("/save-comment/{gameId}")
+    @PostMapping("/save-comment")
     @ResponseStatus(HttpStatus.OK)
     public void saveComment(@Valid @RequestBody CommentSubmitDto commentSubmitDto) {
         commentService.saveComment(commentSubmitDto);

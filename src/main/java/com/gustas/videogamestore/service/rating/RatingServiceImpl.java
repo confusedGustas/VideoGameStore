@@ -23,7 +23,7 @@ public class RatingServiceImpl implements RatingService {
         Rating existingRating = ratingDao.findByUserIdAndGameId(sessionService.getIdFromSession(), ratingSubmitRequestDto.getGameId());
 
         if (existingRating != null) {
-            existingRating.setRating(ratingSubmitRequestDto.getValue());
+            existingRating.setValue(ratingSubmitRequestDto.getValue());
             ratingDao.saveRating(existingRating);
         } else {
             ratingDao.saveRating(ratingMapper.toEntity(ratingSubmitRequestDto));

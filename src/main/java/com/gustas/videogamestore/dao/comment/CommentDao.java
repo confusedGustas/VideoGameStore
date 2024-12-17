@@ -8,6 +8,6 @@ public interface CommentDao {
 
     Optional<Comment> findById(Long id);
     Comment save(Comment comment);
-    List<Comment> findByGameIdAndParentCommentIsNull(Long gameId);
+    List<Comment> findByGameIdAndParentCommentIsNullOrderByTimeDesc(Long gameId);
 
 }

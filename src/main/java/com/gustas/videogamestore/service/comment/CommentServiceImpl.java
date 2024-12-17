@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -33,10 +32,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public CommentsWithRepliesResponseDto getCommentsWithReplies(Long gameId) {
-        List<Comment> rootComments = commentDao.findByGameIdAndParentCommentIsNull(gameId);
+        List<Comment> rootComments = commentDao.findByGameIdAndParentCommentIsNullOrderByTimeDesc(gameId);
         List<CommentsResponseDto> commentDto = rootComments.stream()
-                .map(commentMapper::mapCommentToDtoWithReplies)
-                .collect(Collectors.toList());
+                .map(commentMapper::mapCommentToDtoWithReplies).toList();
         return new CommentsWithRepliesResponseDto(gameId, commentDto);
     }
 
