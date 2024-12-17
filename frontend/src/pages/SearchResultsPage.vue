@@ -29,6 +29,16 @@
         <option value="ASC">Ascending</option>
         <option value="DESC">Descending</option>
       </select>
+      <select
+        v-model="selectedRating"
+        @change="fetchGames(currentPage)"
+        class="p-2 border border-gray-300 rounded-md"
+      >
+        <option value="">Rating</option>
+        <option v-for="n in 5" :key="n" :value="n">
+          {{ n }} <span class="text-yellow-500">{{ '★'.repeat(n) }}</span>
+        </option>
+      </select>
     </div>
     <div v-if="games.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <GameCard
@@ -70,6 +80,7 @@ const hasMorePages = ref(true)
 const itemsPerPage = 10
 const selectedSortColumn = ref('')
 const selectedSortOrder = ref('')
+const selectedRating = ref('')
 const totalItems = ref(0)
 
 const fetchGames = async (page = 1) => {
@@ -81,6 +92,7 @@ const fetchGames = async (page = 1) => {
       limit: itemsPerPage,
       ...(selectedSortColumn.value && { sortColumn: selectedSortColumn.value }),
       ...(selectedSortOrder.value && { sortOrder: selectedSortOrder.value }),
+      ...(selectedRating.value && { rating: selectedRating.value }),
     }
     const response = await axios.get(`/api/games`, { params })
     if (response.data && response.data.items) {
@@ -133,6 +145,6 @@ const prevPage = () => {
 }
 
 const goToDetails = (id) => {
-  router.push({ name: 'details', params: { id } })
+  router.push({name: 'details', params: {id}})
 }
 </script>

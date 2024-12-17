@@ -23,6 +23,12 @@
         <option value="ASC">Ascending</option>
         <option value="DESC">Descending</option>
       </select>
+      <select v-model="selectedRating" @change="fetchGames(currentPage)" class="p-2 border border-gray-300 rounded-md">
+        <option value="">Rating</option>
+        <option v-for="n in 5" :key="n" :value="n">
+          {{ n }} <span class="text-yellow-500">{{ '★'.repeat(n) }}</span>
+        </option>
+      </select>
     </div>
     <div v-if="Games.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <GameCard
@@ -48,8 +54,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import {ref, onMounted, computed} from 'vue'
+import {useRouter} from 'vue-router'
 import axios from 'axios'
 import NavbarComponent from '@/components/NavbarComponent.vue'
 import GameCard from '@/components/GameCard.vue'
@@ -64,6 +70,7 @@ const hasMorePages = ref(true)
 const itemsPerPage = 10
 const selectedSortColumn = ref('')
 const selectedSortOrder = ref('')
+const selectedRating = ref('')
 const totalItems = ref(0)
 
 const fetchGames = async (page = 1) => {
@@ -72,10 +79,11 @@ const fetchGames = async (page = 1) => {
     const params = {
       offset,
       limit: itemsPerPage,
-      ...(selectedSortColumn.value && { sortColumn: selectedSortColumn.value }),
-      ...(selectedSortOrder.value && { sortOrder: selectedSortOrder.value }),
+      ...(selectedSortColumn.value && {sortColumn: selectedSortColumn.value}),
+      ...(selectedSortOrder.value && {sortOrder: selectedSortOrder.value}),
+      ...(selectedRating.value && {rating: selectedRating.value}),
     }
-    const response = await axios.get(`/api/games`, { params })
+    const response = await axios.get(`/api/games`, {params})
     if (response.data && response.data.items) {
       Games.value = response.data.items
       totalItems.value = response.data.totalItems || 0
@@ -99,12 +107,12 @@ onMounted(() => {
 
 const search = () => {
   if (searchQuery.value) {
-    router.push({ name: 'search', query: { q: searchQuery.value } })
+    router.push({name: 'search', query: {q: searchQuery.value}})
   }
 }
 
 const goToDetails = id => {
-  router.push({ name: 'details', params: { id } })
+  router.push({name: 'details', params: {id}})
 }
 
 const nextPage = () => {

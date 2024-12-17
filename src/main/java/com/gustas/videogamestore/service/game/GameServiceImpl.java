@@ -13,6 +13,7 @@ import com.gustas.videogamestore.domain.Genre;
 import com.gustas.videogamestore.domain.Image;
 import com.gustas.videogamestore.domain.Platform;
 import com.gustas.videogamestore.domain.Publisher;
+import com.gustas.videogamestore.domain.Rating;
 import com.gustas.videogamestore.domain.Region;
 import com.gustas.videogamestore.domain.SortOrder;
 import com.gustas.videogamestore.dto.request.GameRequestDto;
@@ -22,8 +23,10 @@ import com.gustas.videogamestore.mapper.GameMapper;
 import com.gustas.videogamestore.service.image.ImageService;
 import com.gustas.videogamestore.service.session.SessionService;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +36,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,10 +126,25 @@ public class GameServiceImpl implements GameService {
             List<Predicate> predicates = new ArrayList<>();
 
             addNamePredicate(gameSearchCriteria, root, criteriaBuilder, predicates);
+            addRatingPredicate(gameSearchCriteria, root, criteriaBuilder, predicates);
             predicates.add(criteriaBuilder.isTrue(root.get("user").get("enabled")));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
+    }
+
+    private void addRatingPredicate(GameSearchCriteria gameSearchCriteria, Root<Game> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates) {
+        if (gameSearchCriteria.getRating() != null) {
+            Subquery<Integer> ratingSubquery = criteriaBuilder.createQuery().subquery(Integer.class);
+            Root<Rating> ratingRoot = ratingSubquery.from(Rating.class);
+            Expression<Double> avgRating = criteriaBuilder.avg(ratingRoot.get("rating"));
+            Expression<Integer> roundedAvgRating = criteriaBuilder.function("ROUND", Integer.class, avgRating);
+
+            ratingSubquery.select(roundedAvgRating)
+                    .where(criteriaBuilder.equal(ratingRoot.get("game"), root));
+
+            predicates.add(criteriaBuilder.equal(ratingSubquery, gameSearchCriteria.getRating()));
+        }
     }
 
     private void addNamePredicate(GameSearchCriteria gameSearchCriteria, Root<Game> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates) {

@@ -12,5 +12,6 @@ public class GameSearchCriteria {
     private SortOrder sortOrder;
     private String sortColumn;
     private String search;
+    private Integer rating;
 
 }

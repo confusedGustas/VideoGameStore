@@ -44,8 +44,9 @@ public class GameController {
                                          @RequestParam(required = false) Integer offset,
                                          @RequestParam(required = false) SortOrder sortOrder,
                                          @RequestParam(required = false) String sortColumn,
-                                         @RequestParam(required = false) String search) {
-        return gameService.getGames(new GameSearchCriteria(limit, offset, sortOrder, sortColumn, search));
+                                         @RequestParam(required = false) String search,
+                                         @RequestParam(required = false) Integer rating) {
+        return gameService.getGames(new GameSearchCriteria(limit, offset, sortOrder, sortColumn, search, rating));
     }
 
     @DeleteMapping("/delete")
