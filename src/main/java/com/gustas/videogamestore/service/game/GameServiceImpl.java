@@ -137,7 +137,7 @@ public class GameServiceImpl implements GameService {
         if (gameSearchCriteria.getRating() != null) {
             Subquery<Integer> ratingSubquery = criteriaBuilder.createQuery().subquery(Integer.class);
             Root<Rating> ratingRoot = ratingSubquery.from(Rating.class);
-            Expression<Double> avgRating = criteriaBuilder.avg(ratingRoot.get("rating"));
+            Expression<Double> avgRating = criteriaBuilder.avg(ratingRoot.get("value"));
             Expression<Integer> roundedAvgRating = criteriaBuilder.function("ROUND", Integer.class, avgRating);
 
             ratingSubquery.select(roundedAvgRating)
